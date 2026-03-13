@@ -1,3 +1,15 @@
+# Node
+node_modules/
+
+# Build
+client/dist/
+
+# OS
+.DS_Store
+
 # Local docs (do not commit)
 docs/ChocolateCraftHouse.md
 docs/ChocolateCraftHouse-UI-Guidelines.md
+
+# Internal planning (do not commit)
+docs/PLAN.md
