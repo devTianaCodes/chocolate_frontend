@@ -82,7 +82,7 @@ export default function Checkout() {
       </header>
 
       {!user && (
-        <div className="rounded-card border border-border bg-surface-elevated p-6 text-body-md text-ink-secondary">
+        <div className="glass-panel p-6 text-body-md text-ink-secondary">
           You need an account to place an order.{' '}
           <Link to="/login" className="text-brand">
             Sign in
@@ -93,8 +93,8 @@ export default function Checkout() {
 
       {user && (
         <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
-          <form className="space-y-4 rounded-card border border-border bg-surface-elevated p-6" onSubmit={handleSubmit}>
-            <p className="text-xs uppercase tracking-[0.2em] text-brand">Delivery</p>
+          <form className="glass-panel space-y-4 p-6" onSubmit={handleSubmit}>
+            <p className="section-label">Delivery</p>
             {error && <p className="text-body-sm text-red-300">{error}</p>}
             <label className="block text-xs uppercase tracking-[0.08em] text-ink-muted">
               Address line
@@ -102,7 +102,7 @@ export default function Checkout() {
                 name="line1"
                 value={shippingAddress.line1}
                 onChange={handleChange}
-                className="mt-2 w-full rounded-sm border border-border bg-surface-high px-4 py-3 text-body-sm text-ink-primary"
+                className="glass-input"
                 required
               />
             </label>
@@ -112,7 +112,7 @@ export default function Checkout() {
                 name="city"
                 value={shippingAddress.city}
                 onChange={handleChange}
-                className="mt-2 w-full rounded-sm border border-border bg-surface-high px-4 py-3 text-body-sm text-ink-primary"
+                className="glass-input"
                 required
               />
             </label>
@@ -122,21 +122,21 @@ export default function Checkout() {
                 name="country"
                 value={shippingAddress.country}
                 onChange={handleChange}
-                className="mt-2 w-full rounded-sm border border-border bg-surface-high px-4 py-3 text-body-sm text-ink-primary"
+                className="glass-input"
                 required
               />
             </label>
             <button
               type="submit"
-              className="inline-flex w-full items-center justify-center rounded-sm bg-brand px-6 py-3 text-xs uppercase tracking-[0.12em] text-ink-invert transition hover:bg-brand-light disabled:opacity-50"
+              className="button-primary w-full disabled:opacity-50"
               disabled={submitting || items.length === 0}
             >
               {submitting ? 'Processing payment...' : 'Pay and place order'}
             </button>
           </form>
 
-          <aside className="rounded-card border border-border bg-surface-elevated p-6">
-            <p className="mb-4 text-xs uppercase tracking-[0.2em] text-brand">Order summary</p>
+          <aside className="glass-panel-strong p-6">
+            <p className="section-label mb-4">Order summary</p>
             <div className="space-y-3">
               {items.map((item) => (
                 <div key={item.id} className="flex items-center justify-between gap-4">
@@ -150,7 +150,7 @@ export default function Checkout() {
                 </div>
               ))}
             </div>
-            <div className="mt-6 space-y-2 border-t border-border pt-4">
+            <div className="mt-6 space-y-2 border-t border-border/40 pt-4">
               <div className="flex items-center justify-between text-body-sm text-ink-secondary">
                 <span>Subtotal</span>
                 <span className="font-mono text-ink-primary">{formatPrice(subtotal)}</span>

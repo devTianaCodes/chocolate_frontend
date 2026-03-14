@@ -31,7 +31,7 @@ export default function Cart() {
       {!loading && !error && items.length > 0 && (
         <div className="space-y-6">
           {items.map((item) => (
-            <div key={item.id} className="flex flex-col gap-4 rounded-card border border-border bg-surface-elevated p-4 md:flex-row md:items-center">
+            <div key={item.id} className="glass-panel flex flex-col gap-4 p-4 md:flex-row md:items-center">
               <img src={item.image} alt={item.name} className="h-24 w-24 rounded-sm object-cover" />
               <div className="flex-1">
                 <p className="font-display text-lg text-ink-primary">{item.name}</p>
@@ -39,14 +39,14 @@ export default function Cart() {
               </div>
               <div className="flex items-center gap-3">
                 <button
-                  className="rounded-sm border border-border px-3 py-1 text-sm text-ink-secondary"
+                  className="button-ghost px-3 py-1"
                   onClick={() => updateItem(item.id, item.quantity - 1)}
                 >
                   −
                 </button>
                 <span className="font-mono text-sm text-ink-primary">{item.quantity}</span>
                 <button
-                  className="rounded-sm border border-border px-3 py-1 text-sm text-ink-secondary"
+                  className="button-ghost px-3 py-1"
                   onClick={() => updateItem(item.id, item.quantity + 1)}
                 >
                   +
@@ -65,14 +65,14 @@ export default function Cart() {
               </div>
             </div>
           ))}
-          <div className="rounded-card border border-border bg-surface-elevated p-6">
+          <div className="glass-panel-strong p-6">
             <div className="mb-4 flex items-center justify-between">
               <span className="text-body-md text-ink-secondary">Subtotal</span>
               <span className="font-mono text-body-md text-ink-primary">{formatPrice(subtotal)}</span>
             </div>
             <Link
               to="/checkout"
-              className="inline-flex w-full items-center justify-center rounded-sm bg-brand px-6 py-3 text-xs uppercase tracking-[0.12em] text-ink-invert transition hover:bg-brand-light"
+              className="button-primary w-full"
             >
               Continue to checkout
             </Link>

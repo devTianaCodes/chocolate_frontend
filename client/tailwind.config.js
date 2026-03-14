@@ -4,26 +4,26 @@ export default {
     extend: {
       colors: {
         brand: {
-          DEFAULT: '#C8873A',
-          light: '#E0A85C',
-          dark: '#9E6020',
-          subtle: '#3A2710',
+          DEFAULT: 'rgb(var(--color-brand) / <alpha-value>)',
+          light: 'rgb(var(--color-brand-light) / <alpha-value>)',
+          dark: 'rgb(var(--color-brand-dark) / <alpha-value>)',
+          subtle: 'rgb(var(--color-brand-subtle) / <alpha-value>)',
         },
         surface: {
-          base: '#1A1209',
-          elevated: '#231A0E',
-          high: '#2E2114',
-          invert: '#F5EFE6',
+          base: 'rgb(var(--color-bg-base) / <alpha-value>)',
+          elevated: 'rgb(var(--color-bg-surface) / <alpha-value>)',
+          high: 'rgb(var(--color-bg-elevated) / <alpha-value>)',
+          invert: 'rgb(var(--color-bg-invert) / <alpha-value>)',
         },
         ink: {
-          primary: '#F5EFE6',
-          secondary: '#C4B49A',
-          muted: '#7A6A55',
-          invert: '#1A1209',
+          primary: 'rgb(var(--color-text-primary) / <alpha-value>)',
+          secondary: 'rgb(var(--color-text-secondary) / <alpha-value>)',
+          muted: 'rgb(var(--color-text-muted) / <alpha-value>)',
+          invert: 'rgb(var(--color-text-invert) / <alpha-value>)',
         },
         border: {
-          DEFAULT: '#3A2C1A',
-          strong: '#5C4530',
+          DEFAULT: 'rgb(var(--color-border) / <alpha-value>)',
+          strong: 'rgb(var(--color-border-strong) / <alpha-value>)',
         },
       },
       fontFamily: {
@@ -53,6 +53,13 @@ export default {
         '400': '400ms',
         '600': '600ms',
         '900': '900ms',
+      },
+      boxShadow: {
+        velvet: '0 24px 80px rgba(20, 10, 6, 0.35)',
+        glass: '0 18px 40px rgba(18, 8, 5, 0.28), inset 0 1px 0 rgba(255, 244, 231, 0.08)',
+      },
+      backdropBlur: {
+        luxury: '18px',
       },
     },
   },

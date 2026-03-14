@@ -30,8 +30,8 @@ export default function Shop() {
 
   return (
     <PageWrapper>
-      <header className="mb-10 flex flex-col gap-4">
-        <p className="text-xs uppercase tracking-[0.2em] text-brand">The collection</p>
+      <header className="glass-panel-strong mb-10 flex flex-col gap-4 p-6 md:p-8">
+        <p className="section-label">The collection</p>
         <h1 className="font-display text-display-md text-ink-primary">Shop</h1>
         <p className="max-w-xl text-body-md text-ink-secondary">
           Explore small-batch bars, pralines, and seasonal releases.

@@ -59,12 +59,12 @@ export default function Account() {
 
         {user && (
           <>
-            <div className="rounded-card border border-border bg-surface-elevated p-6">
+            <div className="glass-panel p-6">
               <p className="text-body-sm text-ink-secondary">Signed in as</p>
               <p className="font-display text-display-sm text-ink-primary">{user.email}</p>
               <p className="text-body-sm text-ink-muted">Role: {user.role}</p>
               <button
-                className="mt-4 rounded-sm border border-border px-4 py-2 text-xs uppercase tracking-[0.1em] text-ink-secondary"
+                className="button-ghost mt-4 px-4 py-2"
                 onClick={logout}
                 disabled={loading}
               >
@@ -72,7 +72,7 @@ export default function Account() {
               </button>
             </div>
 
-            <div className="rounded-card border border-border bg-surface-elevated p-6">
+            <div className="glass-panel-strong p-6">
               <div className="mb-4 flex items-center justify-between">
                 <h2 className="font-display text-display-sm text-ink-primary">Orders</h2>
                 <Link to="/shop" className="text-xs uppercase tracking-[0.1em] text-brand">
@@ -89,7 +89,7 @@ export default function Account() {
               {!ordersLoading && !ordersError && orders.length > 0 && (
                 <div className="space-y-4">
                   {orders.map((order) => (
-                    <div key={order.id} className="flex flex-col gap-2 border-t border-border pt-4 text-body-sm text-ink-secondary md:flex-row md:items-center md:justify-between">
+                    <div key={order.id} className="flex flex-col gap-2 border-t border-border/40 pt-4 text-body-sm text-ink-secondary md:flex-row md:items-center md:justify-between">
                       <div>
                         <p className="font-mono text-ink-primary">{order.order_number}</p>
                         <p>{new Date(order.created_at).toLocaleDateString()}</p>

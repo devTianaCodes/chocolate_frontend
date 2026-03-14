@@ -39,7 +39,7 @@ export default function ProductDetail() {
 
       {!loading && !error && product && (
         <section className="grid gap-10 lg:grid-cols-[1.2fr_1fr]">
-          <div className="overflow-hidden rounded-card border border-border bg-surface-elevated">
+          <div className="glass-panel-strong overflow-hidden">
             <img
               src={product.image}
               alt={product.name}
@@ -47,8 +47,8 @@ export default function ProductDetail() {
               loading="eager"
             />
           </div>
-          <div className="space-y-4">
-            <p className="text-xs uppercase tracking-[0.2em] text-brand">
+          <div className="glass-panel space-y-4 p-6 md:p-8">
+            <p className="section-label">
               {product.category_name || 'Chocolate'}
             </p>
             <h1 className="font-display text-display-md text-ink-primary">{product.name}</h1>
@@ -67,7 +67,7 @@ export default function ProductDetail() {
               {product.origin ? `Origin: ${product.origin}` : 'Origin: single-harvest'}
             </div>
             <button
-              className="inline-flex items-center justify-center rounded-sm bg-brand px-6 py-3 text-xs uppercase tracking-[0.12em] text-ink-invert transition hover:bg-brand-light"
+              className="button-primary"
               onClick={() => addItem(product.id, 1)}
             >
               Add to cart

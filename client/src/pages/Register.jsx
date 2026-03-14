@@ -21,8 +21,9 @@ export default function Register() {
 
   return (
     <PageWrapper>
-      <div className="mx-auto max-w-md space-y-6">
-        <header>
+      <div className="glass-panel-strong mx-auto max-w-md space-y-6 p-6 md:p-8">
+        <header className="space-y-2">
+          <p className="section-label">New membership</p>
           <h1 className="font-display text-display-sm text-ink-primary">Create account</h1>
           <p className="text-body-sm text-ink-secondary">Join for faster checkout and order tracking.</p>
         </header>
@@ -34,7 +35,7 @@ export default function Register() {
             Email
             <input
               type="email"
-              className="mt-2 w-full rounded-sm border border-border bg-surface-high px-4 py-3 text-body-sm text-ink-primary"
+              className="glass-input"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -44,7 +45,7 @@ export default function Register() {
             Password
             <input
               type="password"
-              className="mt-2 w-full rounded-sm border border-border bg-surface-high px-4 py-3 text-body-sm text-ink-primary"
+              className="glass-input"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
@@ -52,7 +53,7 @@ export default function Register() {
           </label>
           <button
             type="submit"
-            className="w-full rounded-sm bg-brand px-6 py-3 text-xs uppercase tracking-[0.12em] text-ink-invert transition hover:bg-brand-light"
+            className="button-primary w-full"
             disabled={loading}
           >
             {loading ? 'Creating…' : 'Create account'}

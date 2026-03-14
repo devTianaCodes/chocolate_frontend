@@ -8,9 +8,9 @@ const links = [
 
 export default function AdminSectionHeader({ title, description }) {
   return (
-    <header className="space-y-5">
+    <header className="glass-panel-strong space-y-5 p-6 md:p-8">
       <div>
-        <p className="text-xs uppercase tracking-[0.2em] text-brand">Admin</p>
+        <p className="section-label">Admin</p>
         <h1 className="font-display text-display-md text-ink-primary">{title}</h1>
         {description && (
           <p className="mt-2 max-w-2xl text-body-sm text-ink-secondary">{description}</p>
@@ -24,8 +24,8 @@ export default function AdminSectionHeader({ title, description }) {
             className={({ isActive }) =>
               `rounded-sm border px-4 py-2 text-xs uppercase tracking-[0.12em] transition ${
                 isActive
-                  ? 'border-brand bg-brand text-ink-invert'
-                  : 'border-border text-ink-secondary hover:border-brand hover:text-brand'
+                  ? 'border-brand bg-brand/90 text-ink-invert shadow-glass'
+                  : 'border-border/70 bg-surface-elevated/20 text-ink-secondary backdrop-blur-md hover:border-brand hover:text-brand'
               }`
             }
           >

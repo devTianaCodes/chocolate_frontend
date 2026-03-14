@@ -21,8 +21,9 @@ export default function Login() {
 
   return (
     <PageWrapper>
-      <div className="mx-auto max-w-md space-y-6">
-        <header>
+      <div className="glass-panel-strong mx-auto max-w-md space-y-6 p-6 md:p-8">
+        <header className="space-y-2">
+          <p className="section-label">Account access</p>
           <h1 className="font-display text-display-sm text-ink-primary">Sign in</h1>
           <p className="text-body-sm text-ink-secondary">Access your account and orders.</p>
         </header>
@@ -34,7 +35,7 @@ export default function Login() {
             Email
             <input
               type="email"
-              className="mt-2 w-full rounded-sm border border-border bg-surface-high px-4 py-3 text-body-sm text-ink-primary"
+              className="glass-input"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -44,7 +45,7 @@ export default function Login() {
             Password
             <input
               type="password"
-              className="mt-2 w-full rounded-sm border border-border bg-surface-high px-4 py-3 text-body-sm text-ink-primary"
+              className="glass-input"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
@@ -52,7 +53,7 @@ export default function Login() {
           </label>
           <button
             type="submit"
-            className="w-full rounded-sm bg-brand px-6 py-3 text-xs uppercase tracking-[0.12em] text-ink-invert transition hover:bg-brand-light"
+            className="button-primary w-full"
             disabled={loading}
           >
             {loading ? 'Signing in…' : 'Sign in'}
