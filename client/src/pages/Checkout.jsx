@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import PageWrapper from '../components/layout/PageWrapper.jsx';
 import { createOrder } from '../api/orders.js';
+import { confirmMockStripePayment, createStripeIntent } from '../api/payments.js';
 import { useAuthStore } from '../store/authStore.js';
 import { useCartStore } from '../store/cartStore.js';
 import { formatPrice } from '../utils/formatPrice.js';
@@ -49,17 +50,26 @@ export default function Checkout() {
     setError('');
 
     try {
-      const response = await createOrder({
+      const orderResponse = await createOrder({
         userId: user.id,
         sessionId,
         shippingAddress,
         shippingMethodId: 1,
       });
+      const orderId = orderResponse.data.orderId;
+      const paymentResponse = await createStripeIntent(orderId);
+
+      if (paymentResponse.data.mode === 'mock') {
+        await confirmMockStripePayment({
+          orderId,
+          paymentIntentId: paymentResponse.data.paymentIntentId,
+        });
+      }
 
       clearItems();
-      navigate(`/order-confirmation/${response.data.orderId}`);
+      navigate(`/order-confirmation/${orderId}`);
     } catch (err) {
-      setError('Unable to create order.');
+      setError('Unable to complete checkout.');
     } finally {
       setSubmitting(false);
     }
@@ -121,7 +131,7 @@ export default function Checkout() {
               className="inline-flex w-full items-center justify-center rounded-sm bg-brand px-6 py-3 text-xs uppercase tracking-[0.12em] text-ink-invert transition hover:bg-brand-light disabled:opacity-50"
               disabled={submitting || items.length === 0}
             >
-              {submitting ? 'Placing order...' : 'Place order'}
+              {submitting ? 'Processing payment...' : 'Pay and place order'}
             </button>
           </form>
 

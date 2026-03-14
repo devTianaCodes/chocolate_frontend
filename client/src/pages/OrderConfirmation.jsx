@@ -63,6 +63,11 @@ export default function OrderConfirmation() {
             <p className="mt-2 text-body-sm text-ink-muted">
               Total: <span className="font-mono text-ink-primary">{formatPrice(order.total)}</span>
             </p>
+            <p className="mt-4 text-body-sm text-ink-secondary">
+              {order.status === 'paid'
+                ? 'Payment received. Your order is now in production.'
+                : 'Your order was created, but payment still needs confirmation.'}
+            </p>
           </div>
 
           <div className="rounded-card border border-border bg-surface-elevated p-6">
