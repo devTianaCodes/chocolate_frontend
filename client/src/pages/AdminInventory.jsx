@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import AdminSectionHeader from '../components/layout/AdminSectionHeader.jsx';
 import PageWrapper from '../components/layout/PageWrapper.jsx';
 import { fetchAdminProducts, updateAdminInventory } from '../api/admin.js';
 import { useAuthStore } from '../store/authStore.js';
@@ -51,12 +52,11 @@ export default function AdminInventory() {
   return (
     <PageWrapper>
       <div className="space-y-8">
-        <header>
-          <p className="text-xs uppercase tracking-[0.2em] text-brand">Admin</p>
-          <h1 className="font-display text-display-md text-ink-primary">Inventory</h1>
-        </header>
+        <AdminSectionHeader
+          title="Inventory"
+          description="Adjust stock levels to keep checkout and catalog availability accurate."
+        />
 
-        {user?.role !== 'admin' && <p className="text-body-md text-ink-secondary">Admin access required.</p>}
         {error && <p className="text-body-md text-red-300">{error}</p>}
         {loading && <p className="text-body-md text-ink-secondary">Loading inventory...</p>}
 

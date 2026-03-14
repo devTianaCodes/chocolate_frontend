@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import AdminSectionHeader from '../components/layout/AdminSectionHeader.jsx';
 import PageWrapper from '../components/layout/PageWrapper.jsx';
 import { fetchCategories } from '../api/categories.js';
 import { createAdminProduct, fetchAdminProducts, updateAdminProduct } from '../api/admin.js';
@@ -119,14 +120,10 @@ export default function AdminProducts() {
   return (
     <PageWrapper>
       <div className="space-y-8">
-        <header>
-          <p className="text-xs uppercase tracking-[0.2em] text-brand">Admin</p>
-          <h1 className="font-display text-display-md text-ink-primary">Products</h1>
-        </header>
-
-        {user?.role !== 'admin' && (
-          <p className="text-body-md text-ink-secondary">Admin access required.</p>
-        )}
+        <AdminSectionHeader
+          title="Products"
+          description="Create and refine the assortment visible in the storefront catalog."
+        />
 
         {user?.role === 'admin' && (
           <>

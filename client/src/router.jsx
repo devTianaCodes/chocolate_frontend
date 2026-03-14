@@ -11,20 +11,38 @@ import OrderConfirmation from './pages/OrderConfirmation.jsx';
 import AdminProducts from './pages/AdminProducts.jsx';
 import AdminInventory from './pages/AdminInventory.jsx';
 import AdminOrders from './pages/AdminOrders.jsx';
+import RequireAuth from './components/routes/RequireAuth.jsx';
+import RequireGuest from './components/routes/RequireGuest.jsx';
+import RequireAdmin from './components/routes/RequireAdmin.jsx';
 
 const router = createBrowserRouter([
   { path: '/', element: <Home /> },
   { path: '/shop', element: <Shop /> },
   { path: '/products/:slug', element: <ProductDetail /> },
   { path: '/cart', element: <Cart /> },
-  { path: '/checkout', element: <Checkout /> },
-  { path: '/order-confirmation/:orderId', element: <OrderConfirmation /> },
-  { path: '/login', element: <Login /> },
-  { path: '/register', element: <Register /> },
-  { path: '/account', element: <Account /> },
-  { path: '/admin/products', element: <AdminProducts /> },
-  { path: '/admin/inventory', element: <AdminInventory /> },
-  { path: '/admin/orders', element: <AdminOrders /> },
+  {
+    element: <RequireGuest />,
+    children: [
+      { path: '/login', element: <Login /> },
+      { path: '/register', element: <Register /> },
+    ],
+  },
+  {
+    element: <RequireAuth />,
+    children: [
+      { path: '/checkout', element: <Checkout /> },
+      { path: '/order-confirmation/:orderId', element: <OrderConfirmation /> },
+      { path: '/account', element: <Account /> },
+    ],
+  },
+  {
+    element: <RequireAdmin />,
+    children: [
+      { path: '/admin/products', element: <AdminProducts /> },
+      { path: '/admin/inventory', element: <AdminInventory /> },
+      { path: '/admin/orders', element: <AdminOrders /> },
+    ],
+  },
 ]);
 
 export default router;

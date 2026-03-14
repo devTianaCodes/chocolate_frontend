@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import AdminSectionHeader from '../components/layout/AdminSectionHeader.jsx';
 import PageWrapper from '../components/layout/PageWrapper.jsx';
 import { fetchAdminOrders, updateAdminOrderStatus } from '../api/admin.js';
 import { useAuthStore } from '../store/authStore.js';
@@ -52,12 +53,11 @@ export default function AdminOrders() {
   return (
     <PageWrapper>
       <div className="space-y-8">
-        <header>
-          <p className="text-xs uppercase tracking-[0.2em] text-brand">Admin</p>
-          <h1 className="font-display text-display-md text-ink-primary">Orders</h1>
-        </header>
+        <AdminSectionHeader
+          title="Orders"
+          description="Review recent purchases and move them through fulfillment states."
+        />
 
-        {user?.role !== 'admin' && <p className="text-body-md text-ink-secondary">Admin access required.</p>}
         {error && <p className="text-body-md text-red-300">{error}</p>}
         {loading && <p className="text-body-md text-ink-secondary">Loading orders...</p>}
 
