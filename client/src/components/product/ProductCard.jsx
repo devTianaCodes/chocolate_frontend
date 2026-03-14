@@ -21,7 +21,7 @@ export default function ProductCard({ product }) {
           </Link>
         </div>
       </div>
-      <div className="space-y-2 p-4">
+      <div className="space-y-2 pl-7 pr-5 pb-5 pt-6">
         <p className="text-[11px] uppercase tracking-[0.12em] text-ink-muted">
           {product.category_name || 'Chocolate'}
         </p>

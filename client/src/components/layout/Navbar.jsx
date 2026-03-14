@@ -14,13 +14,13 @@ export default function Navbar() {
       <div className="mx-auto flex h-[72px] max-w-[1280px] items-center justify-between px-6 md:px-10 lg:px-16">
         <div className="flex flex-col">
           <Link to="/" className="font-display text-[22px] italic text-ink-primary">
-            ChocolateCraftHouse
+            Chocolate Craft House
           </Link>
           <span className="hidden text-[10px] uppercase tracking-[0.12em] text-ink-muted md:block">
             Artisan Chocolate Atelier
           </span>
         </div>
-        <nav className="hidden items-center gap-6 rounded-pill border border-border/40 bg-surface-elevated/20 px-5 py-3 text-[13px] uppercase tracking-[0.1em] text-ink-secondary shadow-glass backdrop-blur-luxury md:flex">
+        <nav className="hidden items-center gap-6 text-[13px] uppercase tracking-[0.1em] text-ink-secondary md:flex">
           <Link to="/shop" className="hover:text-ink-primary">Shop</Link>
           <Link to="/cart" className="hover:text-ink-primary">Cart</Link>
           {user ? (
@@ -40,9 +40,9 @@ export default function Navbar() {
             </>
           )}
         </nav>
-        <div className="rounded-pill border border-border/35 bg-surface-elevated/20 px-4 py-2 text-xs uppercase tracking-[0.1em] text-ink-secondary shadow-glass backdrop-blur-luxury">
+        <button type="button" className="text-xs uppercase tracking-[0.1em] text-ink-secondary md:hidden">
           Menu
-        </div>
+        </button>
       </div>
     </header>
   );

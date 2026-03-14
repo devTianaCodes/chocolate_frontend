@@ -43,7 +43,7 @@ export default {
       },
       borderRadius: {
         DEFAULT: '2px',
-        card: '4px',
+        card: '12px',
         pill: '9999px',
       },
       transitionTimingFunction: {

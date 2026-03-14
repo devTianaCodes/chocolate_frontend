@@ -11,7 +11,7 @@ export default function Home() {
             A warmer chocolate world, wrapped in brown velvet and violet dusk.
           </h1>
           <p className="max-w-2xl text-body-lg text-ink-secondary">
-            ChocolateCraftHouse is shaped like an atelier: reddish cocoa walls, blush highlights, indigo shadows, and glass surfaces that feel softly lacquered.
+            Chocolate Craft House is shaped like an atelier: reddish cocoa walls, blush highlights, indigo shadows, and glass surfaces that feel softly lacquered.
           </p>
           <div className="flex flex-wrap gap-4">
             <Link to="/shop" className="button-primary">
