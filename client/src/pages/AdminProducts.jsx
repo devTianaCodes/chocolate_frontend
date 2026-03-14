@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import PageWrapper from '../components/layout/PageWrapper.jsx';
 import { fetchCategories } from '../api/categories.js';
-import { createAdminProduct, fetchAdminProducts } from '../api/admin.js';
+import { createAdminProduct, fetchAdminProducts, updateAdminProduct } from '../api/admin.js';
 import { useAuthStore } from '../store/authStore.js';
 import { formatPrice } from '../utils/formatPrice.js';
 
@@ -20,6 +20,7 @@ export default function AdminProducts() {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [form, setForm] = useState(initialForm);
+  const [editingProductId, setEditingProductId] = useState(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
@@ -66,23 +67,50 @@ export default function AdminProducts() {
     setForm((current) => ({ ...current, [name]: value }));
   }
 
+  function startEditing(product) {
+    setEditingProductId(product.id);
+    setForm({
+      category_id: String(product.category_id || ''),
+      slug: product.slug,
+      name: product.name,
+      description: product.description,
+      price: String(product.price),
+      discount_price: String(product.discount_price),
+      image: product.image,
+    });
+    setError('');
+  }
+
+  function cancelEditing() {
+    setEditingProductId(null);
+    setForm(initialForm);
+    setError('');
+  }
+
   async function handleSubmit(event) {
     event.preventDefault();
     setSaving(true);
     setError('');
 
     try {
-      await createAdminProduct(accessToken, {
+      const payload = {
         ...form,
         category_id: Number(form.category_id),
         price: Number(form.price),
         discount_price: Number(form.discount_price),
-      });
+      };
+
+      if (editingProductId) {
+        await updateAdminProduct(accessToken, editingProductId, payload);
+      } else {
+        await createAdminProduct(accessToken, payload);
+      }
+
       const refreshed = await fetchAdminProducts(accessToken);
       setProducts(refreshed.data || []);
-      setForm(initialForm);
+      cancelEditing();
     } catch (err) {
-      setError('Unable to create product.');
+      setError(editingProductId ? 'Unable to update product.' : 'Unable to create product.');
     } finally {
       setSaving(false);
     }
@@ -104,6 +132,20 @@ export default function AdminProducts() {
           <>
             <form className="grid gap-4 rounded-card border border-border bg-surface-elevated p-6 lg:grid-cols-2" onSubmit={handleSubmit}>
               {error && <p className="lg:col-span-2 text-body-sm text-red-300">{error}</p>}
+              <div className="lg:col-span-2 flex items-center justify-between gap-4">
+                <p className="text-xs uppercase tracking-[0.2em] text-brand">
+                  {editingProductId ? 'Edit product' : 'Create product'}
+                </p>
+                {editingProductId && (
+                  <button
+                    type="button"
+                    className="text-xs uppercase tracking-[0.12em] text-ink-secondary"
+                    onClick={cancelEditing}
+                  >
+                    Cancel
+                  </button>
+                )}
+              </div>
               <label className="block text-xs uppercase tracking-[0.08em] text-ink-muted">
                 Name
                 <input name="name" value={form.name} onChange={handleChange} className="mt-2 w-full rounded-sm border border-border bg-surface-high px-4 py-3 text-body-sm text-ink-primary" required />
@@ -138,7 +180,7 @@ export default function AdminProducts() {
                 <textarea name="description" value={form.description} onChange={handleChange} className="mt-2 min-h-[120px] w-full rounded-sm border border-border bg-surface-high px-4 py-3 text-body-sm text-ink-primary" required />
               </label>
               <button type="submit" className="inline-flex items-center justify-center rounded-sm bg-brand px-6 py-3 text-xs uppercase tracking-[0.12em] text-ink-invert transition hover:bg-brand-light disabled:opacity-50" disabled={saving}>
-                {saving ? 'Saving...' : 'Create product'}
+                {saving ? 'Saving...' : editingProductId ? 'Update product' : 'Create product'}
               </button>
             </form>
 
@@ -151,9 +193,18 @@ export default function AdminProducts() {
                       <p className="font-display text-lg text-ink-primary">{product.name}</p>
                       <p className="text-body-sm text-ink-muted">{product.category_name}</p>
                     </div>
-                    <div className="text-body-sm text-ink-secondary md:text-right">
-                      <p className="font-mono text-ink-primary">{formatPrice(product.discount_price || product.price)}</p>
-                      <p>Stock {product.inventory_quantity}</p>
+                    <div className="flex items-center gap-4">
+                      <div className="text-body-sm text-ink-secondary md:text-right">
+                        <p className="font-mono text-ink-primary">{formatPrice(product.discount_price || product.price)}</p>
+                        <p>Stock {product.inventory_quantity}</p>
+                      </div>
+                      <button
+                        type="button"
+                        className="rounded-sm border border-border px-4 py-2 text-xs uppercase tracking-[0.12em] text-ink-primary transition hover:border-brand hover:text-brand"
+                        onClick={() => startEditing(product)}
+                      >
+                        Edit
+                      </button>
                     </div>
                   </div>
                 ))}

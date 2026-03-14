@@ -18,6 +18,15 @@ export async function createAdminProduct(token, payload) {
   return data;
 }
 
+export async function updateAdminProduct(token, productId, payload) {
+  const { data } = await api.patch(
+    `/admin/products/${productId}`,
+    payload,
+    authHeaders(token)
+  );
+  return data;
+}
+
 export async function updateAdminInventory(token, productId, quantity) {
   const { data } = await api.patch(
     `/admin/inventory/${productId}`,
