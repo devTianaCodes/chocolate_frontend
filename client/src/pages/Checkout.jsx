@@ -10,6 +10,7 @@ import { formatPrice } from '../utils/formatPrice.js';
 export default function Checkout() {
   const navigate = useNavigate();
   const user = useAuthStore((state) => state.user);
+  const accessToken = useAuthStore((state) => state.accessToken);
   const { items, sessionId, loadCart, clearItems } = useCartStore();
   const [shippingAddress, setShippingAddress] = useState({
     line1: '',
@@ -51,13 +52,12 @@ export default function Checkout() {
 
     try {
       const orderResponse = await createOrder({
-        userId: user.id,
         sessionId,
         shippingAddress,
         shippingMethodId: 1,
-      });
+      }, accessToken);
       const orderId = orderResponse.data.orderId;
-      const paymentResponse = await createStripeIntent(orderId);
+      const paymentResponse = await createStripeIntent(orderId, accessToken);
 
       if (paymentResponse.data.mode === 'mock') {
         await confirmMockStripePayment({

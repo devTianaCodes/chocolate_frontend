@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { fetchCart, addCartItem, updateCartItem, removeCartItem } from '../api/cart.js';
+import { useAuthStore } from './authStore.js';
 
 function getSessionId() {
   let id = localStorage.getItem('choc_session');
@@ -19,7 +20,8 @@ export const useCartStore = create((set, get) => ({
   loadCart: async () => {
     set({ loading: true, error: '' });
     try {
-      const data = await fetchCart({ sessionId: get().sessionId });
+      const token = useAuthStore.getState().accessToken;
+      const data = await fetchCart({ sessionId: get().sessionId, token });
       set({ items: data.data.items || [] });
     } catch (err) {
       set({ error: 'Unable to load cart.' });
@@ -31,7 +33,8 @@ export const useCartStore = create((set, get) => ({
   addItem: async (productId, quantity = 1) => {
     set({ loading: true, error: '' });
     try {
-      const data = await addCartItem({ sessionId: get().sessionId, productId, quantity });
+      const token = useAuthStore.getState().accessToken;
+      const data = await addCartItem({ sessionId: get().sessionId, productId, quantity }, token);
       set({ items: data.data.items || [] });
     } catch (err) {
       set({ error: 'Unable to add item.' });
@@ -43,7 +46,8 @@ export const useCartStore = create((set, get) => ({
   updateItem: async (itemId, quantity) => {
     set({ loading: true, error: '' });
     try {
-      const data = await updateCartItem(itemId, { quantity });
+      const token = useAuthStore.getState().accessToken;
+      const data = await updateCartItem(itemId, { quantity, sessionId: get().sessionId }, token);
       set({ items: data.data.items || [] });
     } catch (err) {
       set({ error: 'Unable to update item.' });
@@ -55,7 +59,8 @@ export const useCartStore = create((set, get) => ({
   removeItem: async (itemId) => {
     set({ loading: true, error: '' });
     try {
-      const data = await removeCartItem(itemId);
+      const token = useAuthStore.getState().accessToken;
+      const data = await removeCartItem(itemId, { sessionId: get().sessionId, token });
       set({ items: data.data.items || [] });
     } catch (err) {
       set({ error: 'Unable to remove item.' });

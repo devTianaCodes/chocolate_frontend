@@ -1,21 +1,37 @@
 import api from './client.js';
 
-export async function fetchCart({ sessionId, userId } = {}) {
-  const { data } = await api.get('/cart', { params: { sessionId, userId } });
+function authHeaders(token) {
+  return token
+    ? {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    : {};
+}
+
+export async function fetchCart({ sessionId, token } = {}) {
+  const { data } = await api.get('/cart', {
+    params: { sessionId },
+    ...authHeaders(token),
+  });
   return data;
 }
 
-export async function addCartItem(payload) {
-  const { data } = await api.post('/cart/items', payload);
+export async function addCartItem(payload, token) {
+  const { data } = await api.post('/cart/items', payload, authHeaders(token));
   return data;
 }
 
-export async function updateCartItem(id, payload) {
-  const { data } = await api.patch(`/cart/items/${id}`, payload);
+export async function updateCartItem(id, payload, token) {
+  const { data } = await api.patch(`/cart/items/${id}`, payload, authHeaders(token));
   return data;
 }
 
-export async function removeCartItem(id) {
-  const { data } = await api.delete(`/cart/items/${id}`);
+export async function removeCartItem(id, { sessionId, token } = {}) {
+  const { data } = await api.delete(`/cart/items/${id}`, {
+    params: { sessionId },
+    ...authHeaders(token),
+  });
   return data;
 }

@@ -8,6 +8,7 @@ import { formatPrice } from '../utils/formatPrice.js';
 export default function OrderConfirmation() {
   const { orderId } = useParams();
   const user = useAuthStore((state) => state.user);
+  const accessToken = useAuthStore((state) => state.accessToken);
   const [order, setOrder] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -23,7 +24,7 @@ export default function OrderConfirmation() {
       }
 
       try {
-        const response = await fetchOrder(orderId, user.id);
+        const response = await fetchOrder(orderId, accessToken);
         if (active) {
           setOrder(response.data);
         }
@@ -42,7 +43,7 @@ export default function OrderConfirmation() {
     return () => {
       active = false;
     };
-  }, [orderId, user]);
+  }, [accessToken, orderId, user]);
 
   return (
     <PageWrapper>

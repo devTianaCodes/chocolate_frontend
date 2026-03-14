@@ -1,7 +1,15 @@
 import api from './client.js';
 
-export async function createStripeIntent(orderId) {
-  const { data } = await api.post('/payments/stripe/intent', { orderId });
+function authHeaders(token) {
+  return {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+}
+
+export async function createStripeIntent(orderId, token) {
+  const { data } = await api.post('/payments/stripe/intent', { orderId }, authHeaders(token));
   return data;
 }
 

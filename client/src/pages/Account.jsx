@@ -6,7 +6,7 @@ import { fetchOrders } from '../api/orders.js';
 import { formatPrice } from '../utils/formatPrice.js';
 
 export default function Account() {
-  const { user, logout, loading } = useAuthStore();
+  const { user, accessToken, logout, loading } = useAuthStore();
   const [orders, setOrders] = useState([]);
   const [ordersLoading, setOrdersLoading] = useState(false);
   const [ordersError, setOrdersError] = useState('');
@@ -23,7 +23,7 @@ export default function Account() {
       setOrdersLoading(true);
       setOrdersError('');
       try {
-        const response = await fetchOrders(user.id);
+        const response = await fetchOrders(accessToken);
         if (active) {
           setOrders(response.data || []);
         }
@@ -42,7 +42,7 @@ export default function Account() {
     return () => {
       active = false;
     };
-  }, [user]);
+  }, [accessToken, user]);
 
   return (
     <PageWrapper>
