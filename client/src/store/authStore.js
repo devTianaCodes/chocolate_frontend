@@ -17,6 +17,24 @@ export const useAuthStore = create((set) => ({
   loading: false,
   error: '',
 
+  setSession: ({ user, accessToken }) => {
+    set({
+      user,
+      accessToken,
+      initialized: true,
+      error: '',
+    });
+  },
+
+  clearSession: () => {
+    set({
+      user: null,
+      accessToken: null,
+      initialized: true,
+      error: '',
+    });
+  },
+
   initialize: async () => {
     set({ loading: true, error: '' });
     try {
@@ -35,6 +53,17 @@ export const useAuthStore = create((set) => ({
     } finally {
       set({ loading: false });
     }
+  },
+
+  refreshSession: async () => {
+    const response = await refreshToken();
+    set({
+      user: response.data.user,
+      accessToken: response.data.accessToken,
+      initialized: true,
+      error: '',
+    });
+    return response.data.accessToken;
   },
 
   register: async (email, password) => {
