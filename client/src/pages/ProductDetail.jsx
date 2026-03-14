@@ -3,12 +3,14 @@ import { useParams } from 'react-router-dom';
 import PageWrapper from '../components/layout/PageWrapper.jsx';
 import { fetchProductBySlug } from '../api/products.js';
 import { formatPrice } from '../utils/formatPrice.js';
+import { useCartStore } from '../store/cartStore.js';
 
 export default function ProductDetail() {
   const { slug } = useParams();
   const [product, setProduct] = useState(null);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
+  const addItem = useCartStore((state) => state.addItem);
 
   useEffect(() => {
     let active = true;
@@ -64,6 +66,12 @@ export default function ProductDetail() {
             <div className="text-body-sm text-ink-muted">
               {product.origin ? `Origin: ${product.origin}` : 'Origin: single-harvest'}
             </div>
+            <button
+              className="inline-flex items-center justify-center rounded-sm bg-brand px-6 py-3 text-xs uppercase tracking-[0.12em] text-ink-invert transition hover:bg-brand-light"
+              onClick={() => addItem(product.id, 1)}
+            >
+              Add to cart
+            </button>
           </div>
         </section>
       )}
