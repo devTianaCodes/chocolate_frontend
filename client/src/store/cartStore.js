@@ -63,4 +63,8 @@ export const useCartStore = create((set, get) => ({
       set({ loading: false });
     }
   },
+
+  clearItems: () => {
+    set({ items: [] });
+  },
 }));

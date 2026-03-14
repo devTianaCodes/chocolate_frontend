@@ -9,7 +9,7 @@ import { formatPrice } from '../utils/formatPrice.js';
 export default function Checkout() {
   const navigate = useNavigate();
   const user = useAuthStore((state) => state.user);
-  const { items, sessionId, loadCart } = useCartStore();
+  const { items, sessionId, loadCart, clearItems } = useCartStore();
   const [shippingAddress, setShippingAddress] = useState({
     line1: '',
     city: '',
@@ -56,6 +56,7 @@ export default function Checkout() {
         shippingMethodId: 1,
       });
 
+      clearItems();
       navigate(`/order-confirmation/${response.data.orderId}`);
     } catch (err) {
       setError('Unable to create order.');

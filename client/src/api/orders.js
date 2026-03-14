@@ -11,3 +11,10 @@ export async function fetchOrder(orderId, userId) {
   });
   return data;
 }
+
+export async function fetchOrders(userId) {
+  const { data } = await api.get('/orders', {
+    params: { userId },
+  });
+  return data;
+}
