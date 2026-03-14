@@ -1,19 +1,21 @@
 import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import PageWrapper from '../components/layout/PageWrapper.jsx';
 import { useAuthStore } from '../store/authStore.js';
 
 export default function Login() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { login, loading, error } = useAuthStore();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const redirectTo = location.state?.from || '/account';
 
   async function handleSubmit(event) {
     event.preventDefault();
     const success = await login(email, password);
     if (success) {
-      navigate('/account');
+      navigate(redirectTo, { replace: true });
     }
   }
 
