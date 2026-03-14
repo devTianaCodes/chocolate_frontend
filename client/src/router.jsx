@@ -7,6 +7,7 @@ import Checkout from './pages/Checkout.jsx';
 import Login from './pages/Login.jsx';
 import Register from './pages/Register.jsx';
 import Account from './pages/Account.jsx';
+import OrderConfirmation from './pages/OrderConfirmation.jsx';
 
 const router = createBrowserRouter([
   { path: '/', element: <Home /> },
@@ -14,6 +15,7 @@ const router = createBrowserRouter([
   { path: '/products/:slug', element: <ProductDetail /> },
   { path: '/cart', element: <Cart /> },
   { path: '/checkout', element: <Checkout /> },
+  { path: '/order-confirmation/:orderId', element: <OrderConfirmation /> },
   { path: '/login', element: <Login /> },
   { path: '/register', element: <Register /> },
   { path: '/account', element: <Account /> },

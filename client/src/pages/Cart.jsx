@@ -1,10 +1,15 @@
 import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import PageWrapper from '../components/layout/PageWrapper.jsx';
 import { useCartStore } from '../store/cartStore.js';
 import { formatPrice } from '../utils/formatPrice.js';
 
 export default function Cart() {
   const { items, loading, error, loadCart, updateItem, removeItem } = useCartStore();
+  const subtotal = items.reduce((sum, item) => {
+    const unitPrice = Number(item.discount_price || item.price || 0);
+    return sum + unitPrice * Number(item.quantity || 0);
+  }, 0);
 
   useEffect(() => {
     loadCart();
@@ -60,6 +65,18 @@ export default function Cart() {
               </div>
             </div>
           ))}
+          <div className="rounded-card border border-border bg-surface-elevated p-6">
+            <div className="mb-4 flex items-center justify-between">
+              <span className="text-body-md text-ink-secondary">Subtotal</span>
+              <span className="font-mono text-body-md text-ink-primary">{formatPrice(subtotal)}</span>
+            </div>
+            <Link
+              to="/checkout"
+              className="inline-flex w-full items-center justify-center rounded-sm bg-brand px-6 py-3 text-xs uppercase tracking-[0.12em] text-ink-invert transition hover:bg-brand-light"
+            >
+              Continue to checkout
+            </Link>
+          </div>
         </div>
       )}
     </PageWrapper>

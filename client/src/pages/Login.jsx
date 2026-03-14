@@ -11,8 +11,10 @@ export default function Login() {
 
   async function handleSubmit(event) {
     event.preventDefault();
-    await login(email, password);
-    navigate('/account');
+    const success = await login(email, password);
+    if (success) {
+      navigate('/account');
+    }
   }
 
   return (

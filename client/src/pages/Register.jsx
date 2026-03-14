@@ -11,8 +11,10 @@ export default function Register() {
 
   async function handleSubmit(event) {
     event.preventDefault();
-    await register(email, password);
-    navigate('/account');
+    const success = await register(email, password);
+    if (success) {
+      navigate('/account');
+    }
   }
 
   return (
