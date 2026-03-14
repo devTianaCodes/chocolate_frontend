@@ -8,6 +8,9 @@ import Login from './pages/Login.jsx';
 import Register from './pages/Register.jsx';
 import Account from './pages/Account.jsx';
 import OrderConfirmation from './pages/OrderConfirmation.jsx';
+import AdminProducts from './pages/AdminProducts.jsx';
+import AdminInventory from './pages/AdminInventory.jsx';
+import AdminOrders from './pages/AdminOrders.jsx';
 
 const router = createBrowserRouter([
   { path: '/', element: <Home /> },
@@ -19,6 +22,9 @@ const router = createBrowserRouter([
   { path: '/login', element: <Login /> },
   { path: '/register', element: <Register /> },
   { path: '/account', element: <Account /> },
+  { path: '/admin/products', element: <AdminProducts /> },
+  { path: '/admin/inventory', element: <AdminInventory /> },
+  { path: '/admin/orders', element: <AdminOrders /> },
 ]);
 
 export default router;
