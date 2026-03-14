@@ -1,5 +1,14 @@
 import { create } from 'zustand';
 import { loginUser, registerUser, logoutUser, refreshToken } from '../api/auth.js';
+import { mergeCart } from '../api/cart.js';
+
+function getSessionId() {
+  if (typeof window === 'undefined') {
+    return null;
+  }
+
+  return window.localStorage.getItem('choc_session');
+}
 
 export const useAuthStore = create((set) => ({
   user: null,
@@ -32,6 +41,10 @@ export const useAuthStore = create((set) => ({
     set({ loading: true, error: '' });
     try {
       const response = await registerUser({ email, password });
+      const sessionId = getSessionId();
+      if (sessionId) {
+        await mergeCart(sessionId, response.data.accessToken);
+      }
       set({
         user: response.data.user,
         accessToken: response.data.accessToken,
@@ -50,6 +63,10 @@ export const useAuthStore = create((set) => ({
     set({ loading: true, error: '' });
     try {
       const response = await loginUser({ email, password });
+      const sessionId = getSessionId();
+      if (sessionId) {
+        await mergeCart(sessionId, response.data.accessToken);
+      }
       set({
         user: response.data.user,
         accessToken: response.data.accessToken,

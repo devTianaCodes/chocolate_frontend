@@ -35,3 +35,12 @@ export async function removeCartItem(id, { sessionId, token } = {}) {
   });
   return data;
 }
+
+export async function mergeCart(sessionId, token) {
+  const { data } = await api.post(
+    '/cart/merge',
+    { sessionId },
+    authHeaders(token)
+  );
+  return data;
+}
