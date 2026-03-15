@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  --color-page-bg: 18 3 31;
+  --color-page-bg: 184 178 255;
   --color-bg-base: 53 30 16;
   --color-bg-surface: 79 48 33;
   --color-bg-elevated: 105 67 49;
