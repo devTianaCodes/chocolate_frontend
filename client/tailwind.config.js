@@ -42,8 +42,9 @@ export default {
         'body-xs': ['12px', { lineHeight: '1.4' }],
       },
       borderRadius: {
-        DEFAULT: '2px',
-        card: '12px',
+        DEFAULT: '10px',
+        sm: '12px',
+        card: '16px',
         pill: '9999px',
       },
       transitionTimingFunction: {
