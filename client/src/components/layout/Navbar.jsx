@@ -1,9 +1,13 @@
+import { ShoppingCart } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useAuthStore } from '../../store/authStore.js';
+import { useCartStore } from '../../store/cartStore.js';
 
 export default function Navbar() {
   const user = useAuthStore((state) => state.user);
   const logout = useAuthStore((state) => state.logout);
+  const items = useCartStore((state) => state.items);
+  const cartCount = items.reduce((total, item) => total + Number(item.quantity || 0), 0);
 
   async function handleLogout() {
     await logout();
@@ -20,9 +24,19 @@ export default function Navbar() {
             Artisan Chocolate Atelier
           </span>
         </div>
-        <nav className="hidden items-center gap-6 text-[13px] uppercase tracking-[0.1em] text-ink-secondary md:flex">
+        <nav className="hidden items-center gap-8 text-[13px] uppercase tracking-[0.1em] text-ink-secondary md:flex">
           <Link to="/shop" className="hover:text-ink-primary">Shop</Link>
-          <Link to="/cart" className="hover:text-ink-primary">Cart</Link>
+          <Link to="/cart" className="relative inline-flex items-center gap-1 hover:text-ink-primary">
+            <span>Cart</span>
+            <span className="relative inline-flex">
+              <ShoppingCart className="h-[15px] w-[15px]" strokeWidth={1.8} />
+              {cartCount > 0 && (
+                <span className="absolute -right-1.5 -top-2.5 inline-flex h-[14px] min-w-[14px] items-center justify-center rounded-pill bg-brand px-[3px] text-[8px] tracking-normal text-ink-invert">
+                  {cartCount}
+                </span>
+              )}
+            </span>
+          </Link>
           {user ? (
             <>
               <Link to="/account" className="hover:text-ink-primary">Account</Link>
