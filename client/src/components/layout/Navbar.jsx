@@ -1,20 +1,27 @@
 import { useEffect, useState } from 'react';
-import { Menu, ShoppingCart, X } from 'lucide-react';
-import { Link, useLocation } from 'react-router-dom';
+import { Menu, Search, ShoppingCart, X } from 'lucide-react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../../store/authStore.js';
 import { useCartStore } from '../../store/cartStore.js';
 
 export default function Navbar() {
   const location = useLocation();
+  const navigate = useNavigate();
   const user = useAuthStore((state) => state.user);
   const logout = useAuthStore((state) => state.logout);
   const items = useCartStore((state) => state.items);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
   const cartCount = items.reduce((total, item) => total + Number(item.quantity || 0), 0);
 
   useEffect(() => {
     setIsMobileMenuOpen(false);
-  }, [location.pathname]);
+    if (location.pathname === '/search') {
+      setSearchTerm(new URLSearchParams(location.search).get('q') || '');
+      return;
+    }
+    setSearchTerm('');
+  }, [location.pathname, location.search]);
 
   async function handleLogout() {
     await logout();
@@ -25,11 +32,18 @@ export default function Navbar() {
     setIsMobileMenuOpen((current) => !current);
   }
 
+  function handleSearchSubmit(event) {
+    event.preventDefault();
+    const value = searchTerm.trim();
+    navigate(value ? `/search?q=${encodeURIComponent(value)}` : '/search');
+    setIsMobileMenuOpen(false);
+  }
+
   return (
-    <header className="sticky top-0 z-50 border-b border-border/35 bg-surface-base">
+    <header className="fixed inset-x-0 top-0 z-50 border-b border-border/35 bg-surface-base">
       <div className="mx-auto flex h-[72px] max-w-[1280px] items-center justify-between px-6 md:px-10 lg:px-16">
         <div className="flex flex-col">
-          <Link to="/" className="font-display text-[22px] italic text-ink-primary">
+          <Link to="/" className="whitespace-nowrap font-display text-[20px] leading-none italic text-ink-primary sm:text-[24px] md:text-[27px]">
             Chocolate Craft House
           </Link>
           <span className="hidden text-[10px] uppercase tracking-[0.12em] text-ink-muted md:block">
@@ -65,6 +79,20 @@ export default function Navbar() {
               <Link to="/login" className="hover:text-ink-primary">Login</Link>
             </>
           )}
+          <form className="relative" onSubmit={handleSearchSubmit}>
+            <Search
+              className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-invert/70"
+              strokeWidth={1.8}
+            />
+            <input
+              type="search"
+              value={searchTerm}
+              onChange={(event) => setSearchTerm(event.target.value)}
+              placeholder="Search"
+              aria-label="Search products"
+              className="h-10 w-[220px] rounded-pill border border-border/45 bg-ink-secondary pl-10 pr-4 text-[12px] normal-case tracking-normal text-ink-invert outline-none placeholder:text-ink-invert/70 focus:border-brand"
+            />
+          </form>
         </nav>
         <button
           type="button"
@@ -84,6 +112,20 @@ export default function Navbar() {
           className="border-t border-border/30 bg-surface-base px-6 py-4 md:hidden"
         >
           <div className="flex flex-col gap-4 text-[13px] uppercase tracking-[0.1em] text-ink-secondary">
+            <form className="relative" onSubmit={handleSearchSubmit}>
+              <Search
+                className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-invert/70"
+                strokeWidth={1.8}
+              />
+              <input
+                type="search"
+                value={searchTerm}
+                onChange={(event) => setSearchTerm(event.target.value)}
+                placeholder="Search products"
+                aria-label="Search products"
+                className="h-11 w-full rounded-pill border border-border/45 bg-ink-secondary pl-10 pr-4 text-[14px] normal-case tracking-normal text-ink-invert outline-none placeholder:text-ink-invert/70 focus:border-brand"
+              />
+            </form>
             <Link to="/shop" className="hover:text-ink-primary">Shop</Link>
             <Link to="/favourites" className="hover:text-ink-primary">Favourites</Link>
             <Link to="/cart" className="inline-flex items-center gap-2 hover:text-ink-primary">
