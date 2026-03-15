@@ -1,6 +1,7 @@
 import { Navigate, createBrowserRouter } from 'react-router-dom';
 import Home from './pages/Home.jsx';
 import Shop from './pages/Shop.jsx';
+import Search from './pages/Search.jsx';
 import Favourites from './pages/Favourites.jsx';
 import ProductDetail from './pages/ProductDetail.jsx';
 import Cart from './pages/Cart.jsx';
@@ -18,6 +19,7 @@ import RequireAdmin from './components/routes/RequireAdmin.jsx';
 const router = createBrowserRouter([
   { path: '/', element: <Home /> },
   { path: '/shop', element: <Shop /> },
+  { path: '/search', element: <Search /> },
   { path: '/favourites', element: <Favourites /> },
   { path: '/products/:slug', element: <ProductDetail /> },
   { path: '/cart', element: <Cart /> },
