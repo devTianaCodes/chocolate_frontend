@@ -16,11 +16,11 @@ export default function ProductCard({ product }) {
         <button
           type="button"
           aria-label={isFavourite ? 'Remove from favourites' : 'Add to favourites'}
-          className="absolute right-3 top-3 z-10 inline-flex h-9 w-9 items-center justify-center rounded-pill bg-surface-base/70 text-ink-primary backdrop-blur-md transition hover:text-red-400"
+          className="absolute right-3 top-3 z-10 inline-flex items-center justify-center p-1 text-ink-primary transition hover:text-red-400"
           onClick={() => toggleFavourite(product)}
         >
           <Heart
-            className={`h-4 w-4 ${isFavourite ? 'fill-red-500 text-red-500' : ''}`}
+            className={`h-5 w-5 ${isFavourite ? 'fill-red-500 text-red-500' : ''}`}
             strokeWidth={1.8}
           />
         </button>
