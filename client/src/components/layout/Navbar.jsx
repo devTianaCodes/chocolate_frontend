@@ -51,7 +51,6 @@ export default function Navbar() {
           ) : (
             <>
               <Link to="/login" className="hover:text-ink-primary">Login</Link>
-              <Link to="/register" className="hover:text-ink-primary">Register</Link>
             </>
           )}
         </nav>

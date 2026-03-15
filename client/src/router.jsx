@@ -1,4 +1,4 @@
-import { createBrowserRouter } from 'react-router-dom';
+import { Navigate, createBrowserRouter } from 'react-router-dom';
 import Home from './pages/Home.jsx';
 import Shop from './pages/Shop.jsx';
 import Favourites from './pages/Favourites.jsx';
@@ -6,7 +6,6 @@ import ProductDetail from './pages/ProductDetail.jsx';
 import Cart from './pages/Cart.jsx';
 import Checkout from './pages/Checkout.jsx';
 import Login from './pages/Login.jsx';
-import Register from './pages/Register.jsx';
 import Account from './pages/Account.jsx';
 import OrderConfirmation from './pages/OrderConfirmation.jsx';
 import AdminProducts from './pages/AdminProducts.jsx';
@@ -26,7 +25,7 @@ const router = createBrowserRouter([
     element: <RequireGuest />,
     children: [
       { path: '/login', element: <Login /> },
-      { path: '/register', element: <Register /> },
+      { path: '/register', element: <Navigate to="/login?mode=register" replace /> },
     ],
   },
   {

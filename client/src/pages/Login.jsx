@@ -1,19 +1,29 @@
-import { useState } from 'react';
-import { useNavigate, Link, useLocation } from 'react-router-dom';
+import { useMemo, useState } from 'react';
+import { useNavigate, useLocation, useSearchParams } from 'react-router-dom';
 import PageWrapper from '../components/layout/PageWrapper.jsx';
 import { useAuthStore } from '../store/authStore.js';
 
 export default function Login() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { login, loading, error } = useAuthStore();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const { login, register, loading, error } = useAuthStore();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const redirectTo = location.state?.from || '/account';
+  const isRegisterMode = useMemo(
+    () => searchParams.get('mode') === 'register',
+    [searchParams]
+  );
+
+  function setMode(mode) {
+    setSearchParams(mode === 'register' ? { mode } : {});
+  }
 
   async function handleSubmit(event) {
     event.preventDefault();
-    const success = await login(email, password);
+    const action = isRegisterMode ? register : login;
+    const success = await action(email, password);
     if (success) {
       navigate(redirectTo, { replace: true });
     }
@@ -23,10 +33,33 @@ export default function Login() {
     <PageWrapper>
       <div className="glass-panel-strong mx-auto max-w-md space-y-6 p-6 md:p-8">
         <header className="space-y-2">
-          <p className="section-label">Account access</p>
-          <h1 className="font-display text-display-sm text-ink-primary">Sign in</h1>
-          <p className="text-body-sm text-ink-secondary">Access your account and orders.</p>
+          <p className="section-label">{isRegisterMode ? 'New membership' : 'Account access'}</p>
+          <h1 className="font-display text-display-sm text-ink-primary">
+            {isRegisterMode ? 'Create account' : 'Sign in'}
+          </h1>
+          <p className="text-body-sm text-ink-secondary">
+            {isRegisterMode
+              ? 'Join for faster checkout and order tracking.'
+              : 'Access your account and orders.'}
+          </p>
         </header>
+
+        <div className="grid grid-cols-2 gap-2">
+          <button
+            type="button"
+            className={isRegisterMode ? 'button-ghost w-full' : 'button-primary w-full'}
+            onClick={() => setMode('login')}
+          >
+            Login
+          </button>
+          <button
+            type="button"
+            className={isRegisterMode ? 'button-primary w-full' : 'button-ghost w-full'}
+            onClick={() => setMode('register')}
+          >
+            New member
+          </button>
+        </div>
 
         {error && <p className="text-body-sm text-red-300">{error}</p>}
 
@@ -56,16 +89,9 @@ export default function Login() {
             className="button-primary w-full"
             disabled={loading}
           >
-            {loading ? 'Signing in…' : 'Sign in'}
+            {loading ? (isRegisterMode ? 'Creating…' : 'Signing in…') : isRegisterMode ? 'Create account' : 'Sign in'}
           </button>
         </form>
-
-        <p className="text-body-sm text-ink-secondary">
-          New here?{' '}
-          <Link className="text-brand" to="/register">
-            Create an account
-          </Link>
-        </p>
       </div>
     </PageWrapper>
   );
