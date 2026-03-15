@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import PageWrapper from '../components/layout/PageWrapper.jsx';
+import luxuryDarkChocolateImage from '../assets/luxury-dark-chocolate.png';
 
 export default function Home() {
   return (
@@ -24,7 +25,7 @@ export default function Home() {
         </div>
         <div className="relative overflow-hidden rounded-card shadow-velvet">
           <img
-            src="https://images.pexels.com/photos/4113335/pexels-photo-4113335.jpeg?auto=compress&cs=tinysrgb&w=1600"
+            src={luxuryDarkChocolateImage}
             alt="Luxury dark chocolate bars in high definition"
             className="h-[420px] w-full object-cover md:h-[520px]"
           />
