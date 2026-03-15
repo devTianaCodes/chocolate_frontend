@@ -31,7 +31,7 @@ export default function Cart() {
       {!loading && !error && items.length > 0 && (
         <div className="space-y-6">
           {items.map((item) => (
-            <div key={item.id} className="glass-panel flex flex-col gap-4 p-4 md:flex-row md:items-center">
+            <div key={item.id} className="glass-panel flex flex-col gap-4 bg-surface-base/95 p-4 md:flex-row md:items-center">
               <img src={item.image} alt={item.name} className="h-24 w-24 rounded-sm object-cover" />
               <div className="flex-1">
                 <p className="font-display text-lg text-ink-primary">{item.name}</p>
@@ -65,7 +65,7 @@ export default function Cart() {
               </div>
             </div>
           ))}
-          <div className="glass-panel-strong p-6">
+          <div className="glass-panel-strong bg-surface-base/95 p-6">
             <div className="mb-4 flex items-center justify-between">
               <span className="text-body-md text-ink-secondary">Subtotal</span>
               <span className="font-mono text-body-md text-ink-primary">{formatPrice(subtotal)}</span>

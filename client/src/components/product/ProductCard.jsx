@@ -6,7 +6,7 @@ export default function ProductCard({ product }) {
   const addItem = useCartStore((state) => state.addItem);
 
   return (
-    <article className="glass-panel group overflow-hidden transition duration-300 hover:-translate-y-1 hover:border-brand-dark">
+    <article className="glass-panel group overflow-hidden bg-surface-base/95 transition duration-300 hover:-translate-y-1 hover:border-brand-dark">
       <div className="relative aspect-[3/4] overflow-hidden bg-surface-high/40">
         <img
           src={product.image}
