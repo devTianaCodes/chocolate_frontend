@@ -31,7 +31,7 @@ export default function Cart() {
       {!loading && !error && items.length > 0 && (
         <div className="space-y-6">
           {items.map((item) => (
-            <div key={item.id} className="glass-panel flex flex-col gap-4 bg-surface-base/95 p-4 md:flex-row md:items-center">
+            <div key={item.id} className="glass-panel-strong flex flex-col gap-4 p-4 md:flex-row md:items-center">
               <img src={item.image} alt={item.name} className="h-24 w-24 rounded-sm object-cover" />
               <div className="flex-1">
                 <p className="font-display text-lg text-ink-primary">{item.name}</p>
