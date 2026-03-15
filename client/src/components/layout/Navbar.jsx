@@ -41,7 +41,7 @@ export default function Navbar() {
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-border/35 bg-surface-base">
-      <div className="mx-auto flex h-[72px] max-w-[1280px] items-center justify-between px-6 md:px-10 lg:px-16">
+      <div className="mx-auto flex h-[72px] max-w-[1280px] items-center justify-between px-3 md:px-5 lg:px-8">
         <div className="flex flex-col">
           <Link to="/" className="whitespace-nowrap font-display text-[20px] leading-none italic text-ink-primary sm:text-[24px] md:text-[27px]">
             Chocolate Craft House
@@ -109,7 +109,7 @@ export default function Navbar() {
       {isMobileMenuOpen && (
         <nav
           id="mobile-nav"
-          className="border-t border-border/30 bg-surface-base px-6 py-4 md:hidden"
+          className="border-t border-border/30 bg-surface-base px-3 py-4 md:hidden"
         >
           <div className="flex flex-col gap-4 text-[13px] uppercase tracking-[0.1em] text-ink-secondary">
             <form className="relative" onSubmit={handleSearchSubmit}>
