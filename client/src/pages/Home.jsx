@@ -23,7 +23,7 @@ export default function Home() {
             </Link>
           </div>
         </div>
-        <div className="relative overflow-hidden rounded-card shadow-velvet lg:self-center">
+        <div className="relative overflow-hidden rounded-card pt-4 shadow-velvet lg:self-center lg:pt-8">
           <img
             src={luxuryDarkChocolateImage}
             alt="Luxury dark chocolate bars in high definition"
