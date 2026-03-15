@@ -8,7 +8,7 @@ export default function Home() {
       <section className="grid gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:items-end">
         <div className="space-y-6 py-8 lg:py-16">
           <p className="section-label">Single-harvest cacao</p>
-          <h1 className="max-w-2xl font-display text-display-sm italic text-ink-primary md:text-display-md">
+          <h1 className="max-w-3xl font-display text-display-md italic text-ink-primary md:text-display-lg">
             Luxury chocolate, tempered slowly and savored deeply.
           </h1>
           <p className="max-w-2xl text-body-lg text-ink-secondary">
