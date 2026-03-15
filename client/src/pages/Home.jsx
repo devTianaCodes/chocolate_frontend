@@ -29,6 +29,10 @@ export default function Home() {
             alt="Luxury dark chocolate bars in high definition"
             className="h-[420px] w-full object-cover md:h-[520px]"
           />
+          <div className="pointer-events-none absolute inset-y-0 left-0 w-24 bg-[linear-gradient(to_right,rgb(var(--color-page-bg)),transparent)] md:w-32" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-16 bg-[linear-gradient(to_left,rgb(var(--color-page-bg)),transparent)] md:w-24" />
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-16 bg-[linear-gradient(to_bottom,rgb(var(--color-page-bg)),transparent)] md:h-24" />
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-[linear-gradient(to_top,rgb(var(--color-page-bg)),transparent)] md:h-24" />
         </div>
       </section>
     </PageWrapper>
