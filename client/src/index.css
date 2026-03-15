@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 :root {
+  --color-page-bg: 18 3 31;
   --color-bg-base: 53 30 16;
   --color-bg-surface: 79 48 33;
   --color-bg-elevated: 105 67 49;
@@ -44,7 +45,7 @@
 body {
   margin: 0;
   font-family: var(--font-body);
-  background-color: rgb(var(--color-bg-base));
+  background-color: rgb(var(--color-page-bg));
   color: rgb(var(--color-text-primary));
   min-height: 100vh;
 }
