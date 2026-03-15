@@ -10,7 +10,7 @@ export default function Navbar() {
   }
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border/35 bg-surface-base/55 backdrop-blur-luxury">
+    <header className="sticky top-0 z-50 border-b border-border/35 bg-surface-base">
       <div className="mx-auto flex h-[72px] max-w-[1280px] items-center justify-between px-6 md:px-10 lg:px-16">
         <div className="flex flex-col">
           <Link to="/" className="font-display text-[22px] italic text-ink-primary">
