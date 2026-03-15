@@ -4,6 +4,7 @@ import router from './router.jsx';
 import { useAuthStore } from './store/authStore.js';
 import { useCartStore } from './store/cartStore.js';
 import { installAuthInterceptor } from './api/client.js';
+import './scrollbar.css';
 
 export default function App() {
   const initialize = useAuthStore((state) => state.initialize);
