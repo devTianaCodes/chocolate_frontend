@@ -5,7 +5,7 @@ import luxuryDarkChocolateImage from '../assets/luxury-dark-chocolate.png';
 export default function Home() {
   return (
     <PageWrapper>
-      <section className="grid gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:items-end">
+      <section className="grid gap-8 lg:min-h-[calc(100vh-240px)] lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
         <div className="space-y-6 py-8 lg:py-16">
           <p className="section-label">Single-harvest cacao</p>
           <h1 className="max-w-3xl font-display text-display-md font-bold italic text-surface-elevated md:text-display-lg">
@@ -23,7 +23,7 @@ export default function Home() {
             </Link>
           </div>
         </div>
-        <div className="relative overflow-hidden rounded-card shadow-velvet">
+        <div className="relative overflow-hidden rounded-card shadow-velvet lg:self-center">
           <img
             src={luxuryDarkChocolateImage}
             alt="Luxury dark chocolate bars in high definition"
