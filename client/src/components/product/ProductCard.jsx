@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Heart } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { formatPrice } from '../../utils/formatPrice.js';
@@ -5,6 +6,7 @@ import { useCartStore } from '../../store/cartStore.js';
 import { useFavouritesStore } from '../../store/favouritesStore.js';
 
 export default function ProductCard({ product }) {
+  const [imageFailed, setImageFailed] = useState(false);
   const addItem = useCartStore((state) => state.addItem);
   const favouriteItems = useFavouritesStore((state) => state.items);
   const toggleFavourite = useFavouritesStore((state) => state.toggleItem);
@@ -24,12 +26,20 @@ export default function ProductCard({ product }) {
             strokeWidth={1.8}
           />
         </button>
-        <img
-          src={product.image}
-          alt={product.name}
-          className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]"
-          loading="lazy"
-        />
+        {!imageFailed ? (
+          <img
+            src={product.image}
+            alt={product.name}
+            className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]"
+            loading="lazy"
+            onError={() => setImageFailed(true)}
+          />
+        ) : (
+          <div
+            aria-label={product.name}
+            className="h-full w-full bg-[rgba(255,255,255,0.04)]"
+          />
+        )}
         <div className="absolute inset-0 bg-gradient-to-t from-surface-base/75 via-brand-subtle/10 to-transparent opacity-0 transition duration-300 group-hover:opacity-100" />
         <div className="absolute inset-x-4 bottom-4 opacity-0 transition duration-300 group-hover:opacity-100">
           <Link to={`/products/${product.slug}`} className="button-ghost w-full bg-surface-base/30 backdrop-blur-md">
