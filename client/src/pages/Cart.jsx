@@ -5,7 +5,7 @@ import { useCartStore } from '../store/cartStore.js';
 import { formatPrice } from '../utils/formatPrice.js';
 
 export default function Cart() {
-  const { items, loading, error, loadCart, updateItem, removeItem } = useCartStore();
+  const { items, loading, error, loadCart, updateItem, removeItem, emptyCart } = useCartStore();
   const subtotal = items.reduce((sum, item) => {
     const unitPrice = Number(item.discount_price || item.price || 0);
     return sum + unitPrice * Number(item.quantity || 0);
@@ -17,8 +17,13 @@ export default function Cart() {
 
   return (
     <PageWrapper>
-      <header className="mb-8">
+      <header className="mb-8 flex items-start justify-between gap-4">
         <h1 className="font-display text-display-md text-ink-primary">Your Cart</h1>
+        {items.length > 0 && (
+          <button type="button" className="button-ghost" onClick={emptyCart}>
+            Empty cart
+          </button>
+        )}
       </header>
 
       {loading && <p className="text-body-md text-ink-secondary">Loading cart…</p>}

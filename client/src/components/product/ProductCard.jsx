@@ -1,13 +1,29 @@
+import { Heart } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { formatPrice } from '../../utils/formatPrice.js';
 import { useCartStore } from '../../store/cartStore.js';
+import { useFavouritesStore } from '../../store/favouritesStore.js';
 
 export default function ProductCard({ product }) {
   const addItem = useCartStore((state) => state.addItem);
+  const favouriteItems = useFavouritesStore((state) => state.items);
+  const toggleFavourite = useFavouritesStore((state) => state.toggleItem);
+  const isFavourite = favouriteItems.some((item) => item.id === product.id);
 
   return (
     <article className="glass-panel-strong group overflow-hidden transition duration-300 hover:-translate-y-1 hover:border-brand-dark">
       <div className="relative aspect-[3/4] overflow-hidden bg-surface-high/40">
+        <button
+          type="button"
+          aria-label={isFavourite ? 'Remove from favourites' : 'Add to favourites'}
+          className="absolute right-3 top-3 z-10 inline-flex h-9 w-9 items-center justify-center rounded-pill bg-surface-base/70 text-ink-primary backdrop-blur-md transition hover:text-red-400"
+          onClick={() => toggleFavourite(product)}
+        >
+          <Heart
+            className={`h-4 w-4 ${isFavourite ? 'fill-red-500 text-red-500' : ''}`}
+            strokeWidth={1.8}
+          />
+        </button>
         <img
           src={product.image}
           alt={product.name}

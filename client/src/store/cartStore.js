@@ -69,6 +69,23 @@ export const useCartStore = create((set, get) => ({
     }
   },
 
+  emptyCart: async () => {
+    set({ loading: true, error: '' });
+    try {
+      const token = useAuthStore.getState().accessToken;
+      const sessionId = get().sessionId;
+      const removals = get().items.map((item) =>
+        removeCartItem(item.id, { sessionId, token })
+      );
+      await Promise.all(removals);
+      set({ items: [] });
+    } catch (err) {
+      set({ error: 'Unable to empty cart.' });
+    } finally {
+      set({ loading: false });
+    }
+  },
+
   clearItems: () => {
     set({ items: [] });
   },
