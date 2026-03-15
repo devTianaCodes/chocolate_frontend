@@ -29,12 +29,6 @@ export default function Home() {
             alt="Luxury dark chocolate bars in high definition"
             className="h-[420px] w-full object-cover md:h-[520px]"
           />
-          <div className="absolute inset-x-0 bottom-0 bg-[linear-gradient(to_top,rgba(53,30,16,0.92),rgba(53,30,16,0.18),transparent)] p-6 md:p-8">
-            <p className="text-body-xs uppercase tracking-[0.18em] text-brand">Signature dark chocolate</p>
-            <p className="mt-3 max-w-sm font-display text-display-sm italic text-ink-primary">
-              Polished finish, deep cacao notes, slow-crafted luxury.
-            </p>
-          </div>
         </div>
       </section>
     </PageWrapper>
