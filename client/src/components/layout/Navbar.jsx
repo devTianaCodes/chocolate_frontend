@@ -40,13 +40,13 @@ export default function Navbar() {
   }
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 border-b border-border/35 bg-surface-base">
+    <header className="fixed inset-x-0 top-0 z-50 border-b border-border/35 bg-[rgba(79,33,33,0.85)]">
       <div className="mx-auto flex h-[72px] max-w-[1280px] items-center justify-between px-3 md:px-5 lg:px-8">
-        <div className="flex flex-col">
-          <Link to="/" className="whitespace-nowrap font-display text-[20px] leading-none italic text-ink-primary sm:text-[24px] md:text-[27px]">
+        <div className="flex flex-col leading-none">
+          <Link to="/" className="whitespace-nowrap font-display text-[22px] italic tracking-[0.02em] text-ink-primary sm:text-[26px] md:text-[30px]">
             Chocolate Craft House
           </Link>
-          <span className="hidden text-[10px] uppercase tracking-[0.12em] text-ink-muted md:block">
+          <span className="hidden pt-[5px] pb-0.5 text-[10px] uppercase tracking-[0.12em] text-ink-muted md:block">
             Artisan Chocolate Atelier
           </span>
         </div>
@@ -81,7 +81,7 @@ export default function Navbar() {
           )}
           <form className="relative" onSubmit={handleSearchSubmit}>
             <Search
-              className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-invert/70"
+              className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-invert/75"
               strokeWidth={1.8}
             />
             <input
@@ -90,7 +90,7 @@ export default function Navbar() {
               onChange={(event) => setSearchTerm(event.target.value)}
               placeholder="Search"
               aria-label="Search products"
-              className="h-10 w-[220px] rounded-pill border border-border/45 bg-ink-secondary pl-10 pr-4 text-[12px] normal-case tracking-normal text-ink-invert outline-none placeholder:text-ink-invert/70 focus:border-brand"
+              className="h-9 w-[220px] rounded-sm border border-brand-light/40 bg-brand pl-10 pr-4 text-xs font-medium uppercase tracking-[0.12em] text-ink-invert shadow-[0_18px_40px_rgba(39,19,13,0.18)] placeholder:text-ink-invert/65 focus:border-brand-dark focus-visible:outline-none"
             />
           </form>
         </nav>
@@ -109,12 +109,12 @@ export default function Navbar() {
       {isMobileMenuOpen && (
         <nav
           id="mobile-nav"
-          className="border-t border-border/30 bg-surface-base px-3 py-4 md:hidden"
+          className="border-t border-border/30 bg-[rgba(79,33,33,0.85)] px-3 py-4 md:hidden"
         >
           <div className="flex flex-col gap-4 text-[13px] uppercase tracking-[0.1em] text-ink-secondary">
             <form className="relative" onSubmit={handleSearchSubmit}>
               <Search
-                className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-invert/70"
+                className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-invert/75"
                 strokeWidth={1.8}
               />
               <input
@@ -123,7 +123,7 @@ export default function Navbar() {
                 onChange={(event) => setSearchTerm(event.target.value)}
                 placeholder="Search products"
                 aria-label="Search products"
-                className="h-11 w-full rounded-pill border border-border/45 bg-ink-secondary pl-10 pr-4 text-[14px] normal-case tracking-normal text-ink-invert outline-none placeholder:text-ink-invert/70 focus:border-brand"
+                className="h-10 w-full rounded-sm border border-brand-light/40 bg-brand pl-10 pr-4 text-xs font-medium uppercase tracking-[0.12em] text-ink-invert shadow-[0_18px_40px_rgba(39,19,13,0.18)] placeholder:text-ink-invert/65 focus:border-brand-dark focus-visible:outline-none"
               />
             </form>
             <Link to="/shop" className="hover:text-ink-primary">Shop</Link>
