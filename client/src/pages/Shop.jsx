@@ -1,15 +1,22 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import PageWrapper from '../components/layout/PageWrapper.jsx';
 import { fetchProducts } from '../api/products.js';
 import { fetchCategories, fetchProductsByCategory } from '../api/categories.js';
 import ProductCard from '../components/product/ProductCard.jsx';
+import Pagination from '../components/Pagination.jsx';
+import { getTotalPages, paginateItems, parsePageParam } from '../utils/pagination.js';
+
+const PAGE_SIZE = 12;
 
 export default function Shop() {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState('all');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
+  const selectedCategory = searchParams.get('category') || 'all';
+  const currentPage = parsePageParam(searchParams.get('page'));
 
   useEffect(() => {
     let active = true;
@@ -29,6 +36,7 @@ export default function Shop() {
 
   useEffect(() => {
     let active = true;
+
     async function loadProducts() {
       setLoading(true);
       setError('');
@@ -55,6 +63,49 @@ export default function Shop() {
     };
   }, [selectedCategory]);
 
+  const totalPages = useMemo(
+    () => getTotalPages(products.length, PAGE_SIZE),
+    [products.length]
+  );
+
+  const visibleProducts = useMemo(
+    () => paginateItems(products, currentPage, PAGE_SIZE),
+    [products, currentPage]
+  );
+
+  useEffect(() => {
+    if (currentPage <= totalPages) return;
+
+    const nextParams = new URLSearchParams(searchParams);
+    nextParams.set('page', String(totalPages));
+    setSearchParams(nextParams, { replace: true });
+  }, [currentPage, searchParams, setSearchParams, totalPages]);
+
+  function handleCategoryChange(slug) {
+    const nextParams = new URLSearchParams(searchParams);
+
+    if (slug === 'all') {
+      nextParams.delete('category');
+    } else {
+      nextParams.set('category', slug);
+    }
+
+    nextParams.delete('page');
+    setSearchParams(nextParams);
+  }
+
+  function handlePageChange(page) {
+    const nextParams = new URLSearchParams(searchParams);
+
+    if (page <= 1) {
+      nextParams.delete('page');
+    } else {
+      nextParams.set('page', String(page));
+    }
+
+    setSearchParams(nextParams);
+  }
+
   return (
     <PageWrapper>
       <header className="glass-panel-strong mb-10 flex flex-col gap-4 p-6 md:p-8">
@@ -67,7 +118,7 @@ export default function Shop() {
           <button
             type="button"
             className={selectedCategory === 'all' ? 'button-primary' : 'button-ghost'}
-            onClick={() => setSelectedCategory('all')}
+            onClick={() => handleCategoryChange('all')}
           >
             All
           </button>
@@ -76,7 +127,7 @@ export default function Shop() {
               key={category.id}
               type="button"
               className={selectedCategory === category.slug ? 'button-primary' : 'button-ghost'}
-              onClick={() => setSelectedCategory(category.slug)}
+              onClick={() => handleCategoryChange(category.slug)}
             >
               {category.name}
             </button>
@@ -88,11 +139,18 @@ export default function Shop() {
       {error && <p className="text-body-md text-red-300">{error}</p>}
 
       {!loading && !error && products.length > 0 && (
-        <section className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {products.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </section>
+        <>
+          <section className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {visibleProducts.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </section>
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+          />
+        </>
       )}
 
       {!loading && !error && products.length === 0 && (

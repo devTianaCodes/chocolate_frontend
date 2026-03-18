@@ -2,7 +2,11 @@ import { useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import PageWrapper from '../components/layout/PageWrapper.jsx';
 import ProductCard from '../components/product/ProductCard.jsx';
+import Pagination from '../components/Pagination.jsx';
 import { fetchProducts } from '../api/products.js';
+import { getTotalPages, paginateItems, parsePageParam } from '../utils/pagination.js';
+
+const PAGE_SIZE = 12;
 
 function matchesQuery(product, query) {
   const haystack = [
@@ -18,11 +22,13 @@ function matchesQuery(product, query) {
 }
 
 export default function Search() {
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const query = searchParams.get('q')?.trim().toLowerCase() || '';
+  const rawQuery = searchParams.get('q')?.trim() || '';
+  const query = rawQuery.toLowerCase();
+  const currentPage = parsePageParam(searchParams.get('page'));
 
   useEffect(() => {
     let active = true;
@@ -56,12 +62,49 @@ export default function Search() {
     return products.filter((product) => matchesQuery(product, query));
   }, [products, query]);
 
+  const totalPages = useMemo(
+    () => getTotalPages(results.length, PAGE_SIZE),
+    [results.length]
+  );
+
+  const visibleResults = useMemo(
+    () => paginateItems(results, currentPage, PAGE_SIZE),
+    [currentPage, results]
+  );
+
+  useEffect(() => {
+    if (!query && currentPage === 1) return;
+    if (query && currentPage <= totalPages) return;
+
+    const nextParams = new URLSearchParams(searchParams);
+
+    if (!query || totalPages <= 1) {
+      nextParams.delete('page');
+    } else {
+      nextParams.set('page', String(totalPages));
+    }
+
+    setSearchParams(nextParams, { replace: true });
+  }, [currentPage, query, searchParams, setSearchParams, totalPages]);
+
+  function handlePageChange(page) {
+    const nextParams = new URLSearchParams(searchParams);
+
+    if (page <= 1) {
+      nextParams.delete('page');
+    } else {
+      nextParams.set('page', String(page));
+    }
+
+    setSearchParams(nextParams);
+  }
+
   return (
     <PageWrapper>
       <header className="glass-panel-strong mb-10 flex flex-col gap-4 p-6 md:p-8">
         <p className="section-label">Search</p>
         <h1 className="font-display text-display-md text-ink-primary">
-          {query ? `Results for "${searchParams.get('q')}"` : 'Search the collection'}
+          {query ? `Results for "${rawQuery}"` : 'Search the collection'}
         </h1>
         <p className="max-w-xl text-body-md text-ink-secondary">
           Find bars, pralines, and seasonal releases by name, note, or category.
@@ -77,11 +120,18 @@ export default function Search() {
         <p className="text-body-md text-ink-secondary">No products found for this search.</p>
       )}
       {!loading && !error && results.length > 0 && (
-        <section className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {results.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </section>
+        <>
+          <section className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {visibleResults.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </section>
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+          />
+        </>
       )}
     </PageWrapper>
   );

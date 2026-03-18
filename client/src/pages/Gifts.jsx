@@ -1,13 +1,19 @@
-import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useEffect, useMemo, useState } from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
 import { fetchProductsByCategory } from '../api/categories.js';
 import PageWrapper from '../components/layout/PageWrapper.jsx';
 import ProductCard from '../components/product/ProductCard.jsx';
+import Pagination from '../components/Pagination.jsx';
+import { getTotalPages, paginateItems, parsePageParam } from '../utils/pagination.js';
+
+const PAGE_SIZE = 12;
 
 export default function Gifts() {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [products, setProducts] = useState([]);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
+  const currentPage = parsePageParam(searchParams.get('page'));
 
   useEffect(() => {
     let active = true;
@@ -36,6 +42,36 @@ export default function Gifts() {
     };
   }, []);
 
+  const totalPages = useMemo(
+    () => getTotalPages(products.length, PAGE_SIZE),
+    [products.length]
+  );
+
+  const visibleProducts = useMemo(
+    () => paginateItems(products, currentPage, PAGE_SIZE),
+    [currentPage, products]
+  );
+
+  useEffect(() => {
+    if (currentPage <= totalPages) return;
+
+    const nextParams = new URLSearchParams(searchParams);
+    nextParams.set('page', String(totalPages));
+    setSearchParams(nextParams, { replace: true });
+  }, [currentPage, searchParams, setSearchParams, totalPages]);
+
+  function handlePageChange(page) {
+    const nextParams = new URLSearchParams(searchParams);
+
+    if (page <= 1) {
+      nextParams.delete('page');
+    } else {
+      nextParams.set('page', String(page));
+    }
+
+    setSearchParams(nextParams);
+  }
+
   return (
     <PageWrapper>
       <header className="glass-panel-strong mb-10 flex flex-col gap-4 p-6 md:p-8">
@@ -50,11 +86,18 @@ export default function Gifts() {
       {error && <p className="text-body-md text-red-300">{error}</p>}
 
       {!loading && !error && products.length > 0 && (
-        <section className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {products.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </section>
+        <>
+          <section className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {visibleProducts.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </section>
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+          />
+        </>
       )}
 
       {!loading && !error && products.length === 0 && (
