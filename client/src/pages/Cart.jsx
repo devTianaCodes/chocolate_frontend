@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import PageWrapper from '../components/layout/PageWrapper.jsx';
 import { useCartStore } from '../store/cartStore.js';
 import { formatPrice } from '../utils/formatPrice.js';
+import { getDisplayProductName } from '../utils/getDisplayProductName.js';
 
 export default function Cart() {
   const { items, loading, error, loadCart, updateItem, removeItem, emptyCart } = useCartStore();
@@ -39,7 +40,7 @@ export default function Cart() {
             <div key={item.id} className="glass-panel-strong flex flex-col gap-4 p-4 md:flex-row md:items-center">
               <img src={item.image} alt={item.name} className="h-24 w-24 rounded-sm object-cover" />
               <div className="flex-1">
-                <p className="font-display text-lg text-ink-primary">{item.name}</p>
+                <p className="font-display text-lg text-ink-primary">{getDisplayProductName(item.name)}</p>
                 <p className="text-body-sm text-ink-muted">{item.origin || 'Single origin'}</p>
               </div>
               <div className="flex items-center gap-3">

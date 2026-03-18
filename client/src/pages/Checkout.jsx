@@ -6,6 +6,7 @@ import { confirmMockStripePayment, createStripeIntent } from '../api/payments.js
 import { useAuthStore } from '../store/authStore.js';
 import { useCartStore } from '../store/cartStore.js';
 import { formatPrice } from '../utils/formatPrice.js';
+import { getDisplayProductName } from '../utils/getDisplayProductName.js';
 
 export default function Checkout() {
   const navigate = useNavigate();
@@ -141,7 +142,7 @@ export default function Checkout() {
               {items.map((item) => (
                 <div key={item.id} className="flex items-center justify-between gap-4">
                   <div>
-                    <p className="text-body-sm text-ink-primary">{item.name}</p>
+                    <p className="text-body-sm text-ink-primary">{getDisplayProductName(item.name)}</p>
                     <p className="text-body-xs text-ink-muted">Qty {item.quantity}</p>
                   </div>
                   <span className="font-mono text-body-sm text-ink-primary">

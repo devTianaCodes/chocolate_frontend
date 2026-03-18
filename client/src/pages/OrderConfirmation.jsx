@@ -4,6 +4,7 @@ import PageWrapper from '../components/layout/PageWrapper.jsx';
 import { fetchOrder } from '../api/orders.js';
 import { useAuthStore } from '../store/authStore.js';
 import { formatPrice } from '../utils/formatPrice.js';
+import { getDisplayProductName } from '../utils/getDisplayProductName.js';
 
 export default function OrderConfirmation() {
   const { orderId } = useParams();
@@ -77,7 +78,7 @@ export default function OrderConfirmation() {
               {order.items.map((item) => (
                 <div key={`${item.product_id}-${item.name}`} className="flex items-center justify-between gap-4">
                   <div>
-                    <p className="text-body-sm text-ink-primary">{item.name}</p>
+                    <p className="text-body-sm text-ink-primary">{getDisplayProductName(item.name)}</p>
                     <p className="text-body-xs text-ink-muted">Qty {item.quantity}</p>
                   </div>
                   <span className="font-mono text-body-sm text-ink-primary">{formatPrice(item.price)}</span>

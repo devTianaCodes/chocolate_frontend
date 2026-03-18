@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Heart, ShoppingCart } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { formatPrice } from '../../utils/formatPrice.js';
+import { getDisplayProductName } from '../../utils/getDisplayProductName.js';
 import { useCartStore } from '../../store/cartStore.js';
 import { useFavouritesStore } from '../../store/favouritesStore.js';
 
@@ -11,6 +12,7 @@ export default function ProductCard({ product }) {
   const favouriteItems = useFavouritesStore((state) => state.items);
   const toggleFavourite = useFavouritesStore((state) => state.toggleItem);
   const isFavourite = favouriteItems.some((item) => item.id === product.id);
+  const displayName = getDisplayProductName(product.name);
 
   return (
     <article className="glass-panel-strong group flex h-full flex-col overflow-hidden transition duration-300 hover:-translate-y-1 hover:border-brand-dark">
@@ -54,7 +56,7 @@ export default function ProductCard({ product }) {
           </p>
           <h3 className="font-display text-lg text-ink-primary">
             <Link to={`/products/${product.slug}`} className="hover:text-brand">
-              {product.name}
+              {displayName}
             </Link>
           </h3>
           <div className="flex items-center justify-between">

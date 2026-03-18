@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import PageWrapper from '../components/layout/PageWrapper.jsx';
 import { fetchProductBySlug } from '../api/products.js';
 import { formatPrice } from '../utils/formatPrice.js';
+import { getDisplayProductName } from '../utils/getDisplayProductName.js';
 import { useCartStore } from '../store/cartStore.js';
 
 export default function ProductDetail() {
@@ -51,7 +52,7 @@ export default function ProductDetail() {
             <p className="section-label">
               {product.category_name || 'Chocolate'}
             </p>
-            <h1 className="font-display text-display-md text-ink-primary">{product.name}</h1>
+            <h1 className="font-display text-display-md text-ink-primary">{getDisplayProductName(product.name)}</h1>
             <p className="text-body-md text-ink-secondary">{product.description}</p>
             <div className="flex items-center gap-4">
               <span className="font-mono text-lg text-ink-primary">
