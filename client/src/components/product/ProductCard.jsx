@@ -47,29 +47,33 @@ export default function ProductCard({ product }) {
           </Link>
         </div>
       </div>
-      <div className="flex flex-1 flex-col space-y-2 pl-7 pr-5 pb-5 pt-6">
-        <p className="text-[11px] uppercase tracking-[0.12em] text-ink-muted">
-          {product.category_name || 'Chocolate'}
-        </p>
-        <h3 className="font-display text-lg text-ink-primary">
-          <Link to={`/products/${product.slug}`} className="hover:text-brand">
-            {product.name}
-          </Link>
-        </h3>
-        <div className="flex items-center justify-between">
-          <span className="font-mono text-sm text-ink-primary">
-            {formatPrice(product.discount_price || product.price)}
-          </span>
-          {Number(product.discount_price) > 0 && (
-            <span className="font-mono text-xs text-ink-muted line-through">
-              {formatPrice(product.price)}
+      <div className="flex flex-1 flex-col pt-6">
+        <div className="space-y-2 pl-7 pr-5">
+          <p className="text-[11px] uppercase tracking-[0.12em] text-ink-muted">
+            {product.category_name || 'Chocolate'}
+          </p>
+          <h3 className="font-display text-lg text-ink-primary">
+            <Link to={`/products/${product.slug}`} className="hover:text-brand">
+              {product.name}
+            </Link>
+          </h3>
+          <div className="flex items-center justify-between">
+            <span className="font-mono text-sm text-ink-primary">
+              {formatPrice(product.discount_price || product.price)}
             </span>
-          )}
+            {Number(product.discount_price) > 0 && (
+              <span className="font-mono text-xs text-ink-muted line-through">
+                {formatPrice(product.price)}
+              </span>
+            )}
+          </div>
         </div>
-        <button className="button-primary mt-auto w-full gap-2" onClick={() => addItem(product.id, 1)}>
-          <span>Add to cart</span>
-          <ShoppingCart className="h-4 w-4" strokeWidth={1.8} />
-        </button>
+        <div className="mt-auto px-[20px] pb-[20px] pt-3">
+          <button className="button-primary w-full gap-2" onClick={() => addItem(product.id, 1)}>
+            <span>Add to cart</span>
+            <ShoppingCart className="h-4 w-4" strokeWidth={1.8} />
+          </button>
+        </div>
       </div>
     </article>
   );
