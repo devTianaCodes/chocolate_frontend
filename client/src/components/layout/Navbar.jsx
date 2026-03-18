@@ -53,6 +53,7 @@ export default function Navbar() {
         <nav className="hidden items-center gap-8 text-[13px] uppercase tracking-[0.1em] text-ink-secondary md:flex">
           <Link to="/shop" className="hover:text-ink-primary">Shop</Link>
           <Link to="/favourites" className="hover:text-ink-primary">Favourites</Link>
+          <Link to="/gifts" className="hover:text-ink-primary">Gifts</Link>
           <Link to="/cart" className="relative inline-flex items-center gap-1 hover:text-ink-primary">
             <span>Cart</span>
             <span className="relative inline-flex">
@@ -128,6 +129,7 @@ export default function Navbar() {
             </form>
             <Link to="/shop" className="hover:text-ink-primary">Shop</Link>
             <Link to="/favourites" className="hover:text-ink-primary">Favourites</Link>
+            <Link to="/gifts" className="hover:text-ink-primary">Gifts</Link>
             <Link to="/cart" className="inline-flex items-center gap-2 hover:text-ink-primary">
               <span>Cart</span>
               <span className="relative inline-flex">
