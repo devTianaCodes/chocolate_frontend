@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Heart } from 'lucide-react';
+import { Heart, ShoppingCart } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { formatPrice } from '../../utils/formatPrice.js';
 import { useCartStore } from '../../store/cartStore.js';
@@ -13,8 +13,8 @@ export default function ProductCard({ product }) {
   const isFavourite = favouriteItems.some((item) => item.id === product.id);
 
   return (
-    <article className="glass-panel-strong group overflow-hidden transition duration-300 hover:-translate-y-1 hover:border-brand-dark">
-      <div className="relative aspect-[3/4] overflow-hidden bg-surface-high/40">
+    <article className="glass-panel-strong group flex h-full flex-col overflow-hidden transition duration-300 hover:-translate-y-1 hover:border-brand-dark">
+      <div className="relative aspect-[15/16] overflow-hidden bg-surface-high/40">
         <button
           type="button"
           aria-label={isFavourite ? 'Remove from favourites' : 'Add to favourites'}
@@ -47,7 +47,7 @@ export default function ProductCard({ product }) {
           </Link>
         </div>
       </div>
-      <div className="space-y-2 pl-7 pr-5 pb-5 pt-6">
+      <div className="flex flex-1 flex-col space-y-2 pl-7 pr-5 pb-5 pt-6">
         <p className="text-[11px] uppercase tracking-[0.12em] text-ink-muted">
           {product.category_name || 'Chocolate'}
         </p>
@@ -66,8 +66,9 @@ export default function ProductCard({ product }) {
             </span>
           )}
         </div>
-        <button className="button-primary mt-3 w-full" onClick={() => addItem(product.id, 1)}>
-          Add to cart
+        <button className="button-primary mt-auto w-full gap-2" onClick={() => addItem(product.id, 1)}>
+          <span>Add to cart</span>
+          <ShoppingCart className="h-4 w-4" strokeWidth={1.8} />
         </button>
       </div>
     </article>
