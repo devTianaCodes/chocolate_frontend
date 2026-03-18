@@ -1,4 +1,4 @@
-import { Instagram, Linkedin, Youtube } from 'lucide-react';
+import { Facebook, Instagram, Linkedin, Youtube } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const companyLinks = [
@@ -91,6 +91,9 @@ export default function Footer() {
             </button>
           </form>
           <div className="flex items-center justify-start gap-4 pt-2 sm:justify-end">
+            <SocialLink label="Facebook" href="https://facebook.com">
+              <Facebook className="h-5 w-5" strokeWidth={2} />
+            </SocialLink>
             <SocialLink label="Instagram" href="https://instagram.com">
               <Instagram className="h-5 w-5" strokeWidth={2} />
             </SocialLink>

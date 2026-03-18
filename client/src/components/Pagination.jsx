@@ -1,7 +1,9 @@
 import { getVisiblePageNumbers } from '../utils/pagination.js';
 
 function getButtonClass(isCurrent) {
-  return isCurrent ? 'button-primary min-w-[44px] px-4 py-2' : 'button-ghost min-w-[44px] px-4 py-2';
+  return isCurrent
+    ? 'button-primary min-w-[44px] px-4 py-2 text-ink-invert'
+    : 'button-ghost min-w-[44px] px-4 py-2 text-ink-invert hover:text-ink-invert';
 }
 
 export default function Pagination({ currentPage, totalPages, onPageChange }) {
@@ -13,7 +15,7 @@ export default function Pagination({ currentPage, totalPages, onPageChange }) {
     <nav aria-label="Pagination" className="mt-10 flex flex-wrap items-center justify-center gap-3">
       <button
         type="button"
-        className="button-ghost px-4 py-2 disabled:cursor-not-allowed disabled:opacity-50"
+        className="button-ghost px-4 py-2 text-ink-invert hover:text-ink-invert disabled:cursor-not-allowed disabled:opacity-50"
         disabled={currentPage === 1}
         onClick={() => onPageChange(currentPage - 1)}
       >
@@ -32,7 +34,7 @@ export default function Pagination({ currentPage, totalPages, onPageChange }) {
       ))}
       <button
         type="button"
-        className="button-ghost px-4 py-2 disabled:cursor-not-allowed disabled:opacity-50"
+        className="button-ghost px-4 py-2 text-ink-invert hover:text-ink-invert disabled:cursor-not-allowed disabled:opacity-50"
         disabled={currentPage === totalPages}
         onClick={() => onPageChange(currentPage + 1)}
       >
