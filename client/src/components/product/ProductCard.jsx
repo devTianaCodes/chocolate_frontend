@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { Heart, ShoppingCart } from 'lucide-react';
+import { Heart, ShoppingCart, Star } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { formatPrice } from '../../utils/formatPrice.js';
 import { getDisplayProductName } from '../../utils/getDisplayProductName.js';
+import { getProductReviewSummary } from '../../utils/getProductReviewSummary.js';
 import { useCartStore } from '../../store/cartStore.js';
 import { useFavouritesStore } from '../../store/favouritesStore.js';
 
@@ -13,6 +14,7 @@ export default function ProductCard({ product }) {
   const toggleFavourite = useFavouritesStore((state) => state.toggleItem);
   const isFavourite = favouriteItems.some((item) => item.id === product.id);
   const displayName = getDisplayProductName(product.name);
+  const reviews = getProductReviewSummary(product.id);
 
   return (
     <article className="glass-panel-strong group flex h-full flex-col overflow-hidden transition duration-300 hover:-translate-y-1 hover:border-brand-dark">
@@ -51,23 +53,39 @@ export default function ProductCard({ product }) {
       </div>
       <div className="flex flex-1 flex-col pt-6">
         <div className="space-y-2 pl-7 pr-5">
-          <p className="text-[11px] uppercase tracking-[0.12em] text-ink-muted">
+          <p className="text-[11px] uppercase tracking-[0.12em] text-black">
             {product.category_name || 'Chocolate'}
           </p>
-          <h3 className="font-display text-lg text-ink-primary">
-            <Link to={`/products/${product.slug}`} className="hover:text-brand">
+          <h3 className="font-display text-lg text-black">
+            <Link to={`/products/${product.slug}`} className="hover:text-black">
               {displayName}
             </Link>
           </h3>
-          <div className="flex items-center justify-between">
-            <span className="font-mono text-sm text-ink-primary">
-              {formatPrice(product.discount_price || product.price)}
-            </span>
+          <div className="flex items-center gap-1 text-[11px] text-black">
+            <div className="flex items-center gap-0.5" aria-label={`${reviews.rating} out of 5 stars`}>
+              {Array.from({ length: 5 }, (_, index) => (
+                <Star
+                  key={index}
+                  className={`h-3.5 w-3.5 ${
+                    index < reviews.rating
+                      ? 'fill-[#d4a373] text-[#d4a373]'
+                      : 'text-black/35'
+                  }`}
+                  strokeWidth={1.6}
+                />
+              ))}
+            </div>
+            <span>{reviews.count} reviews</span>
+          </div>
+          <div className="flex items-center gap-3">
             {Number(product.discount_price) > 0 && (
-              <span className="font-mono text-xs text-ink-muted line-through">
+              <span className="font-mono text-xs text-black/60 line-through">
                 {formatPrice(product.price)}
               </span>
             )}
+            <span className="ml-auto font-mono text-sm text-black text-right">
+              {formatPrice(product.discount_price || product.price)}
+            </span>
           </div>
         </div>
         <div className="mt-auto px-[20px] pb-[20px] pt-3">

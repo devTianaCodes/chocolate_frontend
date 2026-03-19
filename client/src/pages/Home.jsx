@@ -27,12 +27,12 @@ export default function Home() {
           <img
             src={luxuryDarkChocolateImage}
             alt="Luxury dark chocolate bars in high definition"
-            className="h-[470px] w-full object-cover [mask-image:radial-gradient(ellipse_at_center,black_58%,transparent_100%)] [-webkit-mask-image:radial-gradient(ellipse_at_center,black_58%,transparent_100%)] md:h-[620px]"
+            className="h-[470px] w-full object-cover [mask-image:radial-gradient(ellipse_at_center,black_68%,transparent_100%)] [-webkit-mask-image:radial-gradient(ellipse_at_center,black_68%,transparent_100%)] md:h-[620px]"
           />
-          <div className="pointer-events-none absolute inset-y-0 left-0 w-24 bg-[linear-gradient(to_right,rgb(var(--color-page-bg))_0%,rgba(231,210,215,0.82)_28%,transparent_100%)] md:w-32" />
-          <div className="pointer-events-none absolute inset-y-0 right-0 w-24 bg-[linear-gradient(to_left,rgb(var(--color-page-bg))_0%,rgba(231,210,215,0.82)_28%,transparent_100%)] md:w-32" />
-          <div className="pointer-events-none absolute inset-x-0 top-0 h-14 bg-[linear-gradient(to_bottom,rgb(var(--color-page-bg))_0%,rgba(231,210,215,0.8)_34%,transparent_100%)] md:h-20" />
-          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-14 bg-[linear-gradient(to_top,rgb(var(--color-page-bg))_0%,rgba(231,210,215,0.8)_34%,transparent_100%)] md:h-20" />
+          <div className="pointer-events-none absolute inset-y-0 left-0 w-32 bg-[linear-gradient(to_right,rgb(var(--color-page-bg))_0%,rgba(249,207,191,0.62)_34%,transparent_100%)] md:w-40" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-32 bg-[linear-gradient(to_left,rgb(var(--color-page-bg))_0%,rgba(249,207,191,0.62)_34%,transparent_100%)] md:w-40" />
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-16 bg-[linear-gradient(to_bottom,rgb(var(--color-page-bg))_0%,rgba(249,207,191,0.58)_36%,transparent_100%)] md:h-24" />
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-[linear-gradient(to_top,rgb(var(--color-page-bg))_0%,rgba(249,207,191,0.58)_36%,transparent_100%)] md:h-24" />
         </div>
       </section>
     </PageWrapper>
