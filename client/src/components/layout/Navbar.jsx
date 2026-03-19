@@ -40,9 +40,9 @@ export default function Navbar() {
   }
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 border-b border-border/35 bg-[rgba(79,33,33,0.85)]">
-      <div className="flex h-[30px] items-center justify-center border-b border-border/20 bg-[rgba(97,46,53,0.9)] px-3 text-[10px] font-medium uppercase tracking-[0.16em] text-brand md:text-[11px]">
-        Free shipping on orders 100 euro +
+    <header className="fixed inset-x-0 top-0 z-50 border-b border-border/35 bg-[#4f2121]">
+      <div className="flex h-[30px] items-center justify-center border-b border-border/20 bg-brand px-3 text-[10px] font-medium uppercase tracking-[0.16em] text-ink-invert md:text-[11px]">
+        Free shipping on orders 100€+
       </div>
       <div className="mx-auto flex h-[72px] max-w-[1280px] items-center justify-between px-3 md:px-5 lg:px-8">
         <div className="flex flex-col leading-none">
@@ -113,7 +113,7 @@ export default function Navbar() {
       {isMobileMenuOpen && (
         <nav
           id="mobile-nav"
-          className="border-t border-border/30 bg-[rgba(79,33,33,0.85)] px-3 py-4 md:hidden"
+          className="border-t border-border/30 bg-[#4f2121] px-3 py-4 md:hidden"
         >
           <div className="flex flex-col gap-4 text-[13px] uppercase tracking-[0.1em] text-ink-secondary">
             <form className="relative" onSubmit={handleSearchSubmit}>

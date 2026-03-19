@@ -5,7 +5,7 @@ import luxuryDarkChocolateImage from '../assets/luxury-dark-chocolate.png';
 export default function Home() {
   return (
     <PageWrapper>
-      <section className="grid gap-8 lg:min-h-[calc(100vh-240px)] lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
+      <section className="grid gap-8 lg:min-h-[calc(100vh-240px)] lg:grid-cols-[1fr_1.05fr] lg:items-center">
         <div className="space-y-6 py-8 lg:py-16">
           <p className="text-xs uppercase tracking-[0.2em] text-white">Single-harvest cacao</p>
           <h1 className="max-w-3xl font-display text-display-md font-bold italic text-[#612E35] md:text-display-lg">
@@ -23,16 +23,16 @@ export default function Home() {
             </Link>
           </div>
         </div>
-        <div className="relative overflow-hidden rounded-card shadow-velvet lg:self-center">
+        <div className="relative lg:-mr-8 lg:self-center">
           <img
             src={luxuryDarkChocolateImage}
             alt="Luxury dark chocolate bars in high definition"
-            className="h-[420px] w-full object-cover md:h-[520px]"
+            className="h-[470px] w-full object-cover [mask-image:radial-gradient(ellipse_at_center,black_58%,transparent_100%)] [-webkit-mask-image:radial-gradient(ellipse_at_center,black_58%,transparent_100%)] md:h-[620px]"
           />
-          <div className="pointer-events-none absolute inset-y-0 left-0 w-12 bg-[linear-gradient(to_right,rgb(var(--color-page-bg)),transparent)] md:w-16" />
-          <div className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-[linear-gradient(to_left,rgb(var(--color-page-bg)),transparent)] md:w-12" />
-          <div className="pointer-events-none absolute inset-x-0 top-0 h-8 bg-[linear-gradient(to_bottom,rgb(var(--color-page-bg)),transparent)] md:h-12" />
-          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-8 bg-[linear-gradient(to_top,rgb(var(--color-page-bg)),transparent)] md:h-12" />
+          <div className="pointer-events-none absolute inset-y-0 left-0 w-24 bg-[linear-gradient(to_right,rgb(var(--color-page-bg))_0%,rgba(231,210,215,0.82)_28%,transparent_100%)] md:w-32" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-24 bg-[linear-gradient(to_left,rgb(var(--color-page-bg))_0%,rgba(231,210,215,0.82)_28%,transparent_100%)] md:w-32" />
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-14 bg-[linear-gradient(to_bottom,rgb(var(--color-page-bg))_0%,rgba(231,210,215,0.8)_34%,transparent_100%)] md:h-20" />
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-14 bg-[linear-gradient(to_top,rgb(var(--color-page-bg))_0%,rgba(231,210,215,0.8)_34%,transparent_100%)] md:h-20" />
         </div>
       </section>
     </PageWrapper>
