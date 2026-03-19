@@ -41,6 +41,9 @@ export default function Navbar() {
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-border/35 bg-[rgba(79,33,33,0.85)]">
+      <div className="flex h-[30px] items-center justify-center border-b border-border/20 bg-[rgba(97,46,53,0.9)] px-3 text-[10px] font-medium uppercase tracking-[0.16em] text-brand md:text-[11px]">
+        Free shipping on orders 100 euro +
+      </div>
       <div className="mx-auto flex h-[72px] max-w-[1280px] items-center justify-between px-3 md:px-5 lg:px-8">
         <div className="flex flex-col leading-none">
           <Link to="/" className="whitespace-nowrap font-display text-[22px] italic tracking-[0.02em] text-ink-primary sm:text-[26px] md:text-[30px]">
