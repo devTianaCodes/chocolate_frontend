@@ -56,17 +56,17 @@ export default function ProductCard({ product }) {
           <p className="text-[11px] uppercase tracking-[0.12em] text-black">
             {product.category_name || 'Chocolate'}
           </p>
-          <h3 className="font-display text-lg text-black">
+          <h3 className="font-display text-xl font-semibold text-black">
             <Link to={`/products/${product.slug}`} className="hover:text-black">
               {displayName}
             </Link>
           </h3>
-          <div className="flex items-center gap-1 text-[11px] text-black">
+          <div className="flex items-center gap-1.5 text-sm text-black">
             <div className="flex items-center gap-0.5" aria-label={`${reviews.rating} out of 5 stars`}>
               {Array.from({ length: 5 }, (_, index) => (
                 <Star
                   key={index}
-                  className={`h-3.5 w-3.5 ${
+                  className={`h-4 w-4 ${
                     index < reviews.rating
                       ? 'fill-[#d4a373] text-[#d4a373]'
                       : 'text-black/35'
@@ -79,11 +79,11 @@ export default function ProductCard({ product }) {
           </div>
           <div className="flex items-center gap-3">
             {Number(product.discount_price) > 0 && (
-              <span className="font-mono text-xs text-black/60 line-through">
+              <span className="font-mono text-sm text-black/60 line-through">
                 {formatPrice(product.price)}
               </span>
             )}
-            <span className="ml-auto font-mono text-sm text-black text-right">
+            <span className="ml-auto font-mono text-base text-black text-right">
               {formatPrice(product.discount_price || product.price)}
             </span>
           </div>
