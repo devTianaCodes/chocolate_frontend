@@ -40,7 +40,7 @@ export default function ProductDetail() {
 
       {!loading && !error && product && (
         <section className="grid gap-10 lg:grid-cols-[1.2fr_1fr]">
-          <div className="glass-panel-strong overflow-hidden">
+          <div className="glass-panel-strong overflow-hidden rounded-none">
             <img
               src={product.image}
               alt={product.name}
@@ -48,7 +48,7 @@ export default function ProductDetail() {
               loading="eager"
             />
           </div>
-          <div className="glass-panel space-y-4 p-6 md:p-8">
+          <div className="glass-panel space-y-4 rounded-none p-6 md:p-8">
             <p className="section-label">
               {product.category_name || 'Chocolate'}
             </p>

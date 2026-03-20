@@ -57,7 +57,7 @@ function SocialLink({ label, href, children }) {
     <a
       href={href}
       aria-label={label}
-      className="inline-flex h-10 w-10 items-center justify-center rounded-sm border border-brand/30 text-brand transition hover:border-brand hover:bg-brand/10 hover:text-ink-primary"
+      className="inline-flex h-10 w-10 items-center justify-center rounded-none border border-brand/30 text-brand transition hover:border-brand hover:bg-brand/10 hover:text-ink-primary"
     >
       {children}
     </a>
@@ -90,7 +90,7 @@ export default function Footer() {
               Subscribe
             </button>
           </form>
-          <div className="flex items-center justify-start gap-4 pt-2 sm:justify-end">
+          <div className="flex items-center justify-center gap-4 pt-2">
             <SocialLink label="Facebook" href="https://facebook.com">
               <Facebook className="h-5 w-5" strokeWidth={2} />
             </SocialLink>
