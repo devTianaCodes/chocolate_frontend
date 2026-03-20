@@ -89,7 +89,7 @@ export default function ProductCard({ product }) {
           </div>
         </div>
         <div className="mt-auto px-[20px] pb-[20px] pt-3">
-          <button className="button-primary w-full gap-2" onClick={() => addItem(product.id, 1)}>
+          <button className="button-primary w-full gap-2" onClick={() => addItem(product, 1, { openDrawer: true })}>
             <span>Add to cart</span>
             <ShoppingCart className="h-4 w-4" strokeWidth={1.8} />
           </button>
