@@ -17,7 +17,7 @@ export default function ProductCard({ product }) {
   const reviews = getProductReviewSummary(product.id);
 
   return (
-    <article className="glass-panel-strong group flex h-full flex-col overflow-hidden transition duration-300 hover:-translate-y-1 hover:border-brand-dark">
+    <article className="glass-panel-strong group flex h-full flex-col overflow-hidden rounded-none transition duration-300 hover:-translate-y-1 hover:border-brand-dark">
       <div className="relative aspect-[15/16] overflow-hidden bg-surface-high/40">
         <button
           type="button"

@@ -79,7 +79,7 @@ a {
   }
 
   .button-primary {
-    @apply inline-flex items-center justify-center rounded-sm bg-brand px-6 py-3 text-xs font-medium uppercase tracking-[0.12em] text-ink-invert transition duration-300;
+    @apply inline-flex items-center justify-center rounded-none bg-brand px-6 py-3 text-xs font-medium uppercase tracking-[0.12em] text-ink-invert transition duration-300;
     box-shadow: 0 18px 40px rgba(39, 19, 13, 0.28);
   }
 
@@ -92,7 +92,7 @@ a {
   }
 
   .button-ghost {
-    @apply inline-flex items-center justify-center rounded-sm border border-border/70 px-6 py-3 text-xs font-medium uppercase tracking-[0.12em] text-ink-primary transition duration-300 hover:border-brand hover:text-brand;
+    @apply inline-flex items-center justify-center rounded-none border border-border/70 px-6 py-3 text-xs font-medium uppercase tracking-[0.12em] text-ink-primary transition duration-300 hover:border-brand hover:text-brand;
   }
 
   .section-label {
