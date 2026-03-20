@@ -108,7 +108,7 @@ export default function Shop() {
 
   return (
     <PageWrapper>
-      <header className="glass-panel-strong mb-10 flex flex-col gap-4 p-6 md:p-8">
+      <header className="glass-panel-strong mb-10 flex flex-col gap-4 rounded-none p-6 md:p-8">
         <p className="section-label">The collection</p>
         <h1 className="font-display text-display-md text-ink-primary">Shop</h1>
         <p className="max-w-xl text-body-md text-ink-secondary">

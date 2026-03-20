@@ -94,7 +94,7 @@ export default function Navbar() {
               onChange={(event) => setSearchTerm(event.target.value)}
               placeholder="Search"
               aria-label="Search products"
-              className="h-9 w-[220px] rounded-sm border border-brand-light/40 bg-brand pl-10 pr-4 text-xs font-medium uppercase tracking-[0.12em] text-ink-invert shadow-[0_18px_40px_rgba(39,19,13,0.18)] placeholder:text-ink-invert/65 focus:border-brand-dark focus-visible:outline-none"
+              className="h-9 w-[220px] rounded-none border border-brand-light/40 bg-brand pl-10 pr-4 text-xs font-medium uppercase tracking-[0.12em] text-ink-invert shadow-[0_18px_40px_rgba(39,19,13,0.18)] placeholder:text-ink-invert/65 focus:border-brand-dark focus-visible:outline-none"
             />
           </form>
         </nav>
@@ -127,7 +127,7 @@ export default function Navbar() {
                 onChange={(event) => setSearchTerm(event.target.value)}
                 placeholder="Search products"
                 aria-label="Search products"
-                className="h-10 w-full rounded-sm border border-brand-light/40 bg-brand pl-10 pr-4 text-xs font-medium uppercase tracking-[0.12em] text-ink-invert shadow-[0_18px_40px_rgba(39,19,13,0.18)] placeholder:text-ink-invert/65 focus:border-brand-dark focus-visible:outline-none"
+                className="h-10 w-full rounded-none border border-brand-light/40 bg-brand pl-10 pr-4 text-xs font-medium uppercase tracking-[0.12em] text-ink-invert shadow-[0_18px_40px_rgba(39,19,13,0.18)] placeholder:text-ink-invert/65 focus:border-brand-dark focus-visible:outline-none"
               />
             </form>
             <Link to="/shop" className="hover:text-ink-primary">Shop</Link>

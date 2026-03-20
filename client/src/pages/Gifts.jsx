@@ -74,7 +74,7 @@ export default function Gifts() {
 
   return (
     <PageWrapper>
-      <header className="glass-panel-strong mb-10 flex flex-col gap-4 p-6 md:p-8">
+      <header className="glass-panel-strong mb-10 flex flex-col gap-4 rounded-none p-6 md:p-8">
         <p className="section-label">Curated gifting</p>
         <h1 className="font-display text-display-md text-ink-primary">Gifts</h1>
         <p className="max-w-xl text-body-md text-ink-secondary">
@@ -101,7 +101,7 @@ export default function Gifts() {
       )}
 
       {!loading && !error && products.length === 0 && (
-        <div className="glass-panel-strong p-8">
+        <div className="glass-panel-strong rounded-none p-8">
           <p className="text-body-md text-ink-secondary">No gift boxes are available right now.</p>
           <Link to="/shop" className="button-primary mt-5">
             Explore the shop
