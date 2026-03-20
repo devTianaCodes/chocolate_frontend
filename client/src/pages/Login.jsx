@@ -31,7 +31,7 @@ export default function Login() {
 
   return (
     <PageWrapper>
-      <div className="glass-panel-strong mx-auto max-w-md space-y-6 p-6 md:p-8">
+      <div className="glass-panel-strong mx-auto max-w-md space-y-5 rounded-none p-6 md:p-8">
         <header className="space-y-2">
           <p className="section-label">{isRegisterMode ? 'New membership' : 'Account access'}</p>
           <h1 className="font-display text-display-sm text-ink-primary">
@@ -44,7 +44,7 @@ export default function Login() {
           </p>
         </header>
 
-        <div className="grid grid-cols-2 gap-2">
+        <div className="grid grid-cols-2 gap-3">
           <button
             type="button"
             className={isRegisterMode ? 'button-ghost w-full' : 'button-primary w-full'}
@@ -63,12 +63,12 @@ export default function Login() {
 
         {error && <p className="text-body-sm text-red-300">{error}</p>}
 
-        <form className="space-y-4" onSubmit={handleSubmit}>
+        <form className="space-y-5" onSubmit={handleSubmit}>
           <label className="block text-xs uppercase tracking-[0.08em] text-ink-muted">
             Email
             <input
               type="email"
-              className="glass-input"
+              className="glass-input mt-3 rounded-none bg-white text-black"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -78,7 +78,7 @@ export default function Login() {
             Password
             <input
               type="password"
-              className="glass-input"
+              className="glass-input mt-3 rounded-none bg-white text-black"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
@@ -86,7 +86,7 @@ export default function Login() {
           </label>
           <button
             type="submit"
-            className="button-primary w-full"
+            className="button-primary mt-6 w-full"
             disabled={loading}
           >
             {loading ? (isRegisterMode ? 'Creating…' : 'Signing in…') : isRegisterMode ? 'Create account' : 'Sign in'}
