@@ -56,8 +56,8 @@ export default {
         '900': '900ms',
       },
       boxShadow: {
-        velvet: '0 24px 80px rgba(20, 10, 6, 0.35)',
-        glass: '0 18px 40px rgba(18, 8, 5, 0.28), inset 0 1px 0 rgba(255, 244, 231, 0.08)',
+        velvet: '0 17px 56px rgba(20, 10, 6, 0.245)',
+        glass: '0 13px 28px rgba(18, 8, 5, 0.196), inset 0 1px 0 rgba(255, 244, 231, 0.08)',
       },
       backdropBlur: {
         luxury: '18px',

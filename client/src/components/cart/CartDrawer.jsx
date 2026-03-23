@@ -45,7 +45,7 @@ export default function CartDrawer() {
         onClick={closeCartDrawer}
       />
       <aside
-        className="absolute bottom-0 right-0 top-0 flex w-full max-w-[390px] flex-col border-l border-black/10 bg-[#f8e5dd] p-5 text-black shadow-[-18px_0_40px_rgba(39,19,13,0.18)]"
+        className="absolute bottom-0 right-0 top-0 flex w-full max-w-[390px] flex-col border-l border-black/10 bg-[#f8e5dd] p-5 text-black shadow-[-13px_0_28px_rgba(39,19,13,0.126)]"
         onClick={(event) => event.stopPropagation()}
       >
         <div className="mb-5 flex items-start justify-between gap-4">

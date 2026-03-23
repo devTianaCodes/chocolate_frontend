@@ -9,7 +9,7 @@ import { getTotalPages, paginateItems, parsePageParam } from '../utils/paginatio
 
 const PAGE_SIZE = 12;
 const CATEGORY_BUTTON_BASE =
-  'border-[rgba(125,82,71,0.55)] shadow-[0_8px_18px_rgba(79,33,33,0.08)]';
+  'border-[rgba(125,82,71,0.55)] shadow-[0_6px_13px_rgba(79,33,33,0.056)]';
 const CATEGORY_BUTTON_ACTIVE =
   `button-ghost bg-[rgba(214,167,176,0.92)] text-panel-ink ${CATEGORY_BUTTON_BASE} hover:bg-[rgba(214,167,176,1)]`;
 const CATEGORY_BUTTON_IDLE =

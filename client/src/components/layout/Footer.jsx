@@ -84,7 +84,7 @@ export default function Footer() {
               id="footer-email"
               type="email"
               placeholder="Email"
-              className="h-10 flex-1 rounded-none border border-brand-light/40 bg-brand px-4 text-[13px] font-medium uppercase tracking-[0.12em] text-ink-invert shadow-[0_18px_40px_rgba(39,19,13,0.18)] placeholder:text-ink-invert/65 focus:border-brand-dark focus-visible:outline-none"
+              className="h-10 flex-1 rounded-none border border-brand-light/40 bg-brand px-4 text-[13px] font-medium uppercase tracking-[0.12em] text-ink-invert shadow-[0_13px_28px_rgba(39,19,13,0.126)] placeholder:text-ink-invert/65 focus:border-brand-dark focus-visible:outline-none"
             />
             <button type="submit" className="button-primary h-10 min-w-[146px] px-6">
               Subscribe
