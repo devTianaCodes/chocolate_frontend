@@ -8,6 +8,12 @@ import Pagination from '../components/Pagination.jsx';
 import { getTotalPages, paginateItems, parsePageParam } from '../utils/pagination.js';
 
 const PAGE_SIZE = 12;
+const CATEGORY_BUTTON_BASE =
+  'border-[rgba(125,82,71,0.55)] shadow-[0_8px_18px_rgba(79,33,33,0.08)]';
+const CATEGORY_BUTTON_ACTIVE =
+  `button-ghost bg-[rgba(214,167,176,0.92)] text-panel-ink ${CATEGORY_BUTTON_BASE} hover:bg-[rgba(214,167,176,1)]`;
+const CATEGORY_BUTTON_IDLE =
+  `button-ghost bg-[rgb(252,223,214)] text-panel-ink ${CATEGORY_BUTTON_BASE} hover:bg-[rgb(255,235,229)]`;
 
 export default function Shop() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -117,7 +123,7 @@ export default function Shop() {
         <div className="flex flex-wrap gap-3 pt-2">
           <button
             type="button"
-            className={selectedCategory === 'all' ? 'button-primary' : 'button-ghost'}
+            className={selectedCategory === 'all' ? CATEGORY_BUTTON_ACTIVE : CATEGORY_BUTTON_IDLE}
             onClick={() => handleCategoryChange('all')}
           >
             All
@@ -126,7 +132,9 @@ export default function Shop() {
             <button
               key={category.id}
               type="button"
-              className={selectedCategory === category.slug ? 'button-primary' : 'button-ghost'}
+              className={
+                selectedCategory === category.slug ? CATEGORY_BUTTON_ACTIVE : CATEGORY_BUTTON_IDLE
+              }
               onClick={() => handleCategoryChange(category.slug)}
             >
               {category.name}
