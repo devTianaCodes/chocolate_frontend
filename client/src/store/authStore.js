@@ -17,6 +17,8 @@ export const useAuthStore = create((set) => ({
   loading: false,
   error: '',
 
+  clearError: () => set({ error: '' }),
+
   setSession: ({ user, accessToken }) => {
     set({
       user,
@@ -66,10 +68,10 @@ export const useAuthStore = create((set) => ({
     return response.data.accessToken;
   },
 
-  register: async (email, password) => {
+  register: async (payload) => {
     set({ loading: true, error: '' });
     try {
-      const response = await registerUser({ email, password });
+      const response = await registerUser(payload);
       const sessionId = getSessionId();
       if (sessionId) {
         await mergeCart(sessionId, response.data.accessToken);
@@ -81,7 +83,7 @@ export const useAuthStore = create((set) => ({
       });
       return true;
     } catch (err) {
-      set({ error: 'Registration failed.' });
+      set({ error: err.response?.data?.error || 'Registration failed.' });
       return false;
     } finally {
       set({ loading: false });
@@ -103,7 +105,7 @@ export const useAuthStore = create((set) => ({
       });
       return true;
     } catch (err) {
-      set({ error: 'Login failed.' });
+      set({ error: err.response?.data?.error || 'Login failed.' });
       return false;
     } finally {
       set({ loading: false });

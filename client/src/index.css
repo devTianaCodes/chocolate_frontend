@@ -108,6 +108,17 @@ a {
     box-shadow: 0 0 0 3px rgba(75, 0, 130, 0.24), inset 0 1px 0 rgba(255, 244, 231, 0.08);
   }
 
+  .auth-input {
+    @apply glass-input mt-3 rounded-none;
+    border-color: rgba(var(--color-panel-border), 0.24);
+    background-color: rgba(255, 251, 248, 0.96);
+    color: rgb(var(--color-panel-ink));
+  }
+
+  .auth-input::placeholder {
+    color: rgba(var(--color-panel-ink-secondary), 0.62);
+  }
+
   .button-primary {
     @apply inline-flex items-center justify-center rounded-none bg-brand px-6 py-3 text-xs font-medium uppercase tracking-[0.12em] text-ink-invert transition duration-300;
     box-shadow: 0 18px 40px rgba(39, 19, 13, 0.28);
