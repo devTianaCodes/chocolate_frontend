@@ -17,12 +17,12 @@ export default function ProductCard({ product }) {
   const reviews = getProductReviewSummary(product.id);
 
   return (
-    <article className="glass-panel-strong group flex h-full flex-col overflow-hidden rounded-none transition duration-300 hover:-translate-y-1 hover:border-brand-dark">
-      <div className="relative aspect-[15/16] overflow-hidden bg-surface-high/40">
+    <article className="panel-wash-strong group flex h-full flex-col overflow-hidden transition duration-300 hover:-translate-y-1 hover:border-[rgba(79,33,33,0.42)]">
+      <div className="relative aspect-[15/16] overflow-hidden bg-[rgba(79,33,33,0.1)]">
         <button
           type="button"
           aria-label={isFavourite ? 'Remove from favourites' : 'Add to favourites'}
-          className="absolute right-3 top-3 z-10 inline-flex items-center justify-center p-1 text-ink-primary transition hover:text-red-400"
+          className="absolute right-3 top-3 z-10 inline-flex items-center justify-center p-1 text-panel-ink transition hover:text-red-400"
           onClick={() => toggleFavourite(product)}
         >
           <Heart
@@ -41,27 +41,30 @@ export default function ProductCard({ product }) {
         ) : (
           <div
             aria-label={product.name}
-            className="h-full w-full bg-[rgba(255,255,255,0.04)]"
+            className="h-full w-full bg-[rgba(79,33,33,0.08)]"
           />
         )}
-        <div className="absolute inset-0 bg-gradient-to-t from-surface-base/75 via-brand-subtle/10 to-transparent opacity-0 transition duration-300 group-hover:opacity-100" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[rgba(79,33,33,0.18)] via-transparent to-transparent opacity-0 transition duration-300 group-hover:opacity-100" />
         <div className="absolute inset-x-4 bottom-4 opacity-0 transition duration-300 group-hover:opacity-100">
-          <Link to={`/products/${product.slug}`} className="button-ghost w-full bg-surface-base/30 backdrop-blur-md">
+          <Link
+            to={`/products/${product.slug}`}
+            className="button-ghost w-full border-[rgba(79,33,33,0.25)] bg-[rgba(252,223,214,0.88)] text-panel-ink backdrop-blur-md hover:bg-[rgba(252,223,214,0.96)]"
+          >
             Quick view
           </Link>
         </div>
       </div>
       <div className="flex flex-1 flex-col pt-6">
         <div className="space-y-2 pl-7 pr-5">
-          <p className="text-[11px] uppercase tracking-[0.12em] text-black">
+          <p className="text-panel-secondary text-[11px] uppercase tracking-[0.12em]">
             {product.category_name || 'Chocolate'}
           </p>
-          <h3 className="font-display text-xl font-semibold text-black">
-            <Link to={`/products/${product.slug}`} className="hover:text-black">
+          <h3 className="text-panel-ink font-display text-xl font-semibold">
+            <Link to={`/products/${product.slug}`} className="hover:opacity-85">
               {displayName}
             </Link>
           </h3>
-          <div className="flex items-center gap-1.5 text-sm text-black">
+          <div className="text-panel-secondary flex items-center gap-1.5 text-sm">
             <div className="flex items-center gap-0.5" aria-label={`${reviews.rating} out of 5 stars`}>
               {Array.from({ length: 5 }, (_, index) => (
                 <Star
@@ -69,7 +72,7 @@ export default function ProductCard({ product }) {
                   className={`h-4 w-4 ${
                     index < reviews.rating
                       ? 'fill-[#d4a373] text-[#d4a373]'
-                      : 'text-black/35'
+                      : 'text-[rgba(71,39,31,0.35)]'
                   }`}
                   strokeWidth={1.6}
                 />
@@ -79,11 +82,11 @@ export default function ProductCard({ product }) {
           </div>
           <div className="flex items-center gap-3">
             {Number(product.discount_price) > 0 && (
-              <span className="font-mono text-sm text-black/60 line-through">
+              <span className="font-mono text-sm text-[rgba(71,39,31,0.58)] line-through">
                 {formatPrice(product.price)}
               </span>
             )}
-            <span className="ml-auto font-mono text-base text-black text-right">
+            <span className="text-panel-ink ml-auto text-right font-mono text-base">
               {formatPrice(product.discount_price || product.price)}
             </span>
           </div>

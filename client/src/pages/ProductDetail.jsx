@@ -40,7 +40,7 @@ export default function ProductDetail() {
 
       {!loading && !error && product && (
         <section className="grid gap-10 lg:grid-cols-[1.2fr_1fr]">
-          <div className="glass-panel-strong overflow-hidden rounded-none">
+          <div className="panel-wash-strong overflow-hidden">
             <img
               src={product.image}
               alt={product.name}
@@ -48,23 +48,23 @@ export default function ProductDetail() {
               loading="eager"
             />
           </div>
-          <div className="glass-panel space-y-4 rounded-none p-6 md:p-8">
-            <p className="section-label">
+          <div className="panel-wash space-y-4 p-6 md:p-8">
+            <p className="text-panel-secondary text-xs uppercase tracking-[0.2em]">
               {product.category_name || 'Chocolate'}
             </p>
-            <h1 className="font-display text-display-md text-ink-primary">{getDisplayProductName(product.name)}</h1>
-            <p className="text-body-md text-ink-secondary">{product.description}</p>
+            <h1 className="text-panel-ink font-display text-display-md">{getDisplayProductName(product.name)}</h1>
+            <p className="text-panel-secondary text-body-md">{product.description}</p>
             <div className="flex items-center gap-4">
-              <span className="font-mono text-lg text-ink-primary">
+              <span className="text-panel-ink font-mono text-lg">
                 {formatPrice(product.discount_price || product.price)}
               </span>
               {Number(product.discount_price) > 0 && (
-                <span className="font-mono text-sm text-ink-muted line-through">
+                <span className="text-panel-muted font-mono text-sm line-through">
                   {formatPrice(product.price)}
                 </span>
               )}
             </div>
-            <div className="text-body-sm text-ink-muted">
+            <div className="text-panel-muted text-body-sm">
               {product.origin ? `Origin: ${product.origin}` : 'Origin: single-harvest'}
             </div>
             <button

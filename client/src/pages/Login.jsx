@@ -31,13 +31,15 @@ export default function Login() {
 
   return (
     <PageWrapper>
-      <div className="glass-panel-strong mx-auto max-w-md space-y-5 rounded-none p-6 md:p-8">
+      <div className="panel-wash-strong mx-auto max-w-md space-y-5 p-6 md:p-8">
         <header className="space-y-2">
-          <p className="section-label">{isRegisterMode ? 'New membership' : 'Account access'}</p>
-          <h1 className="font-display text-display-sm text-ink-primary">
+          <p className="text-panel-secondary text-xs uppercase tracking-[0.2em]">
+            {isRegisterMode ? 'New membership' : 'Account access'}
+          </p>
+          <h1 className="text-panel-ink font-display text-display-sm">
             {isRegisterMode ? 'Create account' : 'Sign in'}
           </h1>
-          <p className="text-body-sm text-ink-secondary">
+          <p className="text-panel-secondary text-body-sm">
             {isRegisterMode
               ? 'Join for faster checkout and order tracking.'
               : 'Access your account and orders.'}
@@ -61,24 +63,24 @@ export default function Login() {
           </button>
         </div>
 
-        {error && <p className="text-body-sm text-red-300">{error}</p>}
+        {error && <p className="text-body-sm text-[#8c3f37]">{error}</p>}
 
         <form className="space-y-5" onSubmit={handleSubmit}>
-          <label className="block text-xs uppercase tracking-[0.08em] text-ink-muted">
+          <label className="text-panel-secondary block text-xs uppercase tracking-[0.08em]">
             Email
             <input
               type="email"
-              className="glass-input mt-3 rounded-none bg-white text-black"
+              className="glass-input mt-3 rounded-none border-[rgba(125,82,71,0.24)] bg-[rgba(255,251,248,0.96)] text-[rgb(var(--color-panel-ink))]"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
             />
           </label>
-          <label className="block text-xs uppercase tracking-[0.08em] text-ink-muted">
+          <label className="text-panel-secondary block text-xs uppercase tracking-[0.08em]">
             Password
             <input
               type="password"
-              className="glass-input mt-3 rounded-none bg-white text-black"
+              className="glass-input mt-3 rounded-none border-[rgba(125,82,71,0.24)] bg-[rgba(255,251,248,0.96)] text-[rgb(var(--color-panel-ink))]"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required

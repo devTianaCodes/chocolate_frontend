@@ -4,6 +4,12 @@
 
 :root {
   --color-page-bg: 252 223 214;
+  --color-panel-wash: 236 210 200;
+  --color-panel-wash-strong: 226 191 180;
+  --color-panel-border: 125 82 71;
+  --color-panel-ink: 71 39 31;
+  --color-panel-ink-secondary: 109 74 63;
+  --color-panel-ink-muted: 143 104 92;
   --color-bg-base: 53 30 16;
   --color-bg-surface: 79 48 33;
   --color-bg-elevated: 105 67 49;
@@ -60,6 +66,30 @@ a {
 }
 
 @layer components {
+  .panel-wash {
+    @apply rounded-none shadow-glass backdrop-blur-luxury;
+    background-color: rgba(var(--color-panel-wash), 0.94);
+    border: 1px solid rgba(var(--color-panel-border), 0.22);
+  }
+
+  .panel-wash-strong {
+    @apply rounded-none shadow-glass backdrop-blur-luxury;
+    background-color: rgba(var(--color-panel-wash-strong), 0.96);
+    border: 1px solid rgba(var(--color-panel-border), 0.28);
+  }
+
+  .text-panel-ink {
+    color: rgb(var(--color-panel-ink));
+  }
+
+  .text-panel-secondary {
+    color: rgb(var(--color-panel-ink-secondary));
+  }
+
+  .text-panel-muted {
+    color: rgb(var(--color-panel-ink-muted));
+  }
+
   .glass-panel {
     @apply rounded-card border border-border/40 bg-surface-elevated/30 shadow-glass backdrop-blur-luxury;
   }
@@ -92,7 +122,15 @@ a {
   }
 
   .button-ghost {
-    @apply inline-flex items-center justify-center rounded-none border border-border/70 px-6 py-3 text-xs font-medium uppercase tracking-[0.12em] text-ink-primary transition duration-300 hover:border-brand hover:text-brand;
+    @apply inline-flex items-center justify-center rounded-none px-6 py-3 text-xs font-medium uppercase tracking-[0.12em] transition duration-300;
+    color: rgb(var(--color-panel-ink));
+    border: 1px solid rgba(var(--color-panel-border), 0.45);
+  }
+
+  .button-ghost:hover {
+    color: rgb(var(--color-panel-ink));
+    background-color: rgba(var(--color-bg-base), 0.06);
+    border-color: rgba(var(--color-panel-border), 0.72);
   }
 
   .section-label {

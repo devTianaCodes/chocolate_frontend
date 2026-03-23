@@ -101,23 +101,23 @@ export default function Search() {
 
   return (
     <PageWrapper>
-      <header className="glass-panel-strong mb-10 flex flex-col gap-4 p-6 md:p-8">
-        <p className="section-label">Search</p>
-        <h1 className="font-display text-display-md text-ink-primary">
+      <header className="panel-wash-strong mb-10 flex flex-col gap-4 p-6 md:p-8">
+        <p className="text-panel-secondary text-xs uppercase tracking-[0.2em]">Search</p>
+        <h1 className="text-panel-ink font-display text-display-md">
           {query ? `Results for "${rawQuery}"` : 'Search the collection'}
         </h1>
-        <p className="max-w-xl text-body-md text-ink-secondary">
+        <p className="text-panel-secondary max-w-xl text-body-md">
           Find bars, pralines, and seasonal releases by name, note, or category.
         </p>
       </header>
 
-      {loading && <p className="text-body-md text-ink-secondary">Searching products…</p>}
+      {loading && <p className="text-panel-secondary text-body-md">Searching products…</p>}
       {error && <p className="text-body-md text-red-300">{error}</p>}
       {!loading && !error && !query && (
-        <p className="text-body-md text-ink-secondary">Type a search in the header to explore products.</p>
+        <p className="text-panel-secondary text-body-md">Type a search in the header to explore products.</p>
       )}
       {!loading && !error && query && results.length === 0 && (
-        <p className="text-body-md text-ink-secondary">No products found for this search.</p>
+        <p className="text-panel-secondary text-body-md">No products found for this search.</p>
       )}
       {!loading && !error && results.length > 0 && (
         <>

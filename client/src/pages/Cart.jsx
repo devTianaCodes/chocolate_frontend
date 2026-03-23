@@ -19,7 +19,7 @@ export default function Cart() {
   return (
     <PageWrapper>
       <header className="mb-8 flex items-start justify-between gap-4">
-        <h1 className="font-display text-display-md text-ink-primary">Your Cart</h1>
+        <h1 className="text-panel-ink font-display text-display-md">Your Cart</h1>
         {items.length > 0 && (
           <button type="button" className="button-ghost" onClick={emptyCart}>
             Empty cart
@@ -27,21 +27,21 @@ export default function Cart() {
         )}
       </header>
 
-      {loading && <p className="text-body-md text-ink-secondary">Loading cart…</p>}
+      {loading && <p className="text-panel-secondary text-body-md">Loading cart…</p>}
       {error && <p className="text-body-md text-red-300">{error}</p>}
 
       {!loading && !error && items.length === 0 && (
-        <p className="text-body-md text-ink-secondary">Your cart is empty.</p>
+        <p className="text-panel-secondary text-body-md">Your cart is empty.</p>
       )}
 
       {!loading && !error && items.length > 0 && (
         <div className="space-y-6">
           {items.map((item) => (
-            <div key={item.id} className="glass-panel-strong flex flex-col gap-4 rounded-none p-4 md:flex-row md:items-center">
+            <div key={item.id} className="panel-wash-strong flex flex-col gap-4 p-4 md:flex-row md:items-center">
               <img src={item.image} alt={item.name} className="h-24 w-24 rounded-none object-cover" />
               <div className="flex-1">
-                <p className="font-display text-lg text-ink-primary">{getDisplayProductName(item.name)}</p>
-                <p className="text-body-sm text-ink-muted">{item.origin || 'Single origin'}</p>
+                <p className="text-panel-ink font-display text-lg">{getDisplayProductName(item.name)}</p>
+                <p className="text-panel-secondary text-body-sm">{item.origin || 'Single origin'}</p>
               </div>
               <div className="flex items-center gap-3">
                 <button
@@ -50,7 +50,7 @@ export default function Cart() {
                 >
                   −
                 </button>
-                <span className="font-mono text-sm text-ink-primary">{item.quantity}</span>
+                <span className="text-panel-ink font-mono text-sm">{item.quantity}</span>
                 <button
                   className="button-ghost px-3 py-1"
                   onClick={() => updateItem(item.id, item.quantity + 1)}
@@ -59,11 +59,11 @@ export default function Cart() {
                 </button>
               </div>
               <div className="text-right">
-                <p className="font-mono text-sm text-ink-primary">
+                <p className="text-panel-ink font-mono text-base">
                   {formatPrice(item.discount_price || item.price)}
                 </p>
                 <button
-                  className="text-xs uppercase tracking-[0.1em] text-red-300"
+                  className="text-xs uppercase tracking-[0.1em] text-[#8c3f37]"
                   onClick={() => removeItem(item.id)}
                 >
                   Remove
@@ -71,10 +71,10 @@ export default function Cart() {
               </div>
             </div>
           ))}
-          <div className="glass-panel-strong rounded-none bg-surface-base/95 p-6">
+          <div className="panel-wash-strong p-6">
             <div className="mb-4 flex items-center justify-between">
-              <span className="text-body-md text-ink-secondary">Subtotal</span>
-              <span className="font-mono text-body-md text-ink-primary">{formatPrice(subtotal)}</span>
+              <span className="text-panel-secondary text-body-md">Subtotal</span>
+              <span className="text-panel-ink font-mono text-body-md">{formatPrice(subtotal)}</span>
             </div>
             <Link
               to="/checkout"
