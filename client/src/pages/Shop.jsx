@@ -117,9 +117,6 @@ export default function Shop() {
       <header className="panel-wash-strong mb-10 flex flex-col gap-4 p-6 md:p-8">
         <p className="text-panel-secondary text-xs uppercase tracking-[0.2em]">The collection</p>
         <h1 className="text-panel-ink font-display text-display-md">Shop</h1>
-        <p className="text-panel-secondary max-w-xl text-body-md">
-          Explore small-batch bars, pralines, and seasonal releases.
-        </p>
         <div className="flex flex-wrap gap-3 pt-2">
           <button
             type="button"
