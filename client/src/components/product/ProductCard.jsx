@@ -9,12 +9,14 @@ import { useFavouritesStore } from '../../store/favouritesStore.js';
 
 export default function ProductCard({ product }) {
   const [imageFailed, setImageFailed] = useState(false);
+  const [hoverImageFailed, setHoverImageFailed] = useState(false);
   const addItem = useCartStore((state) => state.addItem);
   const favouriteItems = useFavouritesStore((state) => state.items);
   const toggleFavourite = useFavouritesStore((state) => state.toggleItem);
   const isFavourite = favouriteItems.some((item) => item.id === product.id);
   const displayName = getDisplayProductName(product.name);
   const reviews = getProductReviewSummary(product.id);
+  const hoverImage = product.hover_image && !hoverImageFailed ? product.hover_image : '';
 
   return (
     <article className="panel-wash-strong group flex h-full flex-col overflow-hidden transition duration-300 hover:-translate-y-1 hover:border-[rgba(79,33,33,0.42)]">
@@ -31,13 +33,26 @@ export default function ProductCard({ product }) {
           />
         </button>
         {!imageFailed ? (
-          <img
-            src={product.image}
-            alt={product.name}
-            className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]"
-            loading="lazy"
-            onError={() => setImageFailed(true)}
-          />
+          <>
+            <img
+              src={product.image}
+              alt={product.name}
+              className={`h-full w-full object-cover transition duration-500 ${
+                hoverImage ? 'group-hover:scale-[1.01] group-hover:opacity-0' : 'group-hover:scale-[1.03]'
+              }`}
+              loading="lazy"
+              onError={() => setImageFailed(true)}
+            />
+            {hoverImage && (
+              <img
+                src={hoverImage}
+                alt={product.name}
+                className="absolute inset-0 h-full w-full object-cover opacity-0 transition duration-500 group-hover:opacity-100"
+                loading="lazy"
+                onError={() => setHoverImageFailed(true)}
+              />
+            )}
+          </>
         ) : (
           <div
             aria-label={product.name}
