@@ -49,8 +49,10 @@ export const useCartStore = create((set, get) => ({
         lastAddedItem: addedItem || fallbackProduct,
         lastAddedQuantity: Number(quantity || 1),
       });
+      return true;
     } catch (err) {
       set({ error: 'Unable to add item.' });
+      return false;
     } finally {
       set({ loading: false });
     }

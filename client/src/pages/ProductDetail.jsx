@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { ShoppingCart } from 'lucide-react';
 import PageWrapper from '../components/layout/PageWrapper.jsx';
 import { fetchProductBySlug } from '../api/products.js';
@@ -9,6 +9,7 @@ import { useCartStore } from '../store/cartStore.js';
 
 export default function ProductDetail() {
   const { slug } = useParams();
+  const navigate = useNavigate();
   const [product, setProduct] = useState(null);
   const [selectedImage, setSelectedImage] = useState('');
   const [error, setError] = useState('');
@@ -64,6 +65,11 @@ export default function ProductDetail() {
       value: product?.category_name || 'Chocolate',
     },
   ];
+
+  async function handleAddToCart() {
+    const didAdd = await addItem(product.id, 1);
+    if (didAdd) navigate('/cart');
+  }
 
   return (
     <PageWrapper>
@@ -162,7 +168,7 @@ export default function ProductDetail() {
             <div className="flex justify-end pt-2">
               <button
                 className="button-primary min-h-[50px] min-w-[196px] gap-2 px-7 text-[15px]"
-                onClick={() => addItem(product.id, 1)}
+                onClick={handleAddToCart}
               >
                 <span>Add to cart</span>
                 <ShoppingCart className="h-5 w-5" strokeWidth={1.9} />
