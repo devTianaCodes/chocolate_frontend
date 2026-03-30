@@ -5,7 +5,7 @@ import { useCartStore } from '../../store/cartStore.js';
 import { formatPrice } from '../../utils/formatPrice.js';
 import { getDisplayProductName } from '../../utils/getDisplayProductName.js';
 
-const FREE_SHIPPING_THRESHOLD = 100;
+const FREE_SHIPPING_THRESHOLD = 50;
 
 function getEffectivePrice(item) {
   return Number(item?.discount_price || item?.price || 0);
