@@ -182,10 +182,11 @@ export default function ProductDetail() {
             </div>
             <div className="flex justify-end pt-2">
               <button
+                aria-label="Add to cart"
                 className="button-primary min-h-[50px] min-w-[196px] gap-2 px-7 text-[15px]"
                 onClick={handleAddToCart}
               >
-                <span>Add to cart</span>
+                <span>Add to</span>
                 <ShoppingCart className="h-5 w-5" strokeWidth={1.9} />
               </button>
             </div>
