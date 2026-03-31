@@ -1,10 +1,11 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import PageWrapper from '../components/layout/PageWrapper.jsx';
 import ProductCard from '../components/product/ProductCard.jsx';
 import Pagination from '../components/Pagination.jsx';
 import { fetchProducts } from '../api/products.js';
 import { getTotalPages, paginateItems, parsePageParam } from '../utils/pagination.js';
+import { scrollToSection } from '../utils/scrollToSection.js';
 
 const PAGE_SIZE = 12;
 
@@ -26,6 +27,8 @@ export default function Search() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const resultsRef = useRef(null);
+  const pendingPageScrollRef = useRef(false);
   const rawQuery = searchParams.get('q')?.trim() || '';
   const query = rawQuery.toLowerCase();
   const currentPage = parsePageParam(searchParams.get('page'));
@@ -87,8 +90,22 @@ export default function Search() {
     setSearchParams(nextParams, { replace: true });
   }, [currentPage, query, searchParams, setSearchParams, totalPages]);
 
+  useEffect(() => {
+    if (!pendingPageScrollRef.current || loading) return;
+    if (!results.length || !visibleResults.length || !resultsRef.current) {
+      pendingPageScrollRef.current = false;
+      return;
+    }
+
+    scrollToSection(resultsRef.current);
+    pendingPageScrollRef.current = false;
+  }, [loading, results.length, visibleResults.length, currentPage, query]);
+
   function handlePageChange(page) {
+    if (page === currentPage) return;
+
     const nextParams = new URLSearchParams(searchParams);
+    pendingPageScrollRef.current = true;
 
     if (page <= 1) {
       nextParams.delete('page');
@@ -121,7 +138,7 @@ export default function Search() {
       )}
       {!loading && !error && results.length > 0 && (
         <>
-          <section className="catalog-grid">
+          <section ref={resultsRef} className="catalog-grid">
             {visibleResults.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import PageWrapper from '../components/layout/PageWrapper.jsx';
 import { fetchProducts } from '../api/products.js';
@@ -6,6 +6,7 @@ import { fetchCategories, fetchProductsByCategory } from '../api/categories.js';
 import ProductCard from '../components/product/ProductCard.jsx';
 import Pagination from '../components/Pagination.jsx';
 import { getTotalPages, paginateItems, parsePageParam } from '../utils/pagination.js';
+import { scrollToSection } from '../utils/scrollToSection.js';
 
 const PAGE_SIZE = 12;
 const CATEGORY_BUTTON_BASE =
@@ -21,6 +22,8 @@ export default function Shop() {
   const [products, setProducts] = useState([]);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
+  const resultsRef = useRef(null);
+  const pendingPageScrollRef = useRef(false);
   const selectedCategory = searchParams.get('category') || 'all';
   const currentPage = parsePageParam(searchParams.get('page'));
 
@@ -87,8 +90,22 @@ export default function Shop() {
     setSearchParams(nextParams, { replace: true });
   }, [currentPage, searchParams, setSearchParams, totalPages]);
 
+  useEffect(() => {
+    if (!pendingPageScrollRef.current || loading) return;
+    if (!products.length || !visibleProducts.length || !resultsRef.current) {
+      pendingPageScrollRef.current = false;
+      return;
+    }
+
+    scrollToSection(resultsRef.current);
+    pendingPageScrollRef.current = false;
+  }, [loading, products.length, visibleProducts.length, currentPage, selectedCategory]);
+
   function handleCategoryChange(slug) {
+    if (slug === selectedCategory) return;
+
     const nextParams = new URLSearchParams(searchParams);
+    pendingPageScrollRef.current = true;
 
     if (slug === 'all') {
       nextParams.delete('category');
@@ -101,7 +118,10 @@ export default function Shop() {
   }
 
   function handlePageChange(page) {
+    if (page === currentPage) return;
+
     const nextParams = new URLSearchParams(searchParams);
+    pendingPageScrollRef.current = true;
 
     if (page <= 1) {
       nextParams.delete('page');
@@ -145,7 +165,7 @@ export default function Shop() {
 
       {!loading && !error && products.length > 0 && (
         <>
-          <section className="catalog-grid">
+          <section ref={resultsRef} className="catalog-grid">
             {visibleProducts.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
