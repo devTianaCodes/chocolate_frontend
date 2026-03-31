@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { ShoppingCart } from 'lucide-react';
+import { ShoppingCart, Star } from 'lucide-react';
 import PageWrapper from '../components/layout/PageWrapper.jsx';
 import { fetchProductBySlug } from '../api/products.js';
 import { formatPrice } from '../utils/formatPrice.js';
 import { getDisplayProductName } from '../utils/getDisplayProductName.js';
+import { getProductReviewSummary } from '../utils/getProductReviewSummary.js';
 import { useCartStore } from '../store/cartStore.js';
 
 export default function ProductDetail() {
@@ -47,6 +48,7 @@ export default function ProductDetail() {
       ? [{ url: product.image, alt_text: product.name, is_primary: true }]
       : [];
   const activeImage = hoveredImage || selectedImage || gallery[0]?.url || product?.image || '';
+  const reviews = getProductReviewSummary(product?.id);
   const specs = [
     {
       label: 'Weight',
@@ -65,6 +67,9 @@ export default function ProductDetail() {
       value: product?.category_name || 'Chocolate',
     },
   ];
+  const productDescription = product?.description
+    ? product.description.charAt(0).toUpperCase() + product.description.slice(1)
+    : '';
 
   async function handleAddToCart() {
     const didAdd = await addItem(product.id, 1);
@@ -125,7 +130,23 @@ export default function ProductDetail() {
               {product.category_name || 'Chocolate'}
             </p>
             <h1 className="text-panel-ink font-display text-display-md">{getDisplayProductName(product.name)}</h1>
-            <p className="text-panel-secondary text-body-md">{product.description}</p>
+            <div className="text-panel-secondary flex flex-wrap items-center gap-2 text-sm capitalize">
+              <div className="flex items-center gap-0.5" aria-label={`${reviews.rating} out of 5 stars`}>
+                {Array.from({ length: 5 }, (_, index) => (
+                  <Star
+                    key={index}
+                    className={`h-4 w-4 ${
+                      index < reviews.rating
+                        ? 'fill-[#d4a373] text-[#d4a373]'
+                        : 'text-[rgba(71,39,31,0.35)]'
+                    }`}
+                    strokeWidth={1.6}
+                  />
+                ))}
+              </div>
+              <span>{reviews.count} reviews</span>
+            </div>
+            <p className="text-panel-secondary text-body-md">{productDescription}</p>
             <div className="flex items-center gap-4">
               <span className="text-panel-ink font-mono text-lg">
                 {formatPrice(product.discount_price || product.price)}
