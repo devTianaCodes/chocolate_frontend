@@ -66,7 +66,7 @@ function SocialLink({ label, href, children }) {
 
 export default function Footer() {
   return (
-    <footer className="border-t border-border/30 bg-[rgba(79,33,33,0.85)] text-ink-primary">
+    <footer className="border-t border-border/30 bg-[#4f2121] text-ink-primary">
       <div className="mx-auto grid max-w-[1600px] gap-10 px-4 py-12 sm:px-5 md:grid-cols-2 md:gap-x-8 md:gap-y-10 md:px-8 lg:px-10 xl:grid-cols-[1fr_1fr_1fr_1fr_1.45fr] xl:gap-12 xl:px-14 xl:py-14">
         <FooterColumn title="The Company" links={companyLinks} />
         <FooterColumn title="Shop" links={shopLinks} />
