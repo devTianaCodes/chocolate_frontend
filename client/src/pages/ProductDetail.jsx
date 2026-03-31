@@ -12,6 +12,7 @@ export default function ProductDetail() {
   const navigate = useNavigate();
   const [product, setProduct] = useState(null);
   const [selectedImage, setSelectedImage] = useState('');
+  const [hoveredImage, setHoveredImage] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
   const addItem = useCartStore((state) => state.addItem);
@@ -26,6 +27,7 @@ export default function ProductDetail() {
         if (active) {
           setProduct(response.data);
           setSelectedImage(response.data.images?.[0]?.url || response.data.image || '');
+          setHoveredImage('');
         }
       } catch (err) {
         if (active) setError('Unable to load product.');
@@ -44,9 +46,7 @@ export default function ProductDetail() {
     : product?.image
       ? [{ url: product.image, alt_text: product.name, is_primary: true }]
       : [];
-  const activeImage = selectedImage || gallery[0]?.url || product?.image || '';
-  const hoverPreview =
-    gallery.find((image) => image.url !== activeImage) || null;
+  const activeImage = hoveredImage || selectedImage || gallery[0]?.url || product?.image || '';
   const specs = [
     {
       label: 'Weight',
@@ -79,24 +79,14 @@ export default function ProductDetail() {
       {!loading && !error && product && (
         <section className="grid gap-10 lg:grid-cols-[0.85fr_1fr] lg:items-start">
           <div className="space-y-4">
-            <div className="panel-wash-strong group mx-auto max-w-[320px] overflow-hidden sm:max-w-[360px] lg:max-w-[400px]">
+            <div className="panel-wash-strong mx-auto max-w-[320px] overflow-hidden sm:max-w-[360px] lg:max-w-[400px]">
               <div className="relative aspect-[4/5]">
                 <img
                   src={activeImage}
                   alt={product.name}
-                  className={`h-full w-full object-cover transition duration-500 ${
-                    hoverPreview ? 'group-hover:opacity-0' : ''
-                  }`}
+                  className="h-full w-full object-cover transition duration-300"
                   loading="eager"
                 />
-                {hoverPreview && (
-                  <img
-                    src={hoverPreview.url}
-                    alt={hoverPreview.alt_text || product.name}
-                    className="absolute inset-0 h-full w-full object-cover opacity-0 transition duration-500 group-hover:opacity-100"
-                    loading="lazy"
-                  />
-                )}
               </div>
             </div>
             {gallery.length > 1 && (
@@ -108,6 +98,10 @@ export default function ProductDetail() {
                       key={`${image.url}-${index}`}
                       type="button"
                       onClick={() => setSelectedImage(image.url)}
+                      onMouseEnter={() => setHoveredImage(image.url)}
+                      onMouseLeave={() => setHoveredImage('')}
+                      onFocus={() => setHoveredImage(image.url)}
+                      onBlur={() => setHoveredImage('')}
                       className={`panel-wash-strong w-[72px] overflow-hidden border transition sm:w-[84px] ${
                         isActive
                           ? 'border-[rgba(79,33,33,0.48)]'
