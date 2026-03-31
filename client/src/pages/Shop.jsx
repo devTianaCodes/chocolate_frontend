@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { ChevronDown } from 'lucide-react';
 import { useSearchParams } from 'react-router-dom';
 import PageWrapper from '../components/layout/PageWrapper.jsx';
 import { fetchProducts } from '../api/products.js';
@@ -22,7 +23,9 @@ export default function Shop() {
   const [products, setProducts] = useState([]);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
+  const [isMobileCategoryOpen, setIsMobileCategoryOpen] = useState(false);
   const resultsRef = useRef(null);
+  const mobileCategoryRef = useRef(null);
   const pendingPageScrollRef = useRef(false);
   const selectedCategory = searchParams.get('category') || 'all';
   const currentPage = parsePageParam(searchParams.get('page'));
@@ -91,6 +94,21 @@ export default function Shop() {
   }, [currentPage, searchParams, setSearchParams, totalPages]);
 
   useEffect(() => {
+    function handlePointerDown(event) {
+      if (!mobileCategoryRef.current?.contains(event.target)) {
+        setIsMobileCategoryOpen(false);
+      }
+    }
+
+    document.addEventListener('pointerdown', handlePointerDown);
+    return () => document.removeEventListener('pointerdown', handlePointerDown);
+  }, []);
+
+  useEffect(() => {
+    setIsMobileCategoryOpen(false);
+  }, [selectedCategory]);
+
+  useEffect(() => {
     if (!pendingPageScrollRef.current || loading) return;
     if (!products.length || !visibleProducts.length || !resultsRef.current) {
       pendingPageScrollRef.current = false;
@@ -117,6 +135,11 @@ export default function Shop() {
     setSearchParams(nextParams);
   }
 
+  const mobileCategoryLabel =
+    selectedCategory === 'all'
+      ? 'All categories'
+      : categories.find((category) => category.slug === selectedCategory)?.name || 'Categories';
+
   function handlePageChange(page) {
     if (page === currentPage) return;
 
@@ -134,10 +157,72 @@ export default function Shop() {
 
   return (
     <PageWrapper>
-      <header className="panel-wash-strong mb-10 flex flex-col gap-4 p-6 md:p-8">
+      <header className="panel-wash-strong relative z-20 mb-10 flex flex-col gap-4 overflow-visible p-6 md:p-8">
         <p className="text-panel-secondary text-xs uppercase tracking-[0.2em]">The collection</p>
         <h1 className="text-panel-ink font-display text-display-md">Shop</h1>
-        <div className="flex flex-wrap gap-3 pt-2">
+        <div ref={mobileCategoryRef} className="relative pt-1 md:hidden">
+          <button
+            type="button"
+            className="flex min-h-[48px] w-full items-center justify-between gap-4 border border-[rgba(125,82,71,0.34)] bg-[rgba(236,210,200,0.985)] px-4 py-3 text-left shadow-[0_10px_24px_rgba(79,33,33,0.11)] backdrop-blur-luxury"
+            aria-expanded={isMobileCategoryOpen}
+            aria-controls="shop-mobile-category-menu"
+            onClick={() => setIsMobileCategoryOpen((current) => !current)}
+          >
+            <span className="min-w-0">
+              <span className="text-panel-secondary block text-[10px] uppercase tracking-[0.16em]">
+                Category
+              </span>
+              <span className="text-panel-ink block truncate pt-1 text-sm font-medium uppercase tracking-[0.08em]">
+                {mobileCategoryLabel}
+              </span>
+            </span>
+            <ChevronDown
+              className={`text-panel-secondary h-4 w-4 shrink-0 transition duration-300 ${
+                isMobileCategoryOpen ? 'rotate-180' : ''
+              }`}
+              strokeWidth={1.8}
+            />
+          </button>
+          {isMobileCategoryOpen && (
+            <div
+              id="shop-mobile-category-menu"
+              className="absolute inset-x-0 top-[calc(100%+0.5rem)] z-30 flex flex-col overflow-hidden border border-[rgba(125,82,71,0.32)] bg-[rgba(226,191,180,0.992)] shadow-[0_16px_32px_rgba(79,33,33,0.16)] backdrop-blur-luxury"
+            >
+              <button
+                type="button"
+                className={`px-4 py-3 text-left text-sm font-medium uppercase tracking-[0.08em] transition ${
+                  selectedCategory === 'all'
+                    ? 'bg-[rgba(214,167,176,0.92)] text-panel-ink'
+                    : 'text-panel-secondary hover:bg-[rgba(79,33,33,0.06)] hover:text-panel-ink'
+                }`}
+                onClick={() => {
+                  setIsMobileCategoryOpen(false);
+                  handleCategoryChange('all');
+                }}
+              >
+                All categories
+              </button>
+              {categories.map((category) => (
+                <button
+                  key={category.id}
+                  type="button"
+                  className={`border-t border-[rgba(125,82,71,0.12)] px-4 py-3 text-left text-sm font-medium uppercase tracking-[0.08em] transition ${
+                    selectedCategory === category.slug
+                      ? 'bg-[rgba(214,167,176,0.92)] text-panel-ink'
+                      : 'text-panel-secondary hover:bg-[rgba(79,33,33,0.06)] hover:text-panel-ink'
+                  }`}
+                  onClick={() => {
+                    setIsMobileCategoryOpen(false);
+                    handleCategoryChange(category.slug);
+                  }}
+                >
+                  {category.name}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+        <div className="hidden flex-wrap gap-3 pt-2 md:flex">
           <button
             type="button"
             className={selectedCategory === 'all' ? CATEGORY_BUTTON_ACTIVE : CATEGORY_BUTTON_IDLE}

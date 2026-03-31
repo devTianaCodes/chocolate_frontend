@@ -9,7 +9,7 @@ export default function Favourites() {
 
   return (
     <PageWrapper>
-      <header className="panel-wash-strong mb-10 flex items-start justify-between gap-4 p-6 md:p-8">
+      <header className="panel-wash-strong mb-10 p-6 md:p-8">
         <div className="space-y-4">
           <p className="text-panel-secondary text-xs uppercase tracking-[0.2em]">Saved for later</p>
           <h1 className="text-panel-ink font-display text-display-md">Favourites</h1>
@@ -17,11 +17,6 @@ export default function Favourites() {
             Keep the bars and boxes you want close before the next order.
           </p>
         </div>
-        {items.length > 0 && (
-          <button type="button" className="button-ghost" onClick={clearFavourites}>
-            Empty favourites
-          </button>
-        )}
       </header>
 
       {items.length === 0 && (
@@ -34,11 +29,22 @@ export default function Favourites() {
       )}
 
       {items.length > 0 && (
-        <section className="catalog-grid">
-          {items.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </section>
+        <>
+          <section className="catalog-grid">
+            {items.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </section>
+          <div className="flex justify-center pt-8">
+            <button
+              type="button"
+              className="button-primary min-h-[46px] px-6"
+              onClick={clearFavourites}
+            >
+              Empty favourites
+            </button>
+          </div>
+        </>
       )}
     </PageWrapper>
   );
