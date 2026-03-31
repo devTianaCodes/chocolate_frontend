@@ -4,10 +4,9 @@ import PageWrapper from '../components/layout/PageWrapper.jsx';
 import ProductCard from '../components/product/ProductCard.jsx';
 import Pagination from '../components/Pagination.jsx';
 import { fetchProducts } from '../api/products.js';
+import useResponsivePageSize from '../hooks/useResponsivePageSize.js';
 import { getTotalPages, paginateItems, parsePageParam } from '../utils/pagination.js';
 import { scrollToSection } from '../utils/scrollToSection.js';
-
-const PAGE_SIZE = 12;
 
 function matchesQuery(product, query) {
   const haystack = [
@@ -29,6 +28,7 @@ export default function Search() {
   const [error, setError] = useState('');
   const resultsRef = useRef(null);
   const pendingPageScrollRef = useRef(false);
+  const pageSize = useResponsivePageSize();
   const rawQuery = searchParams.get('q')?.trim() || '';
   const query = rawQuery.toLowerCase();
   const currentPage = parsePageParam(searchParams.get('page'));
@@ -66,13 +66,13 @@ export default function Search() {
   }, [products, query]);
 
   const totalPages = useMemo(
-    () => getTotalPages(results.length, PAGE_SIZE),
-    [results.length]
+    () => getTotalPages(results.length, pageSize),
+    [results.length, pageSize]
   );
 
   const visibleResults = useMemo(
-    () => paginateItems(results, currentPage, PAGE_SIZE),
-    [currentPage, results]
+    () => paginateItems(results, currentPage, pageSize),
+    [currentPage, results, pageSize]
   );
 
   useEffect(() => {

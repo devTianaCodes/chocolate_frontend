@@ -4,10 +4,9 @@ import { fetchProductsByCategory } from '../api/categories.js';
 import PageWrapper from '../components/layout/PageWrapper.jsx';
 import ProductCard from '../components/product/ProductCard.jsx';
 import Pagination from '../components/Pagination.jsx';
+import useResponsivePageSize from '../hooks/useResponsivePageSize.js';
 import { getTotalPages, paginateItems, parsePageParam } from '../utils/pagination.js';
 import { scrollToSection } from '../utils/scrollToSection.js';
-
-const PAGE_SIZE = 12;
 
 export default function Gifts() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -16,6 +15,7 @@ export default function Gifts() {
   const [loading, setLoading] = useState(true);
   const resultsRef = useRef(null);
   const pendingPageScrollRef = useRef(false);
+  const pageSize = useResponsivePageSize();
   const currentPage = parsePageParam(searchParams.get('page'));
 
   useEffect(() => {
@@ -46,13 +46,13 @@ export default function Gifts() {
   }, []);
 
   const totalPages = useMemo(
-    () => getTotalPages(products.length, PAGE_SIZE),
-    [products.length]
+    () => getTotalPages(products.length, pageSize),
+    [products.length, pageSize]
   );
 
   const visibleProducts = useMemo(
-    () => paginateItems(products, currentPage, PAGE_SIZE),
-    [currentPage, products]
+    () => paginateItems(products, currentPage, pageSize),
+    [currentPage, products, pageSize]
   );
 
   useEffect(() => {

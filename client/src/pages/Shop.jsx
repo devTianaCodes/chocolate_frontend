@@ -6,10 +6,10 @@ import { fetchProducts } from '../api/products.js';
 import { fetchCategories, fetchProductsByCategory } from '../api/categories.js';
 import ProductCard from '../components/product/ProductCard.jsx';
 import Pagination from '../components/Pagination.jsx';
+import useResponsivePageSize from '../hooks/useResponsivePageSize.js';
 import { getTotalPages, paginateItems, parsePageParam } from '../utils/pagination.js';
 import { scrollToSection } from '../utils/scrollToSection.js';
 
-const PAGE_SIZE = 12;
 const CATEGORY_BUTTON_BASE =
   'border-[rgba(125,82,71,0.55)] shadow-[0_6px_13px_rgba(79,33,33,0.056)]';
 const CATEGORY_BUTTON_ACTIVE =
@@ -27,6 +27,7 @@ export default function Shop() {
   const resultsRef = useRef(null);
   const mobileCategoryRef = useRef(null);
   const pendingPageScrollRef = useRef(false);
+  const pageSize = useResponsivePageSize();
   const selectedCategory = searchParams.get('category') || 'all';
   const currentPage = parsePageParam(searchParams.get('page'));
 
@@ -76,13 +77,13 @@ export default function Shop() {
   }, [selectedCategory]);
 
   const totalPages = useMemo(
-    () => getTotalPages(products.length, PAGE_SIZE),
-    [products.length]
+    () => getTotalPages(products.length, pageSize),
+    [products.length, pageSize]
   );
 
   const visibleProducts = useMemo(
-    () => paginateItems(products, currentPage, PAGE_SIZE),
-    [products, currentPage]
+    () => paginateItems(products, currentPage, pageSize),
+    [products, currentPage, pageSize]
   );
 
   useEffect(() => {
