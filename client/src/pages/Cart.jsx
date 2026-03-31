@@ -35,7 +35,7 @@ export default function Cart() {
       )}
 
       {!loading && !error && items.length > 0 && (
-        <div className="grid gap-6 xl:grid-cols-[minmax(0,3fr)_minmax(320px,2fr)] xl:items-start">
+        <div className="grid gap-6 md:grid-cols-[minmax(0,3fr)_minmax(280px,2fr)] md:items-start">
           <div className="space-y-5">
             {items.map((item) => (
               <div key={item.id} className="panel-wash-strong flex flex-col gap-4 p-4 md:flex-row md:items-center">
@@ -73,7 +73,7 @@ export default function Cart() {
               </div>
             ))}
           </div>
-          <div className="panel-wash-strong p-6 xl:sticky xl:top-24">
+          <div className="panel-wash-strong p-6 md:sticky md:top-24">
             <div className="mb-4 flex items-center justify-between">
               <span className="text-panel-ink text-lg font-semibold">Subtotal</span>
               <span className="text-panel-ink font-mono text-xl font-semibold">{formatPrice(subtotal)}</span>

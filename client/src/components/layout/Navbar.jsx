@@ -41,19 +41,19 @@ export default function Navbar() {
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-border/35 bg-[#4f2121]">
-      <div className="flex h-[30px] items-center justify-center border-b border-border/20 bg-brand px-3 text-[10px] font-medium uppercase tracking-[0.16em] text-ink-invert md:text-[11px]">
+      <div className="flex min-h-[30px] items-center justify-center border-b border-border/20 bg-brand px-3 py-1 text-center text-[9px] font-medium uppercase tracking-[0.14em] text-ink-invert sm:text-[10px] md:text-[11px]">
         Free shipping on orders over €50
       </div>
-      <div className="mx-auto flex h-[72px] max-w-[1280px] items-center justify-between px-3 md:px-5 lg:px-8">
-        <div className="flex flex-col leading-none">
-          <Link to="/" className="whitespace-nowrap font-display text-[22px] italic tracking-[0.02em] text-ink-primary sm:text-[26px] md:text-[30px]">
+      <div className="mx-auto flex h-[68px] max-w-[1280px] items-center justify-between gap-4 px-3 sm:h-[72px] sm:px-4 md:px-5 lg:px-8">
+        <div className="min-w-0 flex flex-col leading-none">
+          <Link to="/" className="whitespace-nowrap font-display text-[20px] italic tracking-[0.02em] text-ink-primary sm:text-[24px] md:text-[26px] lg:text-[30px]">
             Chocolate Craft House
           </Link>
-          <span className="hidden pt-[5px] pb-0.5 text-[10px] uppercase tracking-[0.12em] text-ink-muted md:block">
+          <span className="hidden pt-[5px] pb-0.5 text-[10px] uppercase tracking-[0.1em] text-ink-muted lg:block">
             Artisan Chocolate Atelier
           </span>
         </div>
-        <nav className="hidden items-center gap-8 text-[13px] uppercase tracking-[0.1em] text-ink-secondary md:flex">
+        <nav className="hidden items-center gap-4 text-[12px] uppercase tracking-[0.08em] text-ink-secondary lg:flex xl:gap-7 xl:text-[13px] xl:tracking-[0.1em]">
           <Link to="/shop" className="hover:text-ink-primary">Shop</Link>
           <Link to="/favourites" className="hover:text-ink-primary">Favourites</Link>
           <Link to="/gifts" className="hover:text-ink-primary">Gifts</Link>
@@ -94,13 +94,13 @@ export default function Navbar() {
               onChange={(event) => setSearchTerm(event.target.value)}
               placeholder="Search"
               aria-label="Search products"
-              className="h-9 w-[220px] rounded-none border border-brand-light/40 bg-brand pl-10 pr-4 text-xs font-medium uppercase tracking-[0.12em] text-ink-invert shadow-[0_13px_28px_rgba(39,19,13,0.126)] placeholder:text-ink-invert/65 focus:border-brand-dark focus-visible:outline-none"
+              className="h-9 w-[150px] rounded-none border border-brand-light/40 bg-brand pl-10 pr-4 text-[11px] font-medium uppercase tracking-[0.1em] text-ink-invert shadow-[0_13px_28px_rgba(39,19,13,0.126)] placeholder:text-ink-invert/65 focus:border-brand-dark focus-visible:outline-none xl:w-[220px] xl:text-xs xl:tracking-[0.12em]"
             />
           </form>
         </nav>
         <button
           type="button"
-          className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.1em] text-ink-secondary md:hidden"
+          className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.1em] text-ink-secondary lg:hidden"
           aria-expanded={isMobileMenuOpen}
           aria-controls="mobile-nav"
           aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
@@ -113,7 +113,7 @@ export default function Navbar() {
       {isMobileMenuOpen && (
         <nav
           id="mobile-nav"
-          className="border-t border-border/30 bg-[#4f2121] px-3 py-4 md:hidden"
+          className="border-t border-border/30 bg-[#4f2121] px-3 py-4 lg:hidden"
         >
           <div className="flex flex-col gap-4 text-[13px] uppercase tracking-[0.1em] text-ink-secondary">
             <form className="relative" onSubmit={handleSearchSubmit}>
