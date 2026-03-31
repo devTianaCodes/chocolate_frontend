@@ -41,17 +41,17 @@ export default function ProductCard({ product }) {
 
   return (
     <article
-      className="panel-wash-strong group flex h-full cursor-pointer flex-col overflow-hidden transition duration-300 hover:-translate-y-1 hover:border-[rgba(79,33,33,0.42)]"
+      className="panel-wash-strong group flex h-full min-w-0 cursor-pointer flex-col overflow-hidden transition duration-300 hover:-translate-y-1 hover:border-[rgba(79,33,33,0.42)]"
       role="link"
       tabIndex={0}
       onClick={handleCardClick}
       onKeyDown={handleCardKeyDown}
     >
-      <div className="relative aspect-[15/16] overflow-hidden bg-[rgba(79,33,33,0.1)]">
+      <div className="relative aspect-[13/15] overflow-hidden bg-[rgba(79,33,33,0.1)] sm:aspect-[15/16]">
         <button
           type="button"
           aria-label={isFavourite ? 'Remove from favourites' : 'Add to favourites'}
-          className="absolute right-3 top-3 z-10 inline-flex items-center justify-center p-1 text-panel-ink transition hover:text-red-400"
+          className="absolute right-2.5 top-2.5 z-10 inline-flex items-center justify-center p-1 text-panel-ink transition hover:text-red-400 sm:right-3 sm:top-3"
           onClick={() => toggleFavourite(product)}
         >
           <Heart
@@ -87,26 +87,26 @@ export default function ProductCard({ product }) {
           />
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-[rgba(79,33,33,0.18)] via-transparent to-transparent opacity-0 transition duration-300 group-hover:opacity-100" />
-        <div className="absolute inset-x-4 bottom-4 opacity-0 transition duration-300 group-hover:opacity-100">
+        <div className="absolute inset-x-3 bottom-3 opacity-0 transition duration-300 group-hover:opacity-100 sm:inset-x-4 sm:bottom-4">
           <Link
             to={`/products/${product.slug}`}
-            className="button-ghost w-full border-[rgba(79,33,33,0.25)] bg-[rgba(252,223,214,0.88)] text-panel-ink backdrop-blur-md hover:bg-[rgba(252,223,214,0.96)]"
+            className="button-ghost min-h-[38px] w-full border-[rgba(79,33,33,0.25)] bg-[rgba(252,223,214,0.88)] px-4 py-2 text-[11px] tracking-[0.1em] text-panel-ink backdrop-blur-md hover:bg-[rgba(252,223,214,0.96)] sm:min-h-[42px] sm:px-6 sm:py-3 sm:text-xs sm:tracking-[0.12em]"
           >
             Quick view
           </Link>
         </div>
       </div>
-      <div className="flex flex-1 flex-col pt-6">
-        <div className="space-y-2 pl-7 pr-5">
-          <p className="text-panel-secondary text-[11px] uppercase tracking-[0.12em]">
+      <div className="flex flex-1 flex-col pt-4 sm:pt-5">
+        <div className="space-y-2 px-4 sm:px-5 xl:px-6">
+          <p className="text-panel-secondary text-[10px] uppercase tracking-[0.1em] sm:text-[11px] sm:tracking-[0.12em]">
             {product.category_name || 'Chocolate'}
           </p>
-          <h3 className="text-panel-ink font-display text-xl font-semibold">
+          <h3 className="text-panel-ink min-h-[2.65rem] font-display text-lg font-semibold leading-tight sm:min-h-[2.9rem] sm:text-xl xl:text-[22px]">
             <Link to={`/products/${product.slug}`} className="hover:opacity-85">
               {displayName}
             </Link>
           </h3>
-          <div className="text-panel-secondary flex items-center gap-1.5 text-sm">
+          <div className="text-panel-secondary flex flex-wrap items-center gap-1 text-[12px] sm:gap-1.5 sm:text-sm">
             <div className="flex items-center gap-0.5" aria-label={`${reviews.rating} out of 5 stars`}>
               {Array.from({ length: 5 }, (_, index) => (
                 <Star
@@ -122,19 +122,22 @@ export default function ProductCard({ product }) {
             </div>
             <span>{reviews.count} reviews</span>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             {Number(product.discount_price) > 0 && (
-              <span className="font-mono text-sm text-[rgba(71,39,31,0.58)] line-through">
+              <span className="font-mono text-xs text-[rgba(71,39,31,0.58)] line-through sm:text-sm">
                 {formatPrice(product.price)}
               </span>
             )}
-            <span className="text-panel-ink ml-auto text-right font-mono text-base">
+            <span className="text-panel-ink ml-auto text-right font-mono text-sm sm:text-base">
               {formatPrice(product.discount_price || product.price)}
             </span>
           </div>
         </div>
-        <div className="mt-auto px-[20px] pb-[20px] pt-3">
-          <button className="button-primary w-full gap-2" onClick={() => addItem(product, 1, { openDrawer: true })}>
+        <div className="mt-auto px-4 pb-4 pt-3 sm:px-5 sm:pb-5 xl:px-6">
+          <button
+            className="button-primary min-h-[42px] w-full gap-1.5 px-4 py-2.5 text-[11px] tracking-[0.1em] sm:min-h-[46px] sm:gap-2 sm:px-6 sm:py-3 sm:text-xs sm:tracking-[0.12em]"
+            onClick={() => addItem(product, 1, { openDrawer: true })}
+          >
             <span>Add to cart</span>
             <ShoppingCart className="h-4 w-4" strokeWidth={1.8} />
           </button>

@@ -67,13 +67,13 @@ function SocialLink({ label, href, children }) {
 export default function Footer() {
   return (
     <footer className="border-t border-border/30 bg-[rgba(79,33,33,0.85)] text-ink-primary">
-      <div className="mx-auto grid max-w-[1600px] gap-12 px-8 py-14 md:px-10 lg:grid-cols-[1fr_1fr_1fr_1fr_1.45fr] lg:px-14">
+      <div className="mx-auto grid max-w-[1600px] gap-10 px-4 py-12 sm:px-5 md:grid-cols-2 md:gap-x-8 md:gap-y-10 md:px-8 lg:px-10 xl:grid-cols-[1fr_1fr_1fr_1fr_1.45fr] xl:gap-12 xl:px-14 xl:py-14">
         <FooterColumn title="The Company" links={companyLinks} />
         <FooterColumn title="Shop" links={shopLinks} />
         <FooterColumn title="Support" links={supportLinks} />
         <FooterColumn title="Connect" links={connectLinks} />
 
-        <section className="space-y-6 lg:pl-10">
+        <section className="space-y-6 md:col-span-2 xl:col-span-1 xl:pl-10">
           <h2 className="text-xs uppercase tracking-[0.2em] text-brand">Keep In Touch</h2>
           <p className="max-w-[420px] text-[16px] leading-relaxed text-ink-secondary">
             Stay up-to-date on our latest haut-chocolat creations, exclusive offers and curated gifting releases.

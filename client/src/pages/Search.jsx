@@ -121,7 +121,7 @@ export default function Search() {
       )}
       {!loading && !error && results.length > 0 && (
         <>
-          <section className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <section className="catalog-grid">
             {visibleResults.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}

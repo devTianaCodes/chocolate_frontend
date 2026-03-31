@@ -34,7 +34,7 @@ export default function Favourites() {
       )}
 
       {items.length > 0 && (
-        <section className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <section className="catalog-grid">
           {items.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}

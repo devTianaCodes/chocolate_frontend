@@ -147,6 +147,10 @@ a {
   .section-label {
     @apply text-xs uppercase tracking-[0.2em] text-brand;
   }
+
+  .catalog-grid {
+    @apply grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-5 lg:grid-cols-6 lg:gap-6 xl:grid-cols-5;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
