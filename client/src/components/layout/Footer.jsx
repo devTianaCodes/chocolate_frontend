@@ -37,9 +37,9 @@ const connectLinks = [
 
 function FooterColumn({ title, links }) {
   return (
-    <section className="space-y-5">
-      <h2 className="text-xs uppercase tracking-[0.2em] text-brand">{title}</h2>
-      <ul className="space-y-3 text-[16px] leading-snug text-ink-secondary">
+    <section className="space-y-4">
+      <h2 className="text-ink-primary text-[11px] font-semibold uppercase tracking-[0.18em]">{title}</h2>
+      <ul className="space-y-2.5 text-[14px] leading-snug text-ink-secondary sm:text-[15px]">
         {links.map((link) => (
           <li key={link.label}>
             <Link to={link.to} className="transition hover:text-ink-primary">
@@ -57,7 +57,7 @@ function SocialLink({ label, href, children }) {
     <a
       href={href}
       aria-label={label}
-      className="inline-flex h-10 w-10 items-center justify-center rounded-none border border-brand/30 text-brand transition hover:border-brand hover:bg-brand/10 hover:text-ink-primary"
+      className="inline-flex h-9 w-9 items-center justify-center rounded-none border border-brand/30 text-brand transition hover:border-brand hover:bg-brand/10 hover:text-ink-primary"
     >
       {children}
     </a>
@@ -67,18 +67,18 @@ function SocialLink({ label, href, children }) {
 export default function Footer() {
   return (
     <footer className="border-t border-border/30 bg-[#4f2121] text-ink-primary">
-      <div className="mx-auto grid max-w-[1600px] gap-10 px-4 py-12 sm:px-5 md:grid-cols-2 md:gap-x-8 md:gap-y-10 md:px-8 lg:px-10 xl:grid-cols-[1fr_1fr_1fr_1fr_1.45fr] xl:gap-12 xl:px-14 xl:py-14">
+      <div className="mx-auto grid max-w-[1520px] grid-cols-2 gap-x-5 gap-y-8 px-4 py-10 sm:px-5 md:grid-cols-3 md:gap-x-7 md:gap-y-9 md:px-7 lg:grid-cols-[repeat(4,minmax(0,1fr))_minmax(240px,1.15fr)] lg:gap-x-8 lg:gap-y-8 lg:px-10 xl:px-12 xl:py-12">
         <FooterColumn title="The Company" links={companyLinks} />
         <FooterColumn title="Shop" links={shopLinks} />
         <FooterColumn title="Support" links={supportLinks} />
         <FooterColumn title="Connect" links={connectLinks} />
 
-        <section className="space-y-6 md:col-span-2 xl:col-span-1 xl:pl-10">
-          <h2 className="text-xs uppercase tracking-[0.2em] text-brand">Keep In Touch</h2>
-          <p className="max-w-[420px] text-[16px] leading-relaxed text-ink-secondary">
+        <section className="space-y-5 col-span-2 md:col-span-2 lg:col-span-1 lg:pl-3 xl:pl-6">
+          <h2 className="text-ink-primary text-[11px] font-semibold uppercase tracking-[0.18em]">Keep In Touch</h2>
+          <p className="max-w-[380px] text-[14px] leading-relaxed text-ink-secondary sm:text-[15px]">
             Stay up-to-date on our latest haut-chocolat creations, exclusive offers and curated gifting releases.
           </p>
-          <form className="flex max-w-[460px] flex-col gap-3 sm:flex-row" onSubmit={(event) => event.preventDefault()}>
+          <form className="flex max-w-[420px] flex-col gap-3 sm:flex-row lg:flex-col xl:flex-row" onSubmit={(event) => event.preventDefault()}>
             <label className="sr-only" htmlFor="footer-email">Email</label>
             <input
               id="footer-email"
@@ -90,7 +90,7 @@ export default function Footer() {
               Subscribe
             </button>
           </form>
-          <div className="flex items-center justify-center gap-4 pt-2">
+          <div className="flex flex-wrap items-center justify-start gap-3 pt-1">
             <SocialLink label="Facebook" href="https://facebook.com">
               <Facebook className="h-5 w-5" strokeWidth={2} />
             </SocialLink>
