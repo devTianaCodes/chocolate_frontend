@@ -120,7 +120,7 @@ a {
   }
 
   .button-primary {
-    @apply inline-flex items-center justify-center rounded-none bg-brand px-6 py-3 text-xs font-medium uppercase tracking-[0.12em] text-ink-invert transition duration-300;
+    @apply inline-flex items-center justify-center whitespace-nowrap rounded-none bg-brand px-6 py-3 text-xs font-medium uppercase tracking-[0.12em] text-ink-invert transition duration-300;
     box-shadow: 0 13px 28px rgba(39, 19, 13, 0.196);
   }
 
@@ -133,7 +133,7 @@ a {
   }
 
   .button-ghost {
-    @apply inline-flex items-center justify-center rounded-none px-6 py-3 text-xs font-medium uppercase tracking-[0.12em] transition duration-300;
+    @apply inline-flex items-center justify-center whitespace-nowrap rounded-none px-6 py-3 text-xs font-medium uppercase tracking-[0.12em] transition duration-300;
     color: rgb(var(--color-panel-ink));
     border: 1px solid rgba(var(--color-panel-border), 0.45);
   }
@@ -149,7 +149,7 @@ a {
   }
 
   .catalog-grid {
-    @apply grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-5 lg:grid-cols-6 lg:gap-6 xl:grid-cols-5;
+    @apply grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-5 lg:grid-cols-5 lg:gap-6;
   }
 }
 
