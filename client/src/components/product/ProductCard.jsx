@@ -125,7 +125,7 @@ export default function ProductCard({ product }) {
             <span>{reviews.count} reviews</span>
           </div>
         </div>
-        <div className="px-4 pb-4 pt-3 sm:px-5 xl:px-6">
+        <div className="mt-auto px-4 pt-4 sm:px-5 xl:px-6">
           <div className="flex items-center gap-2 sm:gap-3">
             {Number(product.discount_price) > 0 && (
               <span className="font-mono text-xs text-[rgba(71,39,31,0.58)] line-through sm:text-sm">
@@ -137,7 +137,7 @@ export default function ProductCard({ product }) {
             </span>
           </div>
         </div>
-        <div className="mt-auto px-4 pb-4 pt-3 sm:px-5 sm:pb-5 xl:px-6">
+        <div className="px-4 pb-4 pt-[15px] sm:px-5 sm:pb-5 xl:px-6">
           <button
             aria-label="Add to cart"
             className="button-primary min-h-[42px] w-full gap-1.5 px-4 py-2.5 text-[11px] tracking-[0.1em] sm:min-h-[46px] sm:gap-2 sm:px-6 sm:py-3 sm:text-xs sm:tracking-[0.12em]"
