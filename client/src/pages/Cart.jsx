@@ -4,11 +4,12 @@ import PageWrapper from '../components/layout/PageWrapper.jsx';
 import { useCartStore } from '../store/cartStore.js';
 import { formatPrice } from '../utils/formatPrice.js';
 import { getDisplayProductName } from '../utils/getDisplayProductName.js';
+import { getEffectivePrice } from '../utils/getEffectivePrice.js';
 
 export default function Cart() {
   const { items, loading, error, loadCart, updateItem, removeItem, emptyCart } = useCartStore();
   const subtotal = items.reduce((sum, item) => {
-    const unitPrice = Number(item.discount_price || item.price || 0);
+    const unitPrice = getEffectivePrice(item);
     return sum + unitPrice * Number(item.quantity || 0);
   }, 0);
 
@@ -61,7 +62,7 @@ export default function Cart() {
                 </div>
                 <div className="text-right">
                   <p className="text-panel-ink font-mono text-base">
-                    {formatPrice(item.discount_price || item.price)}
+                    {formatPrice(getEffectivePrice(item))}
                   </p>
                   <button
                     className="text-xs uppercase tracking-[0.1em] text-[#8c3f37]"

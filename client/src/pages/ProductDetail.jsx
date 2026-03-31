@@ -5,6 +5,7 @@ import PageWrapper from '../components/layout/PageWrapper.jsx';
 import { fetchProductBySlug } from '../api/products.js';
 import { formatPrice } from '../utils/formatPrice.js';
 import { getDisplayProductName } from '../utils/getDisplayProductName.js';
+import { getEffectivePrice } from '../utils/getEffectivePrice.js';
 import { getProductReviewSummary } from '../utils/getProductReviewSummary.js';
 import { useCartStore } from '../store/cartStore.js';
 
@@ -70,6 +71,7 @@ export default function ProductDetail() {
   const productDescription = product?.description
     ? product.description.charAt(0).toUpperCase() + product.description.slice(1)
     : '';
+  const effectivePrice = getEffectivePrice(product);
 
   async function handleAddToCart() {
     const didAdd = await addItem(product.id, 1);
@@ -149,7 +151,7 @@ export default function ProductDetail() {
             <p className="text-panel-secondary text-body-md">{productDescription}</p>
             <div className="flex items-center gap-4">
               <span className="text-panel-ink font-mono text-lg">
-                {formatPrice(product.discount_price || product.price)}
+                {formatPrice(effectivePrice)}
               </span>
               {Number(product.discount_price) > 0 && (
                 <span className="text-panel-muted font-mono text-sm line-through">

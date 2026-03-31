@@ -5,6 +5,7 @@ import { fetchCategories } from '../api/categories.js';
 import { createAdminProduct, fetchAdminProducts, updateAdminProduct } from '../api/admin.js';
 import { useAuthStore } from '../store/authStore.js';
 import { formatPrice } from '../utils/formatPrice.js';
+import { getEffectivePrice } from '../utils/getEffectivePrice.js';
 
 const initialForm = {
   category_id: '',
@@ -192,7 +193,7 @@ export default function AdminProducts() {
                     </div>
                     <div className="flex items-center gap-4">
                       <div className="text-body-sm text-ink-secondary md:text-right">
-                        <p className="font-mono text-ink-primary">{formatPrice(product.discount_price || product.price)}</p>
+                        <p className="font-mono text-ink-primary">{formatPrice(getEffectivePrice(product))}</p>
                         <p>Stock {product.inventory_quantity}</p>
                       </div>
                       <button

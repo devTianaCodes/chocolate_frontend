@@ -3,6 +3,7 @@ import { Heart, ShoppingCart, Star } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { formatPrice } from '../../utils/formatPrice.js';
 import { getDisplayProductName } from '../../utils/getDisplayProductName.js';
+import { getEffectivePrice } from '../../utils/getEffectivePrice.js';
 import { getProductReviewSummary } from '../../utils/getProductReviewSummary.js';
 import { useCartStore } from '../../store/cartStore.js';
 import { useFavouritesStore } from '../../store/favouritesStore.js';
@@ -18,6 +19,7 @@ export default function ProductCard({ product }) {
   const displayName = getDisplayProductName(product.name);
   const reviews = getProductReviewSummary(product.id);
   const hoverImage = product.hover_image && !hoverImageFailed ? product.hover_image : '';
+  const effectivePrice = getEffectivePrice(product);
 
   function openDetails() {
     navigate(`/products/${product.slug}`);
@@ -131,7 +133,7 @@ export default function ProductCard({ product }) {
               </span>
             )}
             <span className="text-panel-ink ml-auto text-right font-mono text-sm sm:text-base">
-              {formatPrice(product.discount_price || product.price)}
+              {formatPrice(effectivePrice)}
             </span>
           </div>
         </div>

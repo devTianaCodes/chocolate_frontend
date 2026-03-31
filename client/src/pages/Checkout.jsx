@@ -7,6 +7,7 @@ import { useAuthStore } from '../store/authStore.js';
 import { useCartStore } from '../store/cartStore.js';
 import { formatPrice } from '../utils/formatPrice.js';
 import { getDisplayProductName } from '../utils/getDisplayProductName.js';
+import { getEffectivePrice } from '../utils/getEffectivePrice.js';
 
 export default function Checkout() {
   const navigate = useNavigate();
@@ -26,7 +27,7 @@ export default function Checkout() {
   }, [loadCart]);
 
   const subtotal = items.reduce((sum, item) => {
-    const unitPrice = Number(item.discount_price || item.price || 0);
+    const unitPrice = getEffectivePrice(item);
     return sum + unitPrice * Number(item.quantity || 0);
   }, 0);
   const shippingTotal = items.length > 0 ? 6.5 : 0;
@@ -146,7 +147,7 @@ export default function Checkout() {
                     <p className="text-body-xs text-ink-muted">Qty {item.quantity}</p>
                   </div>
                   <span className="font-mono text-body-sm text-ink-primary">
-                    {formatPrice(Number(item.discount_price || item.price || 0) * Number(item.quantity || 0))}
+                    {formatPrice(getEffectivePrice(item) * Number(item.quantity || 0))}
                   </span>
                 </div>
               ))}
