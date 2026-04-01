@@ -151,6 +151,34 @@ a {
   .catalog-grid {
     @apply grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-5 lg:grid-cols-5 lg:gap-6;
   }
+
+  .offers-range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 13px;
+    height: 13px;
+    border-radius: 9999px;
+    background: rgba(214, 167, 176, 1);
+    border: 1px solid rgba(214, 167, 176, 1);
+    box-shadow: none;
+    cursor: pointer;
+    margin-top: -5.5px;
+  }
+
+  .offers-range::-moz-range-thumb {
+    width: 13px;
+    height: 13px;
+    border-radius: 9999px;
+    background: rgba(214, 167, 176, 1);
+    border: 1px solid rgba(214, 167, 176, 1);
+    box-shadow: none;
+    cursor: pointer;
+  }
+
+  .offers-range::-moz-range-track {
+    height: 2px;
+    background: transparent;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

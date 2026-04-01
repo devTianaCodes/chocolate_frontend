@@ -46,19 +46,25 @@ function formatFilterPrice(value) {
   }).format(value);
 }
 
-function FilterCheckbox({ checked, onChange, label, count }) {
+function FoodFilterButton({ selected, onClick, label, count }) {
   return (
-    <label className="flex items-center gap-3 text-panel-secondary">
-      <input
-        type="checkbox"
-        checked={checked}
-        onChange={onChange}
-        className="h-5 w-5 rounded-sm border-[#b65436] text-[#b65436] focus:ring-[#b65436]"
+    <button
+      type="button"
+      onClick={onClick}
+      className={`flex w-full items-center gap-3 py-2 text-left transition ${
+        selected ? 'text-panel-ink' : 'text-panel-secondary hover:text-panel-ink'
+      }`}
+    >
+      <span
+        className={`h-[13px] w-[13px] rounded-full border border-[rgba(214,167,176,1)] transition ${
+          selected ? 'bg-[rgba(214,167,176,1)]' : 'bg-transparent'
+        }`}
+        aria-hidden="true"
       />
-      <span className="text-body-sm text-panel-ink sm:text-body-md">
+      <span className="text-body-sm sm:text-body-md">
         {label} <span className="text-panel-secondary">({count})</span>
       </span>
-    </label>
+    </button>
   );
 }
 
@@ -345,7 +351,7 @@ export default function Offers() {
                       step="0.01"
                       value={priceRange.min ?? priceBounds.min}
                       onChange={(event) => updatePriceRange('min', Number(event.target.value))}
-                      className="relative z-[1] h-6 w-full appearance-none bg-transparent accent-[#b65436]"
+                      className="offers-range relative z-[1] h-6 w-full appearance-none bg-transparent accent-[#b65436]"
                     />
                     <input
                       type="range"
@@ -354,7 +360,7 @@ export default function Offers() {
                       step="0.01"
                       value={priceRange.max ?? priceBounds.max}
                       onChange={(event) => updatePriceRange('max', Number(event.target.value))}
-                      className="absolute inset-0 z-[2] h-6 w-full appearance-none bg-transparent accent-[#b65436]"
+                      className="offers-range absolute inset-0 z-[2] h-6 w-full appearance-none bg-transparent accent-[#b65436]"
                     />
                   </div>
                   <span className="min-w-[58px] text-right text-body-sm text-[#6a3427]">
@@ -365,12 +371,12 @@ export default function Offers() {
 
               <section className="space-y-4 border-t border-[rgba(193,88,55,0.48)] pt-5">
                 <p className="text-panel-ink text-body-md font-semibold">Food preferences</p>
-                <div className="space-y-4">
+                <div>
                   {foodOptions.map((option) => (
-                    <FilterCheckbox
+                    <FoodFilterButton
                       key={option.value}
-                      checked={selectedFoodFilters.includes(option.value)}
-                      onChange={() => toggleFoodFilter(option.value)}
+                      selected={selectedFoodFilters.includes(option.value)}
+                      onClick={() => toggleFoodFilter(option.value)}
                       label={option.label}
                       count={option.count}
                     />
