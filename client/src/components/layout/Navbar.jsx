@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Menu, Search, ShoppingCart, X } from 'lucide-react';
+import { Menu, Search, ShoppingCart, User, X } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../../store/authStore.js';
 import { useCartStore } from '../../store/cartStore.js';
@@ -57,8 +57,11 @@ export default function Navbar() {
           <Link to="/shop" className="hover:text-ink-primary">Shop</Link>
           <Link to="/favourites" className="hover:text-ink-primary">Favourites</Link>
           <Link to="/gifts" className="hover:text-ink-primary">Gifts</Link>
-          <Link to="/cart" className="relative inline-flex items-center gap-1 hover:text-ink-primary">
-            <span>Cart</span>
+          <Link
+            to="/cart"
+            aria-label="Cart"
+            className="relative inline-flex items-center justify-center hover:text-ink-primary"
+          >
             <span className="relative inline-flex">
               <ShoppingCart className="h-[15px] w-[15px]" strokeWidth={1.8} />
               {cartCount > 0 && (
@@ -70,7 +73,13 @@ export default function Navbar() {
           </Link>
           {user ? (
             <>
-              <Link to="/account" className="hover:text-ink-primary">Account</Link>
+              <Link
+                to="/account"
+                aria-label="Account"
+                className="inline-flex items-center justify-center hover:text-ink-primary"
+              >
+                <User className="h-[15px] w-[15px]" strokeWidth={1.8} />
+              </Link>
               {user?.role === 'admin' && (
                 <Link to="/admin/products" className="hover:text-ink-primary">Admin</Link>
               )}
@@ -80,7 +89,13 @@ export default function Navbar() {
             </>
           ) : (
             <>
-              <Link to="/login" className="hover:text-ink-primary">Login</Link>
+              <Link
+                to="/login"
+                aria-label="Login"
+                className="inline-flex items-center justify-center hover:text-ink-primary"
+              >
+                <User className="h-[15px] w-[15px]" strokeWidth={1.8} />
+              </Link>
             </>
           )}
           <form className="relative" onSubmit={handleSearchSubmit}>
@@ -133,8 +148,11 @@ export default function Navbar() {
             <Link to="/shop" className="hover:text-ink-primary">Shop</Link>
             <Link to="/favourites" className="hover:text-ink-primary">Favourites</Link>
             <Link to="/gifts" className="hover:text-ink-primary">Gifts</Link>
-            <Link to="/cart" className="inline-flex items-center gap-2 hover:text-ink-primary">
-              <span>Cart</span>
+            <Link
+              to="/cart"
+              aria-label="Cart"
+              className="inline-flex items-center gap-2 hover:text-ink-primary"
+            >
               <span className="relative inline-flex">
                 <ShoppingCart className="h-[16px] w-[16px]" strokeWidth={1.8} />
                 {cartCount > 0 && (
@@ -146,7 +164,13 @@ export default function Navbar() {
             </Link>
             {user ? (
               <>
-                <Link to="/account" className="hover:text-ink-primary">Account</Link>
+                <Link
+                  to="/account"
+                  aria-label="Account"
+                  className="inline-flex items-center gap-2 hover:text-ink-primary"
+                >
+                  <User className="h-[16px] w-[16px]" strokeWidth={1.8} />
+                </Link>
                 {user.role === 'admin' && (
                   <Link to="/admin/products" className="hover:text-ink-primary">Admin</Link>
                 )}
@@ -155,7 +179,13 @@ export default function Navbar() {
                 </button>
               </>
             ) : (
-              <Link to="/login" className="hover:text-ink-primary">Login</Link>
+              <Link
+                to="/login"
+                aria-label="Login"
+                className="inline-flex items-center gap-2 hover:text-ink-primary"
+              >
+                <User className="h-[16px] w-[16px]" strokeWidth={1.8} />
+              </Link>
             )}
           </div>
         </nav>
