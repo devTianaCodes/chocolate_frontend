@@ -44,7 +44,7 @@ export default function Navbar() {
       <div className="flex min-h-[30px] items-center justify-center border-b border-border/20 bg-brand px-3 py-1 text-center text-[9px] font-medium uppercase tracking-[0.14em] text-ink-invert sm:text-[10px] md:text-[11px]">
         Free shipping on orders over €50
       </div>
-      <div className="mx-auto flex h-[68px] max-w-[1280px] items-center justify-between gap-4 px-3 sm:h-[72px] sm:px-4 md:px-5 lg:px-8">
+      <div className="mx-auto flex h-[68px] max-w-[1440px] items-center gap-3 px-3 sm:h-[72px] sm:px-4 md:px-5 lg:gap-5 lg:px-8">
         <div className="min-w-0 flex flex-col leading-none">
           <Link to="/" className="whitespace-nowrap font-display text-[20px] italic tracking-[0.02em] text-ink-primary sm:text-[24px] md:text-[26px] lg:text-[30px]">
             Chocolate Craft House
@@ -53,10 +53,24 @@ export default function Navbar() {
             Artisan Chocolate Atelier
           </span>
         </div>
-        <nav className="hidden items-center gap-4 text-[12px] uppercase tracking-[0.08em] text-ink-secondary lg:flex xl:gap-7 xl:text-[13px] xl:tracking-[0.1em]">
+        <nav className="ml-auto hidden items-center gap-4 text-[12px] uppercase tracking-[0.08em] text-ink-secondary lg:flex xl:gap-5 xl:text-[13px] xl:tracking-[0.1em]">
           <Link to="/shop" className="hover:text-ink-primary">Shop</Link>
           <Link to="/favourites" className="hover:text-ink-primary">Favourites</Link>
           <Link to="/gifts" className="hover:text-ink-primary">Gifts</Link>
+          <form className="relative" onSubmit={handleSearchSubmit}>
+            <Search
+              className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-invert/75"
+              strokeWidth={1.8}
+            />
+            <input
+              type="search"
+              value={searchTerm}
+              onChange={(event) => setSearchTerm(event.target.value)}
+              placeholder="Search"
+              aria-label="Search products"
+              className="h-9 w-[150px] rounded-none border border-brand-light/40 bg-brand pl-10 pr-4 text-[11px] font-medium uppercase tracking-[0.1em] text-ink-invert shadow-[0_13px_28px_rgba(39,19,13,0.126)] placeholder:text-ink-invert/65 focus:border-brand-dark focus-visible:outline-none xl:w-[220px] xl:text-xs xl:tracking-[0.12em]"
+            />
+          </form>
           <Link
             to="/cart"
             aria-label="Cart"
@@ -88,30 +102,14 @@ export default function Navbar() {
               </button>
             </>
           ) : (
-            <>
-              <Link
-                to="/login"
-                aria-label="Login"
-                className="inline-flex items-center justify-center hover:text-ink-primary"
-              >
-                <User className="h-[15px] w-[15px]" strokeWidth={1.8} />
-              </Link>
-            </>
+            <Link
+              to="/login"
+              aria-label="Login"
+              className="inline-flex items-center justify-center hover:text-ink-primary"
+            >
+              <User className="h-[15px] w-[15px]" strokeWidth={1.8} />
+            </Link>
           )}
-          <form className="relative" onSubmit={handleSearchSubmit}>
-            <Search
-              className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-invert/75"
-              strokeWidth={1.8}
-            />
-            <input
-              type="search"
-              value={searchTerm}
-              onChange={(event) => setSearchTerm(event.target.value)}
-              placeholder="Search"
-              aria-label="Search products"
-              className="h-9 w-[150px] rounded-none border border-brand-light/40 bg-brand pl-10 pr-4 text-[11px] font-medium uppercase tracking-[0.1em] text-ink-invert shadow-[0_13px_28px_rgba(39,19,13,0.126)] placeholder:text-ink-invert/65 focus:border-brand-dark focus-visible:outline-none xl:w-[220px] xl:text-xs xl:tracking-[0.12em]"
-            />
-          </form>
         </nav>
         <button
           type="button"
