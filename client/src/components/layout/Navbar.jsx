@@ -111,17 +111,39 @@ export default function Navbar() {
             </Link>
           )}
         </nav>
-        <button
-          type="button"
-          className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.1em] text-ink-secondary lg:hidden"
-          aria-expanded={isMobileMenuOpen}
-          aria-controls="mobile-nav"
-          aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
-          onClick={toggleMobileMenu}
-        >
-          <span>Menu</span>
-          {isMobileMenuOpen ? <X className="h-4 w-4" strokeWidth={1.8} /> : <Menu className="h-4 w-4" strokeWidth={1.8} />}
-        </button>
+        <div className="ml-auto flex items-center gap-3 text-ink-secondary lg:hidden">
+          <button
+            type="button"
+            className="inline-flex items-center justify-center hover:text-ink-primary"
+            aria-expanded={isMobileMenuOpen}
+            aria-controls="mobile-nav"
+            aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
+            onClick={toggleMobileMenu}
+          >
+            {isMobileMenuOpen ? <X className="h-[18px] w-[18px]" strokeWidth={1.8} /> : <Menu className="h-[18px] w-[18px]" strokeWidth={1.8} />}
+          </button>
+          <Link
+            to="/cart"
+            aria-label="Cart"
+            className="relative inline-flex items-center justify-center hover:text-ink-primary"
+          >
+            <span className="relative inline-flex">
+              <ShoppingCart className="h-[18px] w-[18px]" strokeWidth={1.8} />
+              {cartCount > 0 && (
+                <span className="absolute -right-1.5 -top-2.5 inline-flex h-[14px] min-w-[14px] items-center justify-center rounded-pill bg-brand px-[3px] text-[8px] tracking-normal text-ink-invert">
+                  {cartCount}
+                </span>
+              )}
+            </span>
+          </Link>
+          <Link
+            to={user ? '/account' : '/login'}
+            aria-label={user ? 'Account' : 'Login'}
+            className="inline-flex items-center justify-center hover:text-ink-primary"
+          >
+            <User className="h-[18px] w-[18px]" strokeWidth={1.8} />
+          </Link>
+        </div>
       </div>
       {isMobileMenuOpen && (
         <nav
