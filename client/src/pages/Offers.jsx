@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { ChevronDown } from 'lucide-react';
 import { Link, useSearchParams } from 'react-router-dom';
 import PageWrapper from '../components/layout/PageWrapper.jsx';
 import ProductCard from '../components/product/ProductCard.jsx';
@@ -32,6 +33,8 @@ const CATEGORY_BUTTON_ACTIVE =
   `button-ghost bg-[rgba(214,167,176,0.92)] text-panel-ink ${CATEGORY_BUTTON_BASE} hover:bg-[rgba(214,167,176,1)]`;
 const CATEGORY_BUTTON_IDLE =
   `button-ghost bg-[rgb(252,223,214)] text-panel-ink ${CATEGORY_BUTTON_BASE} hover:bg-[rgb(255,235,229)]`;
+const FILTER_PRICE_MIN = 0;
+const FILTER_PRICE_MAX = 50;
 
 function getOfferPrice(product) {
   return Number(product.discount_price) > 0
@@ -127,17 +130,10 @@ export default function Offers() {
     [products]
   );
 
-  const priceBounds = useMemo(() => {
-    if (!offerProducts.length) {
-      return { min: 0, max: 0 };
-    }
-
-    const prices = offerProducts.map(getOfferPrice);
-    return {
-      min: Math.min(...prices),
-      max: Math.max(...prices),
-    };
-  }, [offerProducts]);
+  const priceBounds = useMemo(
+    () => ({ min: FILTER_PRICE_MIN, max: FILTER_PRICE_MAX }),
+    []
+  );
 
   useEffect(() => {
     if (!offerProducts.length) return;
@@ -309,11 +305,8 @@ export default function Offers() {
     <div className="space-y-7">
       <section className="space-y-4 border-t border-[rgba(193,88,55,0.48)] pt-5 first:border-t-0 first:pt-0">
         <p className="text-panel-ink text-body-md font-semibold">Price</p>
-        <div className="flex items-center gap-3">
-          <span className="min-w-[58px] text-body-sm text-[#6a3427]">
-            {formatFilterPrice(priceRange.min ?? priceBounds.min)}
-          </span>
-          <div className="relative flex-1">
+        <div className="space-y-2">
+          <div className="relative">
             <div className="absolute inset-x-0 top-1/2 h-[2px] -translate-y-1/2 bg-[rgba(182,84,54,0.28)]" />
             <input
               type="range"
@@ -334,9 +327,10 @@ export default function Offers() {
               className="offers-range absolute inset-0 z-[2] h-6 w-full appearance-none bg-transparent accent-[#b65436]"
             />
           </div>
-          <span className="min-w-[58px] text-right text-body-sm text-[#6a3427]">
-            {formatFilterPrice(priceRange.max ?? priceBounds.max)}
-          </span>
+          <div className="flex items-center justify-between gap-4 text-body-sm text-[#6a3427]">
+            <span>{formatFilterPrice(priceRange.min ?? priceBounds.min)}</span>
+            <span>{formatFilterPrice(priceRange.max ?? priceBounds.max)}</span>
+          </div>
         </div>
       </section>
 
@@ -385,16 +379,29 @@ export default function Offers() {
       {error && <p className="text-body-md text-red-300">{error}</p>}
 
       {!loading && !error && offerProducts.length > 0 && (
-        <div className="flex flex-col gap-6 lg:grid lg:grid-cols-[minmax(240px,0.3fr)_minmax(0,0.7fr)] lg:items-start lg:gap-8">
-          <div className="panel-wash-strong border border-[rgba(79,33,33,0.12)] p-4 sm:p-5 lg:hidden">
+        <div className="flex flex-col gap-6 md:grid md:grid-cols-[minmax(240px,0.3fr)_minmax(0,0.7fr)] md:items-start md:gap-8">
+          <div className="panel-wash-strong border border-[rgba(79,33,33,0.12)] p-4 sm:p-5 md:hidden">
             <div className="flex items-center justify-between gap-4">
               <button
                 type="button"
-                className="button-ghost px-4 py-2"
+                className="flex min-h-[44px] w-full items-center justify-between gap-4 border border-[rgba(125,82,71,0.34)] bg-[rgba(236,210,200,0.985)] px-4 py-3 text-left shadow-[0_10px_24px_rgba(79,33,33,0.11)] backdrop-blur-luxury"
                 onClick={() => setMobileFiltersOpen((current) => !current)}
                 aria-expanded={mobileFiltersOpen}
               >
-                {mobileFiltersOpen ? 'Hide filters' : 'Show filters'}
+                <span className="min-w-0">
+                  <span className="text-panel-secondary block text-[10px] uppercase tracking-[0.16em]">
+                    Filters
+                  </span>
+                  <span className="text-panel-ink block pt-1 text-sm font-medium uppercase tracking-[0.08em]">
+                    {mobileFiltersOpen ? 'Hide filters' : 'Show filters'}
+                  </span>
+                </span>
+                <ChevronDown
+                  className={`text-panel-secondary h-4 w-4 shrink-0 transition duration-300 ${
+                    mobileFiltersOpen ? 'rotate-180' : ''
+                  }`}
+                  strokeWidth={1.8}
+                />
               </button>
               {hasActiveFilters && (
                 <button
@@ -409,7 +416,7 @@ export default function Offers() {
             {mobileFiltersOpen && <div className="mt-5">{filterContent}</div>}
           </div>
 
-          <aside className="panel-wash-strong hidden border border-[rgba(79,33,33,0.12)] p-6 lg:sticky lg:top-[136px] lg:block lg:p-7">
+          <aside className="panel-wash-strong hidden border border-[rgba(79,33,33,0.12)] p-6 md:sticky md:top-[136px] md:block md:p-7">
             <div className="mb-6 flex items-center justify-between gap-4">
               <p className="text-panel-secondary text-[11px] uppercase tracking-[0.18em]">
                 Filter offers

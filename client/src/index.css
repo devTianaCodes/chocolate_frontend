@@ -162,7 +162,7 @@ a {
     border: 1px solid rgba(214, 167, 176, 1);
     box-shadow: none;
     cursor: pointer;
-    margin-top: -5.5px;
+    margin-top: -5px;
   }
 
   .offers-range::-moz-range-thumb {
