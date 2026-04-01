@@ -397,7 +397,10 @@ export default function Offers() {
           <div className="space-y-8">
             {filteredProducts.length > 0 ? (
               <>
-                <section ref={resultsRef} className="catalog-grid">
+                <section
+                  ref={resultsRef}
+                  className="grid grid-cols-2 gap-4 md:gap-5 lg:grid-cols-3 lg:gap-6"
+                >
                   {visibleProducts.map((product) => (
                     <ProductCard key={product.id} product={product} />
                   ))}
