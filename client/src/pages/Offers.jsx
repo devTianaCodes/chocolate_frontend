@@ -67,7 +67,7 @@ function CategoryPill({ selected, onClick, label }) {
     <button
       type="button"
       onClick={onClick}
-      className={selected ? CATEGORY_BUTTON_ACTIVE : CATEGORY_BUTTON_IDLE}
+      className={`${selected ? CATEGORY_BUTTON_ACTIVE : CATEGORY_BUTTON_IDLE} max-w-full whitespace-normal break-words text-left leading-tight`}
     >
       {label}
     </button>
@@ -312,8 +312,8 @@ export default function Offers() {
       {error && <p className="text-body-md text-red-300">{error}</p>}
 
       {!loading && !error && offerProducts.length > 0 && (
-        <div className="flex flex-col gap-8 lg:grid lg:grid-cols-[minmax(260px,0.3fr)_minmax(0,0.7fr)] lg:items-start lg:gap-8">
-          <aside className="panel-wash-strong border border-[rgba(79,33,33,0.12)] p-6 md:p-7 lg:sticky lg:top-[136px]">
+        <div className="flex flex-col gap-8 md:grid md:grid-cols-[minmax(240px,0.3fr)_minmax(0,0.7fr)] md:items-start md:gap-8">
+          <aside className="panel-wash-strong border border-[rgba(79,33,33,0.12)] p-6 md:sticky md:top-[136px] md:p-7">
             <div className="mb-6 flex items-center justify-between gap-4">
               <p className="text-panel-secondary text-[11px] uppercase tracking-[0.18em]">
                 Filter offers
