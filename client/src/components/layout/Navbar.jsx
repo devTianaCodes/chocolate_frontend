@@ -49,7 +49,7 @@ export default function Navbar() {
           <Link to="/" className="whitespace-nowrap font-display text-[20px] italic tracking-[0.02em] text-ink-primary sm:text-[24px] md:text-[26px] lg:text-[30px]">
             Chocolate Craft House
           </Link>
-          <span className="hidden pt-[5px] pb-0.5 text-[10px] uppercase tracking-[0.1em] text-ink-muted lg:block">
+          <span className="pt-[3px] pb-0.5 text-[8px] uppercase tracking-[0.08em] text-ink-muted sm:pt-[4px] sm:text-[9px] md:text-[10px]">
             Artisan Chocolate Atelier
           </span>
         </div>
