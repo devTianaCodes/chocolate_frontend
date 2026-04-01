@@ -46,10 +46,10 @@ export default function Navbar() {
       </div>
       <div className="mx-auto flex h-[68px] max-w-[1440px] items-center gap-3 px-3 sm:h-[72px] sm:px-4 md:px-5 lg:gap-5 lg:px-8">
         <div className="min-w-0 flex flex-col leading-none">
-          <Link to="/" className="whitespace-nowrap font-display text-[20px] italic tracking-[0.02em] text-ink-primary sm:text-[24px] md:text-[26px] lg:text-[30px]">
+          <Link to="/" className="whitespace-nowrap font-display text-[30px] italic tracking-[0.02em] text-ink-primary">
             Chocolate Craft House
           </Link>
-          <span className="pt-[3px] pb-0.5 text-[8px] uppercase tracking-[0.08em] text-ink-muted sm:pt-[4px] sm:text-[9px] md:text-[10px]">
+          <span className="pt-[4px] pb-0.5 text-[10px] uppercase tracking-[0.08em] text-ink-muted">
             Artisan Chocolate Atelier
           </span>
         </div>
@@ -170,29 +170,8 @@ export default function Navbar() {
             <Link to="/favourites" className="hover:text-ink-primary">Favourites</Link>
             <Link to="/gifts" className="hover:text-ink-primary">Gifts</Link>
             <Link to="/offers" className="hover:text-ink-primary">Offers</Link>
-            <Link
-              to="/cart"
-              aria-label="Cart"
-              className="inline-flex items-center gap-2 hover:text-ink-primary"
-            >
-              <span className="relative inline-flex">
-                <ShoppingCart className="h-[16px] w-[16px]" strokeWidth={1.8} />
-                {cartCount > 0 && (
-                  <span className="absolute -right-1.5 -top-2.5 inline-flex h-[14px] min-w-[14px] items-center justify-center rounded-pill bg-brand px-[3px] text-[8px] tracking-normal text-ink-invert">
-                    {cartCount}
-                  </span>
-                )}
-              </span>
-            </Link>
             {user ? (
               <>
-                <Link
-                  to="/account"
-                  aria-label="Account"
-                  className="inline-flex items-center gap-2 hover:text-ink-primary"
-                >
-                  <User className="h-[16px] w-[16px]" strokeWidth={1.8} />
-                </Link>
                 {user.role === 'admin' && (
                   <Link to="/admin/products" className="hover:text-ink-primary">Admin</Link>
                 )}
@@ -200,15 +179,7 @@ export default function Navbar() {
                   Logout
                 </button>
               </>
-            ) : (
-              <Link
-                to="/login"
-                aria-label="Login"
-                className="inline-flex items-center gap-2 hover:text-ink-primary"
-              >
-                <User className="h-[16px] w-[16px]" strokeWidth={1.8} />
-              </Link>
-            )}
+            ) : null}
           </div>
         </nav>
       )}
