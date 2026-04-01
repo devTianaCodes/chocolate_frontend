@@ -57,6 +57,7 @@ export default function Navbar() {
           <Link to="/shop" className="hover:text-ink-primary">Shop</Link>
           <Link to="/favourites" className="hover:text-ink-primary">Favourites</Link>
           <Link to="/gifts" className="hover:text-ink-primary">Gifts</Link>
+          <Link to="/offers" className="hover:text-ink-primary">Offers</Link>
           <form className="relative" onSubmit={handleSearchSubmit}>
             <Search
               className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-invert/75"
@@ -168,6 +169,7 @@ export default function Navbar() {
             <Link to="/shop" className="hover:text-ink-primary">Shop</Link>
             <Link to="/favourites" className="hover:text-ink-primary">Favourites</Link>
             <Link to="/gifts" className="hover:text-ink-primary">Gifts</Link>
+            <Link to="/offers" className="hover:text-ink-primary">Offers</Link>
             <Link
               to="/cart"
               aria-label="Cart"
