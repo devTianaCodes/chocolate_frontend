@@ -26,6 +26,13 @@ const FOOD_FILTERS = [
   },
 ];
 
+const CATEGORY_BUTTON_BASE =
+  'rounded-none border-[rgba(125,82,71,0.55)] shadow-[0_6px_13px_rgba(79,33,33,0.056)]';
+const CATEGORY_BUTTON_ACTIVE =
+  `button-ghost bg-[rgba(214,167,176,0.92)] text-panel-ink ${CATEGORY_BUTTON_BASE} hover:bg-[rgba(214,167,176,1)]`;
+const CATEGORY_BUTTON_IDLE =
+  `button-ghost bg-[rgb(252,223,214)] text-panel-ink ${CATEGORY_BUTTON_BASE} hover:bg-[rgb(255,235,229)]`;
+
 function getOfferPrice(product) {
   return Number(product.discount_price) > 0
     ? Number(product.discount_price)
@@ -55,18 +62,14 @@ function FilterCheckbox({ checked, onChange, label, count }) {
   );
 }
 
-function CategoryPill({ selected, onClick, label, count }) {
+function CategoryPill({ selected, onClick, label }) {
   return (
     <button
       type="button"
       onClick={onClick}
-      className={`border-b pb-1 text-body-sm font-medium transition ${
-        selected
-          ? 'border-[#b65436] text-panel-ink'
-          : 'border-transparent text-panel-secondary hover:border-[rgba(79,33,33,0.18)] hover:text-panel-ink'
-      }`}
+      className={selected ? CATEGORY_BUTTON_ACTIVE : CATEGORY_BUTTON_IDLE}
     >
-      {label} <span className="text-panel-secondary">({count})</span>
+      {label}
     </button>
   );
 }
@@ -310,7 +313,7 @@ export default function Offers() {
 
       {!loading && !error && offerProducts.length > 0 && (
         <div className="flex flex-col gap-8 lg:grid lg:grid-cols-[minmax(260px,0.3fr)_minmax(0,0.7fr)] lg:items-start lg:gap-8">
-          <aside className="panel-wash-strong p-6 md:p-7 lg:sticky lg:top-[136px]">
+          <aside className="panel-wash-strong border border-[rgba(79,33,33,0.12)] p-6 md:p-7 lg:sticky lg:top-[136px]">
             <div className="mb-6 flex items-center justify-between gap-4">
               <p className="text-panel-secondary text-[11px] uppercase tracking-[0.18em]">
                 Filter offers
@@ -377,14 +380,13 @@ export default function Offers() {
 
               <section className="space-y-4 border-t border-[rgba(193,88,55,0.48)] pt-5">
                 <p className="text-panel-ink text-body-md font-semibold">Chocolate type</p>
-                <div className="flex flex-wrap gap-x-4 gap-y-3">
+                <div className="flex flex-wrap gap-3">
                   {categoryOptions.map((category) => (
                     <CategoryPill
                       key={category.slug}
                       selected={selectedCategorySlugs.includes(category.slug)}
                       onClick={() => toggleCategory(category.slug)}
                       label={category.name}
-                      count={category.count}
                     />
                   ))}
                 </div>
