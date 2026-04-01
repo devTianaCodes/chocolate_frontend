@@ -85,6 +85,7 @@ export default function Offers() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const [selectedFoodFilters, setSelectedFoodFilters] = useState([]);
   const [selectedCategorySlugs, setSelectedCategorySlugs] = useState([]);
   const [priceRange, setPriceRange] = useState({ min: null, max: null });
@@ -304,6 +305,72 @@ export default function Offers() {
     priceRange.min !== priceBounds.min ||
     priceRange.max !== priceBounds.max;
 
+  const filterContent = (
+    <div className="space-y-7">
+      <section className="space-y-4 border-t border-[rgba(193,88,55,0.48)] pt-5 first:border-t-0 first:pt-0">
+        <p className="text-panel-ink text-body-md font-semibold">Price</p>
+        <div className="flex items-center gap-3">
+          <span className="min-w-[58px] text-body-sm text-[#6a3427]">
+            {formatFilterPrice(priceRange.min ?? priceBounds.min)}
+          </span>
+          <div className="relative flex-1">
+            <div className="absolute inset-x-0 top-1/2 h-[2px] -translate-y-1/2 bg-[rgba(182,84,54,0.28)]" />
+            <input
+              type="range"
+              min={priceBounds.min}
+              max={priceBounds.max}
+              step="0.01"
+              value={priceRange.min ?? priceBounds.min}
+              onChange={(event) => updatePriceRange('min', Number(event.target.value))}
+              className="offers-range relative z-[1] h-6 w-full appearance-none bg-transparent accent-[#b65436]"
+            />
+            <input
+              type="range"
+              min={priceBounds.min}
+              max={priceBounds.max}
+              step="0.01"
+              value={priceRange.max ?? priceBounds.max}
+              onChange={(event) => updatePriceRange('max', Number(event.target.value))}
+              className="offers-range absolute inset-0 z-[2] h-6 w-full appearance-none bg-transparent accent-[#b65436]"
+            />
+          </div>
+          <span className="min-w-[58px] text-right text-body-sm text-[#6a3427]">
+            {formatFilterPrice(priceRange.max ?? priceBounds.max)}
+          </span>
+        </div>
+      </section>
+
+      <section className="space-y-4 border-t border-[rgba(193,88,55,0.48)] pt-5">
+        <p className="text-panel-ink text-body-md font-semibold">Food preferences</p>
+        <div>
+          {foodOptions.map((option) => (
+            <FoodFilterButton
+              key={option.value}
+              selected={selectedFoodFilters.includes(option.value)}
+              onClick={() => toggleFoodFilter(option.value)}
+              label={option.label}
+              count={option.count}
+            />
+          ))}
+        </div>
+      </section>
+
+      <section className="space-y-4 border-t border-[rgba(193,88,55,0.48)] pt-5">
+        <p className="text-panel-ink text-body-md font-semibold">Chocolate type</p>
+        <div className="flex flex-wrap gap-3">
+          {categoryOptions.map((category) => (
+            <CategoryPill
+              key={category.slug}
+              selected={selectedCategorySlugs.includes(category.slug)}
+              onClick={() => toggleCategory(category.slug)}
+              label={category.name}
+            />
+          ))}
+        </div>
+      </section>
+    </div>
+  );
+
   return (
     <PageWrapper>
       <header className="panel-wash-strong mb-10 flex flex-col gap-4 p-6 md:p-8">
@@ -318,8 +385,31 @@ export default function Offers() {
       {error && <p className="text-body-md text-red-300">{error}</p>}
 
       {!loading && !error && offerProducts.length > 0 && (
-        <div className="flex flex-col gap-8 md:grid md:grid-cols-[minmax(240px,0.3fr)_minmax(0,0.7fr)] md:items-start md:gap-8">
-          <aside className="panel-wash-strong border border-[rgba(79,33,33,0.12)] p-6 md:sticky md:top-[136px] md:p-7">
+        <div className="flex flex-col gap-6 lg:grid lg:grid-cols-[minmax(240px,0.3fr)_minmax(0,0.7fr)] lg:items-start lg:gap-8">
+          <div className="panel-wash-strong border border-[rgba(79,33,33,0.12)] p-4 sm:p-5 lg:hidden">
+            <div className="flex items-center justify-between gap-4">
+              <button
+                type="button"
+                className="button-ghost px-4 py-2"
+                onClick={() => setMobileFiltersOpen((current) => !current)}
+                aria-expanded={mobileFiltersOpen}
+              >
+                {mobileFiltersOpen ? 'Hide filters' : 'Show filters'}
+              </button>
+              {hasActiveFilters && (
+                <button
+                  type="button"
+                  className="text-body-xs font-medium uppercase tracking-[0.14em] text-[#a94b31] transition hover:text-[#8d3720]"
+                  onClick={clearFilters}
+                >
+                  Clear all
+                </button>
+              )}
+            </div>
+            {mobileFiltersOpen && <div className="mt-5">{filterContent}</div>}
+          </div>
+
+          <aside className="panel-wash-strong hidden border border-[rgba(79,33,33,0.12)] p-6 lg:sticky lg:top-[136px] lg:block lg:p-7">
             <div className="mb-6 flex items-center justify-between gap-4">
               <p className="text-panel-secondary text-[11px] uppercase tracking-[0.18em]">
                 Filter offers
@@ -334,70 +424,7 @@ export default function Offers() {
                 </button>
               )}
             </div>
-
-            <div className="space-y-7">
-              <section className="space-y-4 border-t border-[rgba(193,88,55,0.48)] pt-5 first:border-t-0 first:pt-0">
-                <p className="text-panel-ink text-body-md font-semibold">Price</p>
-                <div className="flex items-center gap-3">
-                  <span className="min-w-[58px] text-body-sm text-[#6a3427]">
-                    {formatFilterPrice(priceRange.min ?? priceBounds.min)}
-                  </span>
-                  <div className="relative flex-1">
-                    <div className="absolute inset-x-0 top-1/2 h-[2px] -translate-y-1/2 bg-[rgba(182,84,54,0.28)]" />
-                    <input
-                      type="range"
-                      min={priceBounds.min}
-                      max={priceBounds.max}
-                      step="0.01"
-                      value={priceRange.min ?? priceBounds.min}
-                      onChange={(event) => updatePriceRange('min', Number(event.target.value))}
-                      className="offers-range relative z-[1] h-6 w-full appearance-none bg-transparent accent-[#b65436]"
-                    />
-                    <input
-                      type="range"
-                      min={priceBounds.min}
-                      max={priceBounds.max}
-                      step="0.01"
-                      value={priceRange.max ?? priceBounds.max}
-                      onChange={(event) => updatePriceRange('max', Number(event.target.value))}
-                      className="offers-range absolute inset-0 z-[2] h-6 w-full appearance-none bg-transparent accent-[#b65436]"
-                    />
-                  </div>
-                  <span className="min-w-[58px] text-right text-body-sm text-[#6a3427]">
-                    {formatFilterPrice(priceRange.max ?? priceBounds.max)}
-                  </span>
-                </div>
-              </section>
-
-              <section className="space-y-4 border-t border-[rgba(193,88,55,0.48)] pt-5">
-                <p className="text-panel-ink text-body-md font-semibold">Food preferences</p>
-                <div>
-                  {foodOptions.map((option) => (
-                    <FoodFilterButton
-                      key={option.value}
-                      selected={selectedFoodFilters.includes(option.value)}
-                      onClick={() => toggleFoodFilter(option.value)}
-                      label={option.label}
-                      count={option.count}
-                    />
-                  ))}
-                </div>
-              </section>
-
-              <section className="space-y-4 border-t border-[rgba(193,88,55,0.48)] pt-5">
-                <p className="text-panel-ink text-body-md font-semibold">Chocolate type</p>
-                <div className="flex flex-wrap gap-3">
-                  {categoryOptions.map((category) => (
-                    <CategoryPill
-                      key={category.slug}
-                      selected={selectedCategorySlugs.includes(category.slug)}
-                      onClick={() => toggleCategory(category.slug)}
-                      label={category.name}
-                    />
-                  ))}
-                </div>
-              </section>
-            </div>
+            {filterContent}
           </aside>
 
           <div className="space-y-8">
