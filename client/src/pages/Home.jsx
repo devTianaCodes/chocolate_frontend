@@ -2,14 +2,19 @@ import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { fetchProducts } from '../api/products.js';
 import PageWrapper from '../components/layout/PageWrapper.jsx';
+import Pagination from '../components/Pagination.jsx';
 import ProductCard from '../components/product/ProductCard.jsx';
 import luxuryDarkChocolateImage from '../assets/luxury-dark-chocolate.png';
+import useResponsivePageSize from '../hooks/useResponsivePageSize.js';
 import { getProductReviewSummary } from '../utils/getProductReviewSummary.js';
+import { getTotalPages, paginateItems } from '../utils/pagination.js';
 
 export default function Home() {
   const [products, setProducts] = useState([]);
   const [loadingLoved, setLoadingLoved] = useState(true);
   const [lovedError, setLovedError] = useState('');
+  const [currentLovedPage, setCurrentLovedPage] = useState(1);
+  const lovedPageSize = useResponsivePageSize();
 
   useEffect(() => {
     let active = true;
@@ -57,14 +62,28 @@ export default function Home() {
         }
 
         return Number(left.id) - Number(right.id);
-      })
-      .slice(0, 6);
+      });
   }, [products]);
+
+  const lovedTotalPages = useMemo(
+    () => getTotalPages(mostLovedProducts.length, lovedPageSize),
+    [mostLovedProducts.length, lovedPageSize]
+  );
+
+  const visibleLovedProducts = useMemo(
+    () => paginateItems(mostLovedProducts, currentLovedPage, lovedPageSize),
+    [mostLovedProducts, currentLovedPage, lovedPageSize]
+  );
+
+  useEffect(() => {
+    if (currentLovedPage <= lovedTotalPages) return;
+    setCurrentLovedPage(lovedTotalPages);
+  }, [currentLovedPage, lovedTotalPages]);
 
   return (
     <PageWrapper>
-      <section className="grid gap-8 lg:min-h-[calc(100vh-240px)] lg:grid-cols-[1fr_1.05fr] lg:items-center">
-        <div className="space-y-6 py-8 lg:py-16">
+      <section className="grid gap-8 md:grid-cols-[1fr_1.02fr] md:items-center lg:min-h-[calc(100vh-240px)] lg:grid-cols-[1fr_1.05fr]">
+        <div className="space-y-6 py-8 md:py-10 lg:py-16">
           <p className="text-xs uppercase tracking-[0.2em] text-white">Single-harvest cacao</p>
           <h1 className="max-w-3xl font-display text-display-md font-bold italic text-[#612E35] md:text-display-lg">
             Luxury chocolate, tempered slowly and savored deeply.
@@ -81,7 +100,7 @@ export default function Home() {
             </Link>
           </div>
         </div>
-        <div className="relative lg:-mr-8 lg:self-center">
+        <div className="relative md:self-center lg:-mr-8">
           <img
             src={luxuryDarkChocolateImage}
             alt="Luxury dark chocolate bars in high definition"
@@ -121,11 +140,18 @@ export default function Home() {
         )}
 
         {!loadingLoved && !lovedError && mostLovedProducts.length > 0 && (
-          <div className="grid grid-cols-2 gap-4 md:gap-5 lg:grid-cols-3 lg:gap-6">
-            {mostLovedProducts.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
+          <>
+            <div className="grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-5 lg:grid-cols-5 lg:gap-6">
+              {visibleLovedProducts.map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
+            </div>
+            <Pagination
+              currentPage={currentLovedPage}
+              totalPages={lovedTotalPages}
+              onPageChange={setCurrentLovedPage}
+            />
+          </>
         )}
 
         {!loadingLoved && !lovedError && mostLovedProducts.length === 0 && (
