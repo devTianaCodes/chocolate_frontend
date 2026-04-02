@@ -4,7 +4,7 @@ import { fetchProducts } from '../api/products.js';
 import PageWrapper from '../components/layout/PageWrapper.jsx';
 import Pagination from '../components/Pagination.jsx';
 import ProductCard from '../components/product/ProductCard.jsx';
-import luxuryDarkChocolateImage from '../assets/luxury-dark-chocolate.png';
+import homeHeroWideImage from '../assets/Gemini_Generated_Image_gjugi9gjugi9gjug.png';
 import useResponsivePageSize from '../hooks/useResponsivePageSize.js';
 import { getProductReviewSummary } from '../utils/getProductReviewSummary.js';
 import { getTotalPages, paginateItems } from '../utils/pagination.js';
@@ -82,13 +82,25 @@ export default function Home() {
 
   return (
     <PageWrapper>
-      <section className="grid gap-8 md:grid-cols-[1fr_1.02fr] md:items-center lg:min-h-[calc(100vh-240px)] lg:grid-cols-[1fr_1.05fr]">
-        <div className="space-y-6 py-8 md:py-10 lg:py-16">
-          <p className="text-xs uppercase tracking-[0.2em] text-white">Single-harvest cacao</p>
-          <h1 className="max-w-3xl font-display text-display-md font-bold italic text-[#612E35] md:text-display-lg">
+      <section className="-mt-[98px] space-y-3 sm:-mt-[102px] md:-mt-[102px] md:space-y-4">
+        <div className="relative left-1/2 w-screen -translate-x-1/2 overflow-hidden">
+          <img
+            src={homeHeroWideImage}
+            alt="Luxury chocolate assortment in high definition"
+            className="h-[340px] w-full object-cover sm:h-[420px] md:h-[520px] lg:h-[620px]"
+          />
+          <div className="pointer-events-none absolute inset-y-0 left-0 w-12 bg-[linear-gradient(to_right,rgb(var(--color-page-bg))_0%,rgba(249,207,191,0.18)_38%,transparent_100%)] sm:w-16 md:w-20" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-12 bg-[linear-gradient(to_left,rgb(var(--color-page-bg))_0%,rgba(249,207,191,0.18)_38%,transparent_100%)] sm:w-16 md:w-20" />
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-6 bg-[linear-gradient(to_bottom,rgb(var(--color-page-bg))_0%,rgba(249,207,191,0.18)_38%,transparent_100%)] sm:h-8 md:h-10" />
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-6 bg-[linear-gradient(to_top,rgb(var(--color-page-bg))_0%,rgba(249,207,191,0.18)_38%,transparent_100%)] sm:h-8 md:h-10" />
+        </div>
+
+        <div className="relative left-1/2 w-screen -translate-x-1/2 px-3 pb-2 sm:px-4 md:px-5 lg:px-8">
+          <div className="space-y-6">
+          <h1 className="w-full font-display text-display-md font-bold italic text-[#612E35] md:text-display-lg">
             Luxury chocolate, tempered slowly and savored deeply.
           </h1>
-          <p className="max-w-2xl text-justify text-body-lg text-[#612E35]">
+          <p className="w-full text-justify text-body-lg text-[#612E35]">
             Chocolate Craft House grows from an atelier tradition where each batch is tempered with patience and finished by hand. Our shop pairs a classic chocolate-making legacy with modern small-batch discipline, so every bar and praline lands with deep flavor, clean snap, and premium ingredients you can taste immediately.
           </p>
           <div className="flex flex-wrap gap-4">
@@ -99,24 +111,14 @@ export default function Home() {
               Enter the atelier
             </Link>
           </div>
-        </div>
-        <div className="relative md:self-center lg:-mr-8">
-          <img
-            src={luxuryDarkChocolateImage}
-            alt="Luxury dark chocolate bars in high definition"
-            className="h-[470px] w-full object-cover [mask-image:radial-gradient(ellipse_at_center,black_82%,transparent_100%)] [-webkit-mask-image:radial-gradient(ellipse_at_center,black_82%,transparent_100%)] md:h-[620px]"
-          />
-          <div className="pointer-events-none absolute inset-y-0 left-0 w-16 bg-[linear-gradient(to_right,rgb(var(--color-page-bg))_0%,rgba(249,207,191,0.44)_34%,transparent_100%)] md:w-20" />
-          <div className="pointer-events-none absolute inset-y-0 right-0 w-16 bg-[linear-gradient(to_left,rgb(var(--color-page-bg))_0%,rgba(249,207,191,0.44)_34%,transparent_100%)] md:w-20" />
-          <div className="pointer-events-none absolute inset-x-0 top-0 h-8 bg-[linear-gradient(to_bottom,rgb(var(--color-page-bg))_0%,rgba(249,207,191,0.4)_36%,transparent_100%)] md:h-12" />
-          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-8 bg-[linear-gradient(to_top,rgb(var(--color-page-bg))_0%,rgba(249,207,191,0.4)_36%,transparent_100%)] md:h-12" />
+          </div>
         </div>
       </section>
 
       <section className="mt-12 space-y-6 md:mt-16 md:space-y-8">
         <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div className="space-y-3">
-            <p className="text-panel-secondary text-xs uppercase tracking-[0.2em]">Most loved</p>
+            <p className="text-white text-xs uppercase tracking-[0.2em]">Most loved</p>
             <h2 className="text-panel-ink font-display text-display-md">Our best-reviewed chocolates</h2>
             <p className="text-panel-secondary max-w-2xl text-body-md">
               Chosen again and again for flavor, texture, and gifting appeal.
