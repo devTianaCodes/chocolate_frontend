@@ -97,34 +97,34 @@ export default function Home() {
 
         <div className="relative left-1/2 w-screen -translate-x-1/2 px-3 pb-2 sm:px-4 md:px-5 lg:px-8">
           <div className="space-y-6">
-          <h1 className="w-full font-display text-display-md font-bold italic text-[#612E35] md:text-display-lg">
-            Luxury chocolate, tempered slowly and savored deeply.
-          </h1>
-          <p className="w-full text-justify text-body-lg text-[#612E35]">
-            Chocolate Craft House grows from an atelier tradition where each batch is tempered with patience and finished by hand. Our shop pairs a classic chocolate-making legacy with modern small-batch discipline, so every bar and praline lands with deep flavor, clean snap, and premium ingredients you can taste immediately.
-          </p>
-          <div className="flex flex-wrap gap-4">
-            <Link to="/shop" className="button-primary">
-              Shop the collection
-            </Link>
-            <Link to="/account" className="button-ghost">
-              Enter the atelier
-            </Link>
-          </div>
+            <h1 className="w-full font-display text-display-md font-bold italic text-[#612E35] md:text-display-lg">
+              Luxury chocolate, tempered slowly and savored deeply.
+            </h1>
+            <p className="w-full text-justify text-body-lg text-[#612E35]">
+              Chocolate Craft House grows from an atelier tradition where each batch is tempered with patience and finished by hand. Our shop pairs a classic chocolate-making legacy with modern small-batch discipline, so every bar and praline lands with deep flavor, clean snap, and premium ingredients you can taste immediately.
+            </p>
+            <div className="flex flex-wrap gap-4">
+              <Link to="/shop" className="button-primary">
+                Shop the collection
+              </Link>
+              <Link to="/account" className="button-primary">
+                Enter the atelier
+              </Link>
+            </div>
           </div>
         </div>
       </section>
 
       <section className="mt-12 space-y-6 md:mt-16 md:space-y-8">
-        <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+        <div className="panel-wash-strong flex flex-col gap-4 p-6 md:flex-row md:items-end md:justify-between md:p-8">
           <div className="space-y-3">
-            <p className="text-white text-xs uppercase tracking-[0.2em]">Most loved</p>
+            <p className="text-panel-secondary text-xs uppercase tracking-[0.2em]">Most loved</p>
             <h2 className="text-panel-ink font-display text-display-md">Our best-reviewed chocolates</h2>
             <p className="text-panel-secondary max-w-2xl text-body-md">
               Chosen again and again for flavor, texture, and gifting appeal.
             </p>
           </div>
-          <Link to="/shop" className="button-ghost self-start md:self-auto">
+          <Link to="/shop" className="button-primary self-start md:self-auto">
             View all
           </Link>
         </div>
