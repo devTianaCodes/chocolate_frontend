@@ -27,14 +27,6 @@ const supportLinks = [
   { label: 'Return Policy', to: '/shop' },
 ];
 
-const connectLinks = [
-  { label: 'Mobile App', to: '/shop' },
-  { label: 'Contact Us', to: '/account' },
-  { label: 'Affiliates', to: '/shop' },
-  { label: 'Become a Wholesaler', to: '/gifts' },
-  { label: 'Events', to: '/shop?category=seasonal-limited-edition' },
-];
-
 function FooterColumn({ title, links }) {
   return (
     <section className="space-y-4">
@@ -67,26 +59,25 @@ function SocialLink({ label, href, children }) {
 export default function Footer() {
   return (
     <footer className="border-t border-border/30 bg-[#4f2121] text-ink-primary">
-      <div className="mx-auto grid max-w-[1520px] grid-cols-2 gap-x-5 gap-y-8 px-4 py-10 sm:px-5 md:grid-cols-3 md:gap-x-7 md:gap-y-9 md:px-7 lg:grid-cols-[repeat(4,minmax(0,1fr))_minmax(240px,1.15fr)] lg:gap-x-8 lg:gap-y-8 lg:px-10 xl:px-12 xl:py-12">
+      <div className="mx-auto grid max-w-[1520px] grid-cols-2 gap-x-5 gap-y-8 px-4 py-10 sm:px-5 md:grid-cols-3 md:gap-x-7 md:gap-y-9 md:px-7 lg:grid-cols-[minmax(0,0.88fr)_minmax(0,0.94fr)_minmax(0,0.98fr)_minmax(380px,1.65fr)] lg:gap-x-8 lg:gap-y-8 lg:px-10 xl:grid-cols-[minmax(0,0.84fr)_minmax(0,0.92fr)_minmax(0,0.96fr)_minmax(420px,1.8fr)] xl:gap-x-10 xl:px-12 xl:py-12">
         <FooterColumn title="The Company" links={companyLinks} />
         <FooterColumn title="Shop" links={shopLinks} />
         <FooterColumn title="Support" links={supportLinks} />
-        <FooterColumn title="Connect" links={connectLinks} />
 
-        <section className="space-y-5 col-span-2 md:col-span-2 lg:col-span-1 lg:pl-3 xl:pl-6">
+        <section className="col-span-2 min-w-0 space-y-5 md:col-span-3 lg:col-span-1">
           <h2 className="text-ink-primary text-[11px] font-semibold uppercase tracking-[0.18em]">Keep In Touch</h2>
-          <p className="max-w-[380px] text-[14px] leading-relaxed text-ink-secondary sm:text-[15px]">
+          <p className="max-w-[440px] text-[14px] leading-relaxed text-ink-secondary sm:text-[15px]">
             Stay up-to-date on our latest haut-chocolat creations, exclusive offers and curated gifting releases.
           </p>
-          <form className="flex max-w-[420px] flex-col gap-3 sm:flex-row lg:flex-col xl:flex-row" onSubmit={(event) => event.preventDefault()}>
+          <form className="flex w-full max-w-[520px] min-w-0 flex-col gap-3 sm:flex-row" onSubmit={(event) => event.preventDefault()}>
             <label className="sr-only" htmlFor="footer-email">Email</label>
             <input
               id="footer-email"
               type="email"
               placeholder="Email"
-              className="h-10 flex-1 rounded-none border border-brand-light/40 bg-brand px-4 text-[13px] font-medium uppercase tracking-[0.12em] text-ink-invert shadow-[0_13px_28px_rgba(39,19,13,0.126)] placeholder:text-ink-invert/65 focus:border-brand-dark focus-visible:outline-none"
+              className="h-11 min-w-0 w-full flex-1 rounded-none border border-brand-light/40 bg-brand px-4 text-[13px] font-medium uppercase tracking-[0.12em] text-ink-invert shadow-[0_13px_28px_rgba(39,19,13,0.126)] placeholder:text-ink-invert/65 focus:border-brand-dark focus-visible:outline-none"
             />
-            <button type="submit" className="button-primary h-10 min-w-[146px] px-6">
+            <button type="submit" className="button-primary h-11 w-full shrink-0 px-6 sm:w-auto sm:min-w-[156px]">
               Subscribe
             </button>
           </form>
