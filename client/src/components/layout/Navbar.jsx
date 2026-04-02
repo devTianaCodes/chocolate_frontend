@@ -69,7 +69,7 @@ export default function Navbar() {
               onChange={(event) => setSearchTerm(event.target.value)}
               placeholder="Search"
               aria-label="Search products"
-              className="h-9 w-[150px] rounded-none border border-brand-light/40 bg-brand pl-10 pr-4 text-[11px] font-medium uppercase tracking-[0.1em] text-ink-invert shadow-[0_13px_28px_rgba(39,19,13,0.126)] placeholder:text-ink-invert/65 focus:border-brand-dark focus-visible:outline-none xl:w-[220px] xl:text-xs xl:tracking-[0.12em]"
+              className="h-9 w-[220px] rounded-none border border-brand-light/40 bg-brand pl-10 pr-4 text-[11px] font-medium uppercase tracking-[0.1em] text-ink-invert shadow-[0_13px_28px_rgba(39,19,13,0.126)] placeholder:text-ink-invert/65 focus:border-brand-dark focus-visible:outline-none xl:w-[280px] xl:text-xs xl:tracking-[0.12em]"
             />
           </form>
           <Link
@@ -124,6 +124,14 @@ export default function Navbar() {
             {isMobileMenuOpen ? <X className="h-[18px] w-[18px]" strokeWidth={1.8} /> : <Menu className="h-[18px] w-[18px]" strokeWidth={1.8} />}
           </button>
           <Link
+            to="/search"
+            aria-label="Search"
+            className="inline-flex items-center justify-center hover:text-ink-primary"
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            <Search className="h-[18px] w-[18px]" strokeWidth={1.8} />
+          </Link>
+          <Link
             to="/cart"
             aria-label="Cart"
             className="relative inline-flex items-center justify-center hover:text-ink-primary"
@@ -152,20 +160,6 @@ export default function Navbar() {
           className="border-t border-border/30 bg-[#4f2121] px-3 py-4 lg:hidden"
         >
           <div className="flex flex-col gap-4 text-[13px] uppercase tracking-[0.1em] text-ink-secondary">
-            <form className="relative" onSubmit={handleSearchSubmit}>
-              <Search
-                className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-invert/75"
-                strokeWidth={1.8}
-              />
-              <input
-                type="search"
-                value={searchTerm}
-                onChange={(event) => setSearchTerm(event.target.value)}
-                placeholder="Search products"
-                aria-label="Search products"
-                className="h-10 w-full rounded-none border border-brand-light/40 bg-brand pl-10 pr-4 text-xs font-medium uppercase tracking-[0.12em] text-ink-invert shadow-[0_13px_28px_rgba(39,19,13,0.126)] placeholder:text-ink-invert/65 focus:border-brand-dark focus-visible:outline-none"
-              />
-            </form>
             <Link to="/shop" className="hover:text-ink-primary">Shop</Link>
             <Link to="/favourites" className="hover:text-ink-primary">Favourites</Link>
             <Link to="/gifts" className="hover:text-ink-primary">Gifts</Link>

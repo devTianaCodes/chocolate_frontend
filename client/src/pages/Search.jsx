@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { Search as SearchIcon } from 'lucide-react';
 import { useSearchParams } from 'react-router-dom';
 import PageWrapper from '../components/layout/PageWrapper.jsx';
 import ProductCard from '../components/product/ProductCard.jsx';
@@ -32,6 +33,11 @@ export default function Search() {
   const rawQuery = searchParams.get('q')?.trim() || '';
   const query = rawQuery.toLowerCase();
   const currentPage = parsePageParam(searchParams.get('page'));
+  const [searchInput, setSearchInput] = useState(rawQuery);
+
+  useEffect(() => {
+    setSearchInput(rawQuery);
+  }, [rawQuery]);
 
   useEffect(() => {
     let active = true;
@@ -116,6 +122,21 @@ export default function Search() {
     setSearchParams(nextParams);
   }
 
+  function handleSearchSubmit(event) {
+    event.preventDefault();
+    const nextQuery = searchInput.trim();
+    const nextParams = new URLSearchParams(searchParams);
+
+    if (nextQuery) {
+      nextParams.set('q', nextQuery);
+    } else {
+      nextParams.delete('q');
+    }
+
+    nextParams.delete('page');
+    setSearchParams(nextParams);
+  }
+
   return (
     <PageWrapper>
       <header className="panel-wash-strong mb-10 flex flex-col gap-4 p-6 md:p-8">
@@ -126,12 +147,28 @@ export default function Search() {
         <p className="text-panel-secondary max-w-xl text-body-md">
           Find bars, pralines, and seasonal releases by name, note, or category.
         </p>
+        <form className="relative lg:hidden" onSubmit={handleSearchSubmit}>
+          <SearchIcon
+            className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-panel-secondary"
+            strokeWidth={1.8}
+          />
+          <input
+            type="search"
+            value={searchInput}
+            onChange={(event) => setSearchInput(event.target.value)}
+            placeholder="Search products"
+            aria-label="Search products"
+            className="h-11 w-full rounded-none border border-[rgba(125,82,71,0.34)] bg-[rgba(236,210,200,0.985)] pl-10 pr-4 text-sm text-panel-ink shadow-[0_10px_24px_rgba(79,33,33,0.11)] placeholder:text-panel-secondary focus:border-[rgba(125,82,71,0.5)] focus-visible:outline-none"
+          />
+        </form>
       </header>
 
       {loading && <p className="text-panel-secondary text-body-md">Searching products…</p>}
       {error && <p className="text-body-md text-red-300">{error}</p>}
       {!loading && !error && !query && (
-        <p className="text-panel-secondary text-body-md">Type a search in the header to explore products.</p>
+        <p className="text-panel-secondary text-body-md">
+          Type a search to explore products.
+        </p>
       )}
       {!loading && !error && query && results.length === 0 && (
         <p className="text-panel-secondary text-body-md">No products found for this search.</p>
