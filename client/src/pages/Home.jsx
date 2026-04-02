@@ -1,8 +1,66 @@
+import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { fetchProducts } from '../api/products.js';
 import PageWrapper from '../components/layout/PageWrapper.jsx';
+import ProductCard from '../components/product/ProductCard.jsx';
 import luxuryDarkChocolateImage from '../assets/luxury-dark-chocolate.png';
+import { getProductReviewSummary } from '../utils/getProductReviewSummary.js';
 
 export default function Home() {
+  const [products, setProducts] = useState([]);
+  const [loadingLoved, setLoadingLoved] = useState(true);
+  const [lovedError, setLovedError] = useState('');
+
+  useEffect(() => {
+    let active = true;
+
+    async function loadProducts() {
+      setLoadingLoved(true);
+      setLovedError('');
+
+      try {
+        const response = await fetchProducts({ page: 1, limit: 100 });
+        if (active) {
+          setProducts(response.data.result || []);
+        }
+      } catch {
+        if (active) {
+          setProducts([]);
+          setLovedError('Unable to load the most loved collection.');
+        }
+      } finally {
+        if (active) {
+          setLoadingLoved(false);
+        }
+      }
+    }
+
+    loadProducts();
+
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  const mostLovedProducts = useMemo(() => {
+    return [...products]
+      .sort((left, right) => {
+        const leftReviews = getProductReviewSummary(left.id);
+        const rightReviews = getProductReviewSummary(right.id);
+
+        if (rightReviews.rating !== leftReviews.rating) {
+          return rightReviews.rating - leftReviews.rating;
+        }
+
+        if (rightReviews.count !== leftReviews.count) {
+          return rightReviews.count - leftReviews.count;
+        }
+
+        return Number(left.id) - Number(right.id);
+      })
+      .slice(0, 6);
+  }, [products]);
+
   return (
     <PageWrapper>
       <section className="grid gap-8 lg:min-h-[calc(100vh-240px)] lg:grid-cols-[1fr_1.05fr] lg:items-center">
@@ -34,6 +92,49 @@ export default function Home() {
           <div className="pointer-events-none absolute inset-x-0 top-0 h-8 bg-[linear-gradient(to_bottom,rgb(var(--color-page-bg))_0%,rgba(249,207,191,0.4)_36%,transparent_100%)] md:h-12" />
           <div className="pointer-events-none absolute inset-x-0 bottom-0 h-8 bg-[linear-gradient(to_top,rgb(var(--color-page-bg))_0%,rgba(249,207,191,0.4)_36%,transparent_100%)] md:h-12" />
         </div>
+      </section>
+
+      <section className="mt-12 space-y-6 md:mt-16 md:space-y-8">
+        <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+          <div className="space-y-3">
+            <p className="text-panel-secondary text-xs uppercase tracking-[0.2em]">Most loved</p>
+            <h2 className="text-panel-ink font-display text-display-md">Our best-reviewed chocolates</h2>
+            <p className="text-panel-secondary max-w-2xl text-body-md">
+              Chosen again and again for flavor, texture, and gifting appeal.
+            </p>
+          </div>
+          <Link to="/shop" className="button-ghost self-start md:self-auto">
+            View all
+          </Link>
+        </div>
+
+        {loadingLoved && (
+          <div className="panel-wash-strong p-6">
+            <p className="text-panel-secondary text-body-md">Loading most loved chocolates…</p>
+          </div>
+        )}
+
+        {!loadingLoved && lovedError && (
+          <div className="panel-wash-strong p-6">
+            <p className="text-body-md text-red-300">{lovedError}</p>
+          </div>
+        )}
+
+        {!loadingLoved && !lovedError && mostLovedProducts.length > 0 && (
+          <div className="grid grid-cols-2 gap-4 md:gap-5 lg:grid-cols-3 lg:gap-6">
+            {mostLovedProducts.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+        )}
+
+        {!loadingLoved && !lovedError && mostLovedProducts.length === 0 && (
+          <div className="panel-wash-strong p-6">
+            <p className="text-panel-secondary text-body-md">
+              Most loved products are unavailable right now.
+            </p>
+          </div>
+        )}
       </section>
     </PageWrapper>
   );
