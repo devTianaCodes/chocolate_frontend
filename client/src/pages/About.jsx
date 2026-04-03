@@ -50,11 +50,11 @@ function StoryImage({ image, title }) {
 function StoryBlock({ title, body, align, image }) {
   const isRight = align === 'right';
   const content = (
-    <div className="panel-wash-strong relative z-10 p-6 md:p-8">
-      <div className="space-y-4">
+    <div className="panel-wash-strong relative z-10 flex min-h-[250px] items-center p-8 md:min-h-[320px] md:p-10 lg:min-h-[360px] lg:p-12">
+      <div className="w-full space-y-4">
         <p className="text-white text-xs uppercase tracking-[0.2em]">About us</p>
         <h2 className="text-panel-ink font-display text-display-sm">{title}</h2>
-        <p className="text-panel-secondary text-body-md">{body}</p>
+        <p className="text-panel-secondary text-body-md text-justify">{body}</p>
       </div>
     </div>
   );
@@ -66,10 +66,10 @@ function StoryBlock({ title, body, align, image }) {
           <StoryImage image={image} title={title} />
         </div>
       ) : (
-        <div className="pt-0 md:pt-[120px] md:-mr-9 lg:-mr-[47px]">{content}</div>
+        <div className="pt-0 md:pt-[120px] md:-mr-7 lg:-mr-[38px]">{content}</div>
       )}
       {isRight ? (
-        <div className="order-1 pt-0 md:order-2 md:pt-[120px] md:-ml-9 lg:-ml-[47px]">{content}</div>
+        <div className="order-1 pt-0 md:order-2 md:pt-[120px] md:-ml-7 lg:-ml-[38px]">{content}</div>
       ) : (
         <div className="pt-0 md:pt-[60px] md:-ml-12 lg:-ml-16">
           <StoryImage image={image} title={title} />
@@ -85,7 +85,7 @@ export default function About() {
       <header className="panel-wash-strong mb-4 flex flex-col gap-4 p-6 md:mb-10 md:p-8">
         <p className="text-white text-xs uppercase tracking-[0.2em]">Our house</p>
         <h1 className="text-panel-ink font-display text-display-md">About us</h1>
-        <p className="text-panel-secondary max-w-2xl text-body-md">
+        <p className="text-panel-secondary max-w-2xl text-body-md text-justify">
           Chocolate Craft House is a small-batch chocolate studio shaped by slow technique, ingredient clarity, and a belief that luxury should feel warm, tactile, and deeply memorable.
         </p>
       </header>
