@@ -66,10 +66,10 @@ function StoryBlock({ title, body, align, image }) {
           <StoryImage image={image} title={title} />
         </div>
       ) : (
-        <div className="pt-0 md:pt-[120px] md:-mr-10 lg:-mr-[52px]">{content}</div>
+        <div className="pt-0 md:pt-[120px] md:-mr-9 lg:-mr-[47px]">{content}</div>
       )}
       {isRight ? (
-        <div className="order-1 pt-0 md:order-2 md:pt-[120px] md:-ml-10 lg:-ml-[52px]">{content}</div>
+        <div className="order-1 pt-0 md:order-2 md:pt-[120px] md:-ml-9 lg:-ml-[47px]">{content}</div>
       ) : (
         <div className="pt-0 md:pt-[60px] md:-ml-12 lg:-ml-16">
           <StoryImage image={image} title={title} />
@@ -90,7 +90,7 @@ export default function About() {
         </p>
       </header>
 
-      <div className="space-y-0">
+      <div className="space-y-0 md:-space-y-10 lg:-space-y-14">
         {storyBlocks.map((block) => (
           <StoryBlock
             key={block.title}
