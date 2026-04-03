@@ -4,7 +4,7 @@ import { fetchProducts } from '../api/products.js';
 import PageWrapper from '../components/layout/PageWrapper.jsx';
 import Pagination from '../components/Pagination.jsx';
 import ProductCard from '../components/product/ProductCard.jsx';
-import homeHeroWideImage from '../assets/Gemini_Generated_Image_gjugi9gjugi9gjug.png';
+import homeHeroWideImage from '../assets/hero-big.png';
 import useResponsivePageSize from '../hooks/useResponsivePageSize.js';
 import { getProductReviewSummary } from '../utils/getProductReviewSummary.js';
 import { getTotalPages, paginateItems } from '../utils/pagination.js';
