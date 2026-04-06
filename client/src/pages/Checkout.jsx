@@ -142,30 +142,30 @@ export default function Checkout() {
           </form>
 
           <aside className="panel-wash-strong p-6 md:p-8">
-            <p className="text-panel-secondary mb-4 text-xs uppercase tracking-[0.2em]">Order summary</p>
+            <p className="text-panel-secondary mb-4 text-sm uppercase tracking-[0.2em]">Order summary</p>
             <div className="space-y-3">
               {items.map((item) => (
                 <div key={item.id} className="flex items-center justify-between gap-4">
                   <div>
-                    <p className="text-panel-ink text-body-sm">{getDisplayProductName(item.name)}</p>
-                    <p className="text-panel-secondary text-body-xs">Qty {item.quantity}</p>
+                    <p className="text-panel-ink text-body-md">{getDisplayProductName(item.name)}</p>
+                    <p className="text-panel-secondary text-body-sm">Qty {item.quantity}</p>
                   </div>
-                  <span className="text-panel-ink font-mono text-body-sm">
+                  <span className="text-panel-ink font-mono text-body-md">
                     {formatPrice(getEffectivePrice(item) * Number(item.quantity || 0))}
                   </span>
                 </div>
               ))}
             </div>
             <div className="mt-6 space-y-2 border-t border-[rgba(79,33,33,0.14)] pt-4">
-              <div className="text-panel-secondary flex items-center justify-between text-body-sm">
+              <div className="text-panel-secondary flex items-center justify-between text-body-md">
                 <span>Subtotal</span>
                 <span className="text-panel-ink font-mono">{formatPrice(subtotal)}</span>
               </div>
-              <div className="text-panel-secondary flex items-center justify-between text-body-sm">
+              <div className="text-panel-secondary flex items-center justify-between text-body-md">
                 <span>Shipping</span>
                 <span className="text-panel-ink font-mono">{formatPrice(shippingTotal)}</span>
               </div>
-              <div className="text-panel-ink flex items-center justify-between text-body-md">
+              <div className="text-panel-ink flex items-center justify-between text-lg">
                 <span>Total</span>
                 <span className="font-mono">{formatPrice(total)}</span>
               </div>
