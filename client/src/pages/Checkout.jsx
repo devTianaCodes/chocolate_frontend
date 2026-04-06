@@ -104,7 +104,7 @@ export default function Checkout() {
                 name="line1"
                 value={shippingAddress.line1}
                 onChange={handleChange}
-                className="glass-input"
+                className="auth-input"
                 required
               />
             </label>
@@ -114,7 +114,7 @@ export default function Checkout() {
                 name="city"
                 value={shippingAddress.city}
                 onChange={handleChange}
-                className="glass-input"
+                className="auth-input"
                 required
               />
             </label>
@@ -124,7 +124,7 @@ export default function Checkout() {
                 name="country"
                 value={shippingAddress.country}
                 onChange={handleChange}
-                className="glass-input"
+                className="auth-input"
                 required
               />
             </label>

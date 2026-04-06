@@ -59,7 +59,7 @@ export default function Account() {
 
         {user && (
           <>
-            <div className="glass-panel bg-surface-base/95 p-6">
+            <div className="glass-panel bg-[#4f2121] p-6">
               <p className="text-body-sm text-ink-secondary">Signed in as</p>
               <p className="font-display text-display-sm text-ink-primary">{user.email}</p>
               <p className="text-body-sm text-ink-muted">Role: {user.role}</p>
