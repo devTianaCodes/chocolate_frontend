@@ -79,14 +79,18 @@ export default function Checkout() {
 
   return (
     <PageWrapper>
-      <header className="mb-8">
-        <h1 className="font-display text-display-md text-ink-primary">Checkout</h1>
+      <header className="panel-wash-strong mb-10 flex flex-col gap-4 p-6 md:p-8">
+        <p className="text-panel-secondary text-xs uppercase tracking-[0.2em]">Order details</p>
+        <h1 className="text-panel-ink font-display text-display-md">Checkout</h1>
+        <p className="text-panel-secondary max-w-xl text-body-md">
+          Confirm your delivery details and review the final total before payment.
+        </p>
       </header>
 
       {!user && (
-        <div className="glass-panel p-6 text-body-md text-ink-secondary">
+        <div className="panel-wash-strong p-6 text-body-md text-panel-secondary">
           You need an account to place an order.{' '}
-          <Link to="/login" className="text-brand">
+          <Link to="/login" className="text-panel-ink">
             Sign in
           </Link>
           .
@@ -95,10 +99,10 @@ export default function Checkout() {
 
       {user && (
         <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
-          <form className="glass-panel space-y-4 p-6" onSubmit={handleSubmit}>
-            <p className="section-label">Delivery</p>
+          <form className="panel-wash-strong space-y-4 p-6 md:p-8" onSubmit={handleSubmit}>
+            <p className="text-panel-secondary text-xs uppercase tracking-[0.2em]">Delivery</p>
             {error && <p className="text-body-sm text-red-300">{error}</p>}
-            <label className="block text-xs uppercase tracking-[0.08em] text-ink-muted">
+            <label className="text-panel-secondary block text-xs uppercase tracking-[0.08em]">
               Address line
               <input
                 name="line1"
@@ -108,7 +112,7 @@ export default function Checkout() {
                 required
               />
             </label>
-            <label className="block text-xs uppercase tracking-[0.08em] text-ink-muted">
+            <label className="text-panel-secondary block text-xs uppercase tracking-[0.08em]">
               City
               <input
                 name="city"
@@ -118,7 +122,7 @@ export default function Checkout() {
                 required
               />
             </label>
-            <label className="block text-xs uppercase tracking-[0.08em] text-ink-muted">
+            <label className="text-panel-secondary block text-xs uppercase tracking-[0.08em]">
               Country
               <input
                 name="country"
@@ -137,31 +141,31 @@ export default function Checkout() {
             </button>
           </form>
 
-          <aside className="glass-panel-strong p-6">
-            <p className="section-label mb-4">Order summary</p>
+          <aside className="panel-wash-strong p-6 md:p-8">
+            <p className="text-panel-secondary mb-4 text-xs uppercase tracking-[0.2em]">Order summary</p>
             <div className="space-y-3">
               {items.map((item) => (
                 <div key={item.id} className="flex items-center justify-between gap-4">
                   <div>
-                    <p className="text-body-sm text-ink-primary">{getDisplayProductName(item.name)}</p>
-                    <p className="text-body-xs text-ink-muted">Qty {item.quantity}</p>
+                    <p className="text-panel-ink text-body-sm">{getDisplayProductName(item.name)}</p>
+                    <p className="text-panel-secondary text-body-xs">Qty {item.quantity}</p>
                   </div>
-                  <span className="font-mono text-body-sm text-ink-primary">
+                  <span className="text-panel-ink font-mono text-body-sm">
                     {formatPrice(getEffectivePrice(item) * Number(item.quantity || 0))}
                   </span>
                 </div>
               ))}
             </div>
-            <div className="mt-6 space-y-2 border-t border-border/40 pt-4">
-              <div className="flex items-center justify-between text-body-sm text-ink-secondary">
+            <div className="mt-6 space-y-2 border-t border-[rgba(79,33,33,0.14)] pt-4">
+              <div className="text-panel-secondary flex items-center justify-between text-body-sm">
                 <span>Subtotal</span>
-                <span className="font-mono text-ink-primary">{formatPrice(subtotal)}</span>
+                <span className="text-panel-ink font-mono">{formatPrice(subtotal)}</span>
               </div>
-              <div className="flex items-center justify-between text-body-sm text-ink-secondary">
+              <div className="text-panel-secondary flex items-center justify-between text-body-sm">
                 <span>Shipping</span>
-                <span className="font-mono text-ink-primary">{formatPrice(shippingTotal)}</span>
+                <span className="text-panel-ink font-mono">{formatPrice(shippingTotal)}</span>
               </div>
-              <div className="flex items-center justify-between text-body-md text-ink-primary">
+              <div className="text-panel-ink flex items-center justify-between text-body-md">
                 <span>Total</span>
                 <span className="font-mono">{formatPrice(total)}</span>
               </div>

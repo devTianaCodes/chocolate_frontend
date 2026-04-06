@@ -47,24 +47,28 @@ export default function Account() {
   return (
     <PageWrapper>
       <div className="space-y-6">
-        <header>
-          <h1 className="font-display text-display-md text-ink-primary">Account</h1>
+        <header className="panel-wash-strong flex flex-col gap-4 p-6 md:p-8">
+          <p className="text-panel-secondary text-xs uppercase tracking-[0.2em]">Your profile</p>
+          <h1 className="text-panel-ink font-display text-display-md">Account</h1>
+          <p className="text-panel-secondary max-w-xl text-body-md">
+            Review your signed-in details and keep track of every order placed with the atelier.
+          </p>
         </header>
 
         {!user && (
-          <p className="text-body-md text-ink-secondary">
-            You are not signed in.
-          </p>
+          <div className="panel-wash-strong p-8">
+            <p className="text-panel-secondary text-body-md">You are not signed in.</p>
+          </div>
         )}
 
         {user && (
           <>
-            <div className="glass-panel bg-[#4f2121] p-6">
-              <p className="text-body-sm text-ink-secondary">Signed in as</p>
-              <p className="font-display text-display-sm text-ink-primary">{user.email}</p>
-              <p className="text-body-sm text-ink-muted">Role: {user.role}</p>
+            <div className="panel-wash-strong p-6 md:p-8">
+              <p className="text-panel-secondary text-xs uppercase tracking-[0.2em]">Signed in as</p>
+              <p className="text-panel-ink font-display text-display-sm">{user.email}</p>
+              <p className="text-panel-secondary text-body-sm">Role: {user.role}</p>
               <button
-                className="button-ghost mt-4 px-4 py-2"
+                className="button-ghost mt-5 px-4 py-2"
                 onClick={logout}
                 disabled={loading}
               >
@@ -72,31 +76,31 @@ export default function Account() {
               </button>
             </div>
 
-            <div className="glass-panel-strong p-6">
+            <div className="panel-wash-strong p-6 md:p-8">
               <div className="mb-4 flex items-center justify-between">
-                <h2 className="font-display text-display-sm text-ink-primary">Orders</h2>
-                <Link to="/shop" className="text-xs uppercase tracking-[0.1em] text-brand">
+                <h2 className="text-panel-ink font-display text-display-sm">Orders</h2>
+                <Link to="/shop" className="text-xs uppercase tracking-[0.1em] text-panel-secondary transition hover:text-panel-ink">
                   Continue shopping
                 </Link>
               </div>
 
-              {ordersLoading && <p className="text-body-sm text-ink-secondary">Loading orders...</p>}
+              {ordersLoading && <p className="text-panel-secondary text-body-sm">Loading orders...</p>}
               {ordersError && <p className="text-body-sm text-red-300">{ordersError}</p>}
               {!ordersLoading && !ordersError && orders.length === 0 && (
-                <p className="text-body-sm text-ink-secondary">No orders yet.</p>
+                <p className="text-panel-secondary text-body-sm">No orders yet.</p>
               )}
 
               {!ordersLoading && !ordersError && orders.length > 0 && (
                 <div className="space-y-4">
-                  {orders.map((order) => (
-                    <div key={order.id} className="flex flex-col gap-2 border-t border-border/40 pt-4 text-body-sm text-ink-secondary md:flex-row md:items-center md:justify-between">
+                  {orders.map((order, index) => (
+                    <div key={order.id} className={`flex flex-col gap-2 pt-4 text-body-sm text-panel-secondary md:flex-row md:items-center md:justify-between ${index > 0 ? 'border-t border-[rgba(79,33,33,0.14)]' : ''}`}>
                       <div>
-                        <p className="font-mono text-ink-primary">{order.order_number}</p>
+                        <p className="text-panel-ink font-mono">{order.order_number}</p>
                         <p>{new Date(order.created_at).toLocaleDateString()}</p>
                       </div>
                       <div className="md:text-right">
-                        <p className="uppercase tracking-[0.08em] text-ink-muted">{order.status}</p>
-                        <p className="font-mono text-ink-primary">{formatPrice(order.total)}</p>
+                        <p className="text-panel-muted uppercase tracking-[0.08em]">{order.status}</p>
+                        <p className="text-panel-ink font-mono">{formatPrice(order.total)}</p>
                       </div>
                     </div>
                   ))}
