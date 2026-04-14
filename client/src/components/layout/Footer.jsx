@@ -1,4 +1,4 @@
-import { Facebook, Instagram } from 'lucide-react';
+import { Facebook, Instagram, Youtube } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../../assets/logo1-transparent.png';
@@ -22,7 +22,9 @@ const helpLinks = [
 const socialLinks = [
   { label: 'Instagram', href: 'https://instagram.com', icon: Instagram },
   { label: 'Facebook', href: 'https://facebook.com', icon: Facebook },
+  { label: 'X', href: 'https://x.com', icon: XIcon },
   { label: 'TikTok', href: 'https://tiktok.com', icon: TikTokIcon },
+  { label: 'YouTube', href: 'https://youtube.com', icon: Youtube },
 ];
 
 const awards = [
@@ -34,7 +36,7 @@ const awards = [
 function FooterColumn({ title, links, children = null }) {
   return (
     <section className="space-y-4">
-      <h2 className="text-[11px] font-semibold uppercase tracking-[0.18em] text-ink-primary">{title}</h2>
+      <h2 className="pb-[25px] text-[11px] font-semibold uppercase tracking-[0.18em] text-ink-primary">{title}</h2>
       <ul className="space-y-3 text-[15px] leading-snug text-ink-secondary">
         {links.map((link) => (
           <li key={link.label}>
@@ -106,6 +108,14 @@ function TikTokIcon(props) {
   );
 }
 
+function XIcon(props) {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 16 16" fill="currentColor" {...props}>
+      <path d="M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867-5.07-4.425 5.07H.316l5.733-6.57L0 .75h5.063l3.495 4.633L12.601.75Zm-.86 13.028h1.36L4.323 2.145H2.865z" />
+    </svg>
+  );
+}
+
 export default function Footer() {
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
@@ -136,7 +146,7 @@ export default function Footer() {
   return (
     <footer className="border-t border-border/25 bg-[#4f2121] text-ink-primary">
       <div className="mx-auto max-w-[1520px] px-4 py-10 sm:px-5 md:px-7 lg:px-10 xl:px-12 xl:py-12">
-        <div className="grid gap-10 md:grid-cols-2 md:gap-12 lg:grid-cols-[1.3fr_0.9fr_1fr] lg:gap-16">
+        <div className="grid gap-10 md:grid-cols-2 md:gap-12 lg:grid-cols-[1.3fr_0.9fr_1fr] lg:grid-rows-[auto_auto] lg:items-start lg:gap-x-16 lg:gap-y-12">
           <section className="space-y-6">
             <Link to="/" className="inline-flex max-w-[420px]">
               <img src={logo} alt="Chocolate Craft House" className="h-auto w-full max-w-[360px]" />
@@ -159,56 +169,52 @@ export default function Footer() {
               </div>
               {error && <p className="text-sm text-[rgb(255,220,210)]">{error}</p>}
             </form>
-
-            <section className="space-y-3 pt-12">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-ink-primary">Awards & Recognition</p>
-              <div className="flex flex-wrap gap-2.5">
-                {awards.map((award) => (
-                  <AwardRow key={award.label} label={award.label} rating={award.rating} />
-                ))}
-              </div>
-            </section>
           </section>
 
-          <FooterColumn title="Shop" links={shopLinks}>
-            <div className="space-y-4 pt-12">
-              <section className="space-y-2">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-ink-primary">Contact us</p>
-                <address className="not-italic space-y-2 text-[15px] leading-relaxed text-ink-secondary">
-                  Rue du Cacao 18
-                  <br />
-                  1204 Geneva, Switzerland
-                  <br />
-                  <a href="mailto:hello@chocolatecrafthouse.com" className="transition hover:text-ink-primary">
-                    hello@chocolatecrafthouse.com
-                  </a>
-                  <br />
-                  <span>customer support:</span>{' '}
-                  <a href="tel:+41225551084" className="transition hover:text-ink-primary">
-                    +41 22 555 1084
-                  </a>
-                </address>
-              </section>
-            </div>
-          </FooterColumn>
+          <FooterColumn title="Shop" links={shopLinks} />
 
-          <FooterColumn title="Help" links={helpLinks}>
-            <div className="space-y-4 pt-12">
+          <FooterColumn title="Help" links={helpLinks} />
 
-              <section className="space-y-3">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-ink-primary">Follow us</p>
-                <div className="flex flex-wrap gap-3">
-                  {socialLinks.map(({ label, href, icon: Icon }) => (
-                    <SocialIconLink key={label} href={href} label={label} Icon={Icon} />
-                  ))}
-                </div>
-              </section>
+          <section className="space-y-3 pb-[20px] lg:col-start-1 lg:row-start-2">
+            <p className="pb-[25px] text-[11px] font-semibold uppercase tracking-[0.18em] text-ink-primary">Awards & Recognition</p>
+            <div className="flex flex-wrap gap-2.5">
+              {awards.map((award) => (
+                <AwardRow key={award.label} label={award.label} rating={award.rating} />
+              ))}
             </div>
-          </FooterColumn>
+          </section>
+
+          <section className="space-y-2 lg:col-start-2 lg:row-start-2">
+            <p className="pb-[25px] text-[11px] font-semibold uppercase tracking-[0.18em] text-ink-primary">Contact us</p>
+            <address className="not-italic space-y-2 text-[15px] leading-relaxed text-ink-secondary">
+              <p>Rue du Cacao 18</p>
+              <p>1204 Geneva, Switzerland</p>
+              <p>
+                <a href="mailto:hello@chocolatecrafthouse.com" className="transition hover:text-ink-primary">
+                  hello@chocolatecrafthouse.com
+                </a>
+              </p>
+              <p>
+                <span>customer support:</span>{' '}
+                <a href="tel:+41225551084" className="transition hover:text-ink-primary">
+                  +41 22 555 1084
+                </a>
+              </p>
+            </address>
+          </section>
+
+          <section className="space-y-3 lg:col-start-3 lg:row-start-2">
+            <p className="pb-[25px] text-[11px] font-semibold uppercase tracking-[0.18em] text-ink-primary">Follow us</p>
+            <div className="flex flex-wrap gap-3">
+              {socialLinks.map(({ label, href, icon: Icon }) => (
+                <SocialIconLink key={label} href={href} label={label} Icon={Icon} />
+              ))}
+            </div>
+          </section>
         </div>
 
         <div className="mt-7 flex flex-col gap-1 border-t border-brand-light/15 pt-3 text-[10px] uppercase tracking-[0.14em] text-ink-secondary sm:flex-row sm:items-center sm:justify-between">
-          <p>© Chocolate Craft House</p>
+          <p>© 2026 Chocolate Craft House</p>
           <p>Artisan chocolate atelier</p>
         </div>
       </div>
