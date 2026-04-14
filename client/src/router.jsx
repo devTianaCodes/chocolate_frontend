@@ -1,4 +1,4 @@
-import { Navigate, createBrowserRouter } from 'react-router-dom';
+import { Navigate, Outlet, createBrowserRouter } from 'react-router-dom';
 import Home from './pages/Home.jsx';
 import Shop from './pages/Shop.jsx';
 import Offers from './pages/Offers.jsx';
@@ -23,43 +23,58 @@ import AdminOrders from './pages/AdminOrders.jsx';
 import RequireAuth from './components/routes/RequireAuth.jsx';
 import RequireGuest from './components/routes/RequireGuest.jsx';
 import RequireAdmin from './components/routes/RequireAdmin.jsx';
+import ScrollToTop from './components/routes/ScrollToTop.jsx';
+
+function RootRouteLayout() {
+  return (
+    <>
+      <ScrollToTop />
+      <Outlet />
+    </>
+  );
+}
 
 const router = createBrowserRouter([
-  { path: '/', element: <Home /> },
-  { path: '/shop', element: <Shop /> },
-  { path: '/offers', element: <Offers /> },
-  { path: '/about', element: <About /> },
-  { path: '/faq', element: <Faq /> },
-  { path: '/shipping', element: <Shipping /> },
-  { path: '/returns', element: <Returns /> },
-  { path: '/privacy', element: <Privacy /> },
-  { path: '/contact', element: <Contact /> },
-  { path: '/gifts', element: <Gifts /> },
-  { path: '/search', element: <Search /> },
-  { path: '/favourites', element: <Favourites /> },
-  { path: '/products/:slug', element: <ProductDetail /> },
-  { path: '/cart', element: <Cart /> },
   {
-    element: <RequireGuest />,
+    element: <RootRouteLayout />,
     children: [
-      { path: '/login', element: <Login /> },
-      { path: '/register', element: <Navigate to="/login?mode=register" replace /> },
-    ],
-  },
-  {
-    element: <RequireAuth />,
-    children: [
-      { path: '/checkout', element: <Checkout /> },
-      { path: '/order-confirmation/:orderId', element: <OrderConfirmation /> },
-      { path: '/account', element: <Account /> },
-    ],
-  },
-  {
-    element: <RequireAdmin />,
-    children: [
-      { path: '/admin/products', element: <AdminProducts /> },
-      { path: '/admin/inventory', element: <AdminInventory /> },
-      { path: '/admin/orders', element: <AdminOrders /> },
+      { path: '/', element: <Home /> },
+      { path: '/shop', element: <Shop /> },
+      { path: '/offers', element: <Offers /> },
+      { path: '/about', element: <About /> },
+      { path: '/faq', element: <Faq /> },
+      { path: '/shipping', element: <Shipping /> },
+      { path: '/returns', element: <Returns /> },
+      { path: '/privacy', element: <Privacy /> },
+      { path: '/contact', element: <Contact /> },
+      { path: '/gifts', element: <Gifts /> },
+      { path: '/search', element: <Search /> },
+      { path: '/favourites', element: <Favourites /> },
+      { path: '/products/:slug', element: <ProductDetail /> },
+      { path: '/cart', element: <Cart /> },
+      {
+        element: <RequireGuest />,
+        children: [
+          { path: '/login', element: <Login /> },
+          { path: '/register', element: <Navigate to="/login?mode=register" replace /> },
+        ],
+      },
+      {
+        element: <RequireAuth />,
+        children: [
+          { path: '/checkout', element: <Checkout /> },
+          { path: '/order-confirmation/:orderId', element: <OrderConfirmation /> },
+          { path: '/account', element: <Account /> },
+        ],
+      },
+      {
+        element: <RequireAdmin />,
+        children: [
+          { path: '/admin/products', element: <AdminProducts /> },
+          { path: '/admin/inventory', element: <AdminInventory /> },
+          { path: '/admin/orders', element: <AdminOrders /> },
+        ],
+      },
     ],
   },
 ]);
