@@ -183,6 +183,7 @@ export default function Footer() {
                     hello@chocolatecrafthouse.com
                   </a>
                   <br />
+                  <span>customer support:</span>{' '}
                   <a href="tel:+41225551084" className="transition hover:text-ink-primary">
                     +41 22 555 1084
                   </a>
