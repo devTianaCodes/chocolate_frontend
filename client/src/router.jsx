@@ -3,9 +3,14 @@ import Home from './pages/Home.jsx';
 import Shop from './pages/Shop.jsx';
 import Offers from './pages/Offers.jsx';
 import About from './pages/About.jsx';
+import Faq from './pages/Faq.jsx';
 import Gifts from './pages/Gifts.jsx';
 import Search from './pages/Search.jsx';
 import Favourites from './pages/Favourites.jsx';
+import Shipping from './pages/Shipping.jsx';
+import Returns from './pages/Returns.jsx';
+import Privacy from './pages/Privacy.jsx';
+import Contact from './pages/Contact.jsx';
 import ProductDetail from './pages/ProductDetail.jsx';
 import Cart from './pages/Cart.jsx';
 import Checkout from './pages/Checkout.jsx';
@@ -24,6 +29,11 @@ const router = createBrowserRouter([
   { path: '/shop', element: <Shop /> },
   { path: '/offers', element: <Offers /> },
   { path: '/about', element: <About /> },
+  { path: '/faq', element: <Faq /> },
+  { path: '/shipping', element: <Shipping /> },
+  { path: '/returns', element: <Returns /> },
+  { path: '/privacy', element: <Privacy /> },
+  { path: '/contact', element: <Contact /> },
   { path: '/gifts', element: <Gifts /> },
   { path: '/search', element: <Search /> },
   { path: '/favourites', element: <Favourites /> },
