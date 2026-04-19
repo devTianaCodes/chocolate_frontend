@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import PageWrapper from '../components/layout/PageWrapper.jsx';
 import { useAuthStore } from '../store/authStore.js';
@@ -22,6 +22,47 @@ const REGISTER_DEFAULTS = {
   country: '',
 };
 
+function PasswordToggleButton({ visible, onToggle }) {
+  return (
+    <button
+      type="button"
+      onClick={onToggle}
+      className="absolute right-4 top-1/2 flex h-5 w-5 -translate-y-1/2 items-center justify-center text-panel-secondary transition hover:text-panel-ink"
+      aria-label={visible ? 'Hide password' : 'Show password'}
+      aria-pressed={visible}
+    >
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-5 w-5">
+        <path d="M2 12c2.6-4.1 6-6.1 10-6.1s7.4 2 10 6.1c-2.6 4.1-6 6.1-10 6.1S4.6 16.1 2 12Z" />
+        <circle cx="12" cy="12" r="3.2" />
+        {visible ? null : <path d="M4 4l16 16" />}
+      </svg>
+    </button>
+  );
+}
+
+function readDemoPayload() {
+  if (typeof window === 'undefined' || !window.location.hash.startsWith('#demo=')) {
+    return null;
+  }
+
+  const params = new URLSearchParams(window.location.hash.slice('#demo='.length));
+  return {
+    email: params.get('email') ?? '',
+    password: params.get('password') ?? '',
+    mode: params.get('mode') === 'register' ? 'register' : 'login',
+    redirect: params.get('redirect'),
+    autologin: params.get('autologin') === '1',
+  };
+}
+
+function clearDemoHash() {
+  if (typeof window === 'undefined' || !window.location.hash.startsWith('#demo=')) {
+    return;
+  }
+
+  window.history.replaceState({}, '', `${window.location.pathname}${window.location.search}`);
+}
+
 export default function Login() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -30,6 +71,10 @@ export default function Login() {
   const [loginForm, setLoginForm] = useState(LOGIN_DEFAULTS);
   const [registerForm, setRegisterForm] = useState(REGISTER_DEFAULTS);
   const [localError, setLocalError] = useState('');
+  const [isLoginPasswordVisible, setIsLoginPasswordVisible] = useState(false);
+  const [demoRedirect, setDemoRedirect] = useState(null);
+  const [demoLogin, setDemoLogin] = useState(null);
+  const autoLoginStarted = useRef(false);
   const redirectTo = location.state?.from || '/account';
   const isRegisterMode = useMemo(
     () => searchParams.get('mode') === 'register',
@@ -39,8 +84,72 @@ export default function Login() {
   function setMode(mode) {
     setLocalError('');
     clearError();
-    setSearchParams(mode === 'register' ? { mode } : {});
+    const nextParams =
+      typeof window === 'undefined' ? new URLSearchParams(searchParams) : new URLSearchParams(window.location.search);
+    if (mode === 'register') {
+      nextParams.set('mode', mode);
+    } else {
+      nextParams.delete('mode');
+    }
+    setSearchParams(nextParams, { replace: true });
   }
+
+  useEffect(() => {
+    function applyDemoPayload() {
+      const payload = readDemoPayload();
+      if (!payload) {
+        return;
+      }
+
+      setDemoRedirect(payload.redirect);
+      setMode(payload.mode);
+
+      if (payload.mode !== 'login') {
+        return;
+      }
+
+      setLoginForm({
+        email: payload.email,
+        password: payload.password,
+      });
+
+      if (!payload.autologin || !payload.email || !payload.password || autoLoginStarted.current) {
+        return;
+      }
+
+      autoLoginStarted.current = true;
+      clearDemoHash();
+      setDemoLogin({
+        email: payload.email,
+        password: payload.password,
+      });
+    }
+
+    applyDemoPayload();
+    window.addEventListener('hashchange', applyDemoPayload);
+    return () => window.removeEventListener('hashchange', applyDemoPayload);
+  }, []);
+
+  useEffect(() => {
+    if (!demoLogin || isRegisterMode || loading) {
+      return;
+    }
+
+    async function runDemoLogin() {
+      setLocalError('');
+      const success = await login(demoLogin.email.trim(), demoLogin.password);
+      if (success) {
+        navigate(demoRedirect || redirectTo, { replace: true });
+        setDemoLogin(null);
+        return;
+      }
+
+      autoLoginStarted.current = false;
+      setDemoLogin(null);
+    }
+
+    void runDemoLogin();
+  }, [demoLogin, demoRedirect, isRegisterMode, loading, login, navigate, redirectTo]);
 
   function updateLoginField(field, value) {
     setLoginForm((current) => ({ ...current, [field]: value }));
@@ -117,7 +226,7 @@ export default function Login() {
       : await login(loginForm.email.trim(), loginForm.password);
 
     if (success) {
-      navigate(redirectTo, { replace: true });
+      navigate(demoRedirect || redirectTo, { replace: true });
     }
   }
 
@@ -292,13 +401,19 @@ export default function Login() {
                 />
               </FormField>
               <FormField label="Password">
-                <input
-                  type="password"
-                  className="auth-input"
-                  value={loginForm.password}
-                  onChange={(e) => updateLoginField('password', e.target.value)}
-                  required
-                />
+                <div className="relative mt-3">
+                  <input
+                    type={isLoginPasswordVisible ? 'text' : 'password'}
+                    className="auth-input mt-0 pr-12"
+                    value={loginForm.password}
+                    onChange={(e) => updateLoginField('password', e.target.value)}
+                    required
+                  />
+                  <PasswordToggleButton
+                    visible={isLoginPasswordVisible}
+                    onToggle={() => setIsLoginPasswordVisible((current) => !current)}
+                  />
+                </div>
               </FormField>
             </>
           )}
