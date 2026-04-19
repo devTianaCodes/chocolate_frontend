@@ -4,7 +4,6 @@ import { fetchProducts } from '../api/products.js';
 import PageWrapper from '../components/layout/PageWrapper.jsx';
 import Pagination from '../components/Pagination.jsx';
 import ProductCard from '../components/product/ProductCard.jsx';
-import homeHeroWideImage from '../assets/hero-big.png';
 import useResponsivePageSize from '../hooks/useResponsivePageSize.js';
 import { getProductReviewSummary } from '../utils/getProductReviewSummary.js';
 import { getTotalPages, paginateItems } from '../utils/pagination.js';
@@ -65,6 +64,10 @@ export default function Home() {
       });
   }, [products]);
 
+  const heroImage = useMemo(() => {
+    return products.find((product) => product.image)?.image || '';
+  }, [products]);
+
   const lovedTotalPages = useMemo(
     () => getTotalPages(mostLovedProducts.length, lovedPageSize),
     [mostLovedProducts.length, lovedPageSize]
@@ -84,11 +87,15 @@ export default function Home() {
     <PageWrapper>
       <section className="-mt-[98px] space-y-3 sm:-mt-[102px] md:-mt-[102px] md:space-y-4">
         <div className="relative left-1/2 w-screen -translate-x-1/2 overflow-hidden">
-          <img
-            src={homeHeroWideImage}
-            alt="Luxury chocolate assortment in high definition"
-            className="h-[340px] w-full object-cover sm:h-[420px] md:h-[520px] lg:h-[620px]"
-          />
+          {heroImage ? (
+            <img
+              src={heroImage}
+              alt="Featured Chocolate Craft House product"
+              className="h-[340px] w-full object-cover sm:h-[420px] md:h-[520px] lg:h-[620px]"
+            />
+          ) : (
+            <div className="h-[340px] w-full bg-[rgba(79,33,33,0.12)] sm:h-[420px] md:h-[520px] lg:h-[620px]" />
+          )}
           <div className="pointer-events-none absolute inset-y-0 left-0 w-12 bg-[linear-gradient(to_right,rgb(var(--color-page-bg))_0%,rgba(249,207,191,0.18)_38%,transparent_100%)] sm:w-16 md:w-20" />
           <div className="pointer-events-none absolute inset-y-0 right-0 w-12 bg-[linear-gradient(to_left,rgb(var(--color-page-bg))_0%,rgba(249,207,191,0.18)_38%,transparent_100%)] sm:w-16 md:w-20" />
           <div className="pointer-events-none absolute inset-x-0 top-0 h-6 bg-[linear-gradient(to_bottom,rgb(var(--color-page-bg))_0%,rgba(249,207,191,0.18)_38%,transparent_100%)] sm:h-8 md:h-10" />
