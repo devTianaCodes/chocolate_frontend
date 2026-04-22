@@ -67,7 +67,7 @@ export default function Navbar() {
         </div>
         <div className="pointer-events-none absolute left-1/2 top-1/2 flex min-w-0 -translate-x-1/2 -translate-y-1/2 flex-col items-center leading-none">
           <Link
-            to="/"
+            to="/home"
             aria-label="Chocolate Craft House"
             className="pointer-events-auto flex items-center justify-center"
           >

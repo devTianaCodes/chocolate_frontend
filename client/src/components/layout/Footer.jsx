@@ -148,7 +148,7 @@ export default function Footer() {
       <div className="mx-auto max-w-[1520px] px-4 py-10 sm:px-5 md:px-7 lg:px-10 xl:px-12 xl:py-12">
         <div className="grid gap-10 md:grid-cols-2 md:gap-12 lg:grid-cols-[1.3fr_0.9fr_1fr] lg:grid-rows-[auto_auto] lg:items-start lg:gap-x-16 lg:gap-y-12">
           <section className="space-y-6">
-            <Link to="/" className="inline-flex max-w-[420px]">
+            <Link to="/home" className="inline-flex max-w-[420px]">
               <img src={logo} alt="Chocolate Craft House" className="h-auto w-full max-w-[360px]" />
             </Link>
 
