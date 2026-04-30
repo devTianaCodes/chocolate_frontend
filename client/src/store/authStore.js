@@ -2,6 +2,8 @@ import { create } from 'zustand';
 import { loginUser, registerUser, logoutUser, refreshToken } from '../api/auth.js';
 import { mergeCart } from '../api/cart.js';
 
+let authMutationVersion = 0;
+
 function getSessionId() {
   if (typeof window === 'undefined') {
     return null;
@@ -20,6 +22,7 @@ export const useAuthStore = create((set) => ({
   clearError: () => set({ error: '' }),
 
   setSession: ({ user, accessToken }) => {
+    authMutationVersion += 1;
     set({
       user,
       accessToken,
@@ -29,6 +32,7 @@ export const useAuthStore = create((set) => ({
   },
 
   clearSession: () => {
+    authMutationVersion += 1;
     set({
       user: null,
       accessToken: null,
@@ -38,15 +42,22 @@ export const useAuthStore = create((set) => ({
   },
 
   initialize: async () => {
+    const initializeVersion = authMutationVersion;
     set({ loading: true, error: '' });
     try {
       const response = await refreshToken();
+      if (authMutationVersion !== initializeVersion) {
+        return;
+      }
       set({
         user: response.data.user,
         accessToken: response.data.accessToken,
         initialized: true,
       });
     } catch (err) {
+      if (authMutationVersion !== initializeVersion) {
+        return;
+      }
       set({
         user: null,
         accessToken: null,
@@ -69,6 +80,7 @@ export const useAuthStore = create((set) => ({
   },
 
   register: async (payload) => {
+    authMutationVersion += 1;
     set({ loading: true, error: '' });
     try {
       const response = await registerUser(payload);
@@ -91,6 +103,7 @@ export const useAuthStore = create((set) => ({
   },
 
   login: async (email, password) => {
+    authMutationVersion += 1;
     set({ loading: true, error: '' });
     try {
       const response = await loginUser({ email, password });
@@ -113,6 +126,7 @@ export const useAuthStore = create((set) => ({
   },
 
   logout: async () => {
+    authMutationVersion += 1;
     set({ loading: true, error: '' });
     try {
       await logoutUser();
