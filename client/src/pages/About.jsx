@@ -1,5 +1,3 @@
-import { useEffect, useMemo, useState } from 'react';
-import { fetchProducts } from '../api/products.js';
 import PageWrapper from '../components/layout/PageWrapper.jsx';
 
 const storyBlocks = [
@@ -23,6 +21,13 @@ const storyBlocks = [
     body: 'We borrow from old-world chocolate houses where technique, repetition, and patience mattered more than speed. The result is a catalog that feels contemporary in presentation but classical in method: refined, precise, and meant to be returned to rather than consumed once and forgotten.',
     align: 'right',
   },
+];
+
+const storyImages = [
+  '/about-images/about-us1.png',
+  '/about-images/about-us2.png',
+  '/about-images/about-us3.png',
+  '/about-images/about-us4.png',
 ];
 
 function StoryImage({ image, title }) {
@@ -78,32 +83,6 @@ function StoryBlock({ title, body, align, image }) {
 }
 
 export default function About() {
-  const [products, setProducts] = useState([]);
-
-  useEffect(() => {
-    let active = true;
-
-    async function loadProducts() {
-      try {
-        const response = await fetchProducts({ page: 1, limit: 24 });
-        if (active) setProducts(response.data.result || []);
-      } catch {
-        if (active) setProducts([]);
-      }
-    }
-
-    loadProducts();
-
-    return () => {
-      active = false;
-    };
-  }, []);
-
-  const storyImages = useMemo(() => {
-    const images = products.flatMap((product) => [product.image, product.hover_image].filter(Boolean));
-    return [...new Set(images)];
-  }, [products]);
-
   return (
     <PageWrapper>
       <header className="panel-wash-strong mb-4 flex flex-col gap-4 p-6 md:mb-10 md:p-8">
