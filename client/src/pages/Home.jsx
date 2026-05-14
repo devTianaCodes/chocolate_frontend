@@ -143,7 +143,7 @@ export default function Home() {
 
         {!loadingLoved && !lovedError && mostLovedProducts.length > 0 && (
           <>
-            <div className="grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-5 lg:grid-cols-5 lg:gap-6">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-4 md:gap-5 lg:grid-cols-5 lg:gap-6">
               {visibleLovedProducts.map((product) => (
                 <ProductCard key={product.id} product={product} />
               ))}

@@ -149,7 +149,7 @@ a {
   }
 
   .catalog-grid {
-    @apply grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-5 lg:grid-cols-5 lg:gap-6;
+    @apply grid grid-cols-1 gap-4 md:grid-cols-4 md:gap-5 lg:grid-cols-5 lg:gap-6;
   }
 
   .offers-range::-webkit-slider-thumb {

@@ -42,20 +42,20 @@ export default function Navbar() {
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-border/35 bg-[#4f2121]">
-      <div className="flex min-h-[30px] items-center justify-center border-b border-border/20 bg-brand px-3 py-1 text-center text-[9px] font-medium uppercase tracking-[0.14em] text-ink-invert sm:text-[10px] md:text-[11px]">
+      <div className="flex min-h-[36px] items-center justify-center border-b border-border/20 bg-brand px-2 py-1.5 text-center text-[8px] font-medium uppercase tracking-[0.08em] text-ink-invert sm:min-h-[36px] sm:px-3 sm:text-[10px] sm:tracking-[0.14em] md:min-h-[30px] md:py-1 md:text-[11px]">
         Free shipping on orders over €50
       </div>
-      <div className="relative mx-auto flex h-[76px] max-w-[1440px] items-center justify-between gap-3 px-3 sm:h-[82px] sm:px-4 md:px-5 lg:px-8">
+      <div className="relative mx-auto flex h-[91px] max-w-[1440px] items-center justify-between gap-3 px-4 sm:h-[98px] sm:px-4 md:h-[82px] md:px-5 lg:px-8">
         <div className="flex min-w-0 items-center lg:flex-1">
           <button
             type="button"
-            className="inline-flex items-center justify-center text-ink-secondary hover:text-ink-primary lg:hidden"
+            className="inline-flex min-h-11 min-w-11 items-center justify-center text-ink-secondary hover:text-ink-primary lg:hidden"
             aria-expanded={isMobileMenuOpen}
             aria-controls="mobile-nav"
             aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
             onClick={toggleMobileMenu}
           >
-            {isMobileMenuOpen ? <X className="h-[18px] w-[18px]" strokeWidth={1.8} /> : <Menu className="h-[18px] w-[18px]" strokeWidth={1.8} />}
+            {isMobileMenuOpen ? <X className="h-[27px] w-[27px]" strokeWidth={1.8} /> : <Menu className="h-[27px] w-[27px]" strokeWidth={1.8} />}
           </button>
           <nav className="hidden items-center gap-4 text-[12px] uppercase tracking-[0.08em] text-ink-secondary lg:flex xl:gap-5 xl:text-[13px] xl:tracking-[0.1em]">
             <Link to="/shop" className="hover:text-ink-primary">Shop</Link>
@@ -65,7 +65,7 @@ export default function Navbar() {
             <Link to="/about" className="hover:text-ink-primary">About us</Link>
           </nav>
         </div>
-        <div className="pointer-events-none absolute left-1/2 top-1/2 flex min-w-0 -translate-x-1/2 -translate-y-1/2 flex-col items-center leading-none">
+        <div className="pointer-events-none absolute inset-x-0 top-1/2 flex min-w-0 -translate-y-1/2 flex-col items-center leading-none">
           <Link
             to="/home"
             aria-label="Chocolate Craft House"
@@ -74,7 +74,7 @@ export default function Navbar() {
             <img
               src={logo}
               alt="Chocolate Craft House"
-              className="h-[74px] w-auto object-contain sm:h-[80px] md:h-[84px]"
+              className="h-auto max-h-[84px] w-auto max-w-[228px] object-contain sm:max-h-[94px] sm:max-w-[288px] md:h-[84px] md:max-h-none md:max-w-none"
             />
           </Link>
         </div>
@@ -94,20 +94,12 @@ export default function Navbar() {
             />
           </form>
           <Link
-            to="/search"
-            aria-label="Search"
-            className="inline-flex shrink-0 items-center justify-center hover:text-ink-primary lg:hidden"
-            onClick={() => setIsMobileMenuOpen(false)}
-          >
-            <Search className="h-[17px] w-[17px] shrink-0" strokeWidth={1.8} />
-          </Link>
-          <Link
             to="/cart"
             aria-label="Cart"
             className="relative inline-flex items-center justify-center hover:text-ink-primary"
           >
             <span className="relative inline-flex">
-              <ShoppingCart className="h-[18px] w-[18px] lg:h-[15px] lg:w-[15px]" strokeWidth={1.8} />
+              <ShoppingCart className="h-[22px] w-[22px] lg:h-[15px] lg:w-[15px]" strokeWidth={1.8} />
               {cartCount > 0 && (
                 <span className="absolute -right-1.5 -top-2.5 inline-flex h-[14px] min-w-[14px] items-center justify-center rounded-pill bg-brand px-[3px] text-[8px] tracking-normal text-ink-invert">
                   {cartCount}
@@ -120,12 +112,12 @@ export default function Navbar() {
               <Link
                 to="/account"
                 aria-label="Account"
-                className="inline-flex items-center justify-center hover:text-ink-primary"
+                className="hidden items-center justify-center hover:text-ink-primary lg:inline-flex"
               >
-                <User className="h-[18px] w-[18px] lg:h-[15px] lg:w-[15px]" strokeWidth={1.8} />
+                <User className="h-[15px] w-[15px]" strokeWidth={1.8} />
               </Link>
               {user?.role === 'admin' && (
-                <Link to="/admin/products" className="hover:text-ink-primary">Admin</Link>
+                <Link to="/admin/products" className="hidden hover:text-ink-primary lg:inline">Admin</Link>
               )}
               <button type="button" className="hidden hover:text-ink-primary lg:block" onClick={handleLogout}>
                 Logout
@@ -135,9 +127,9 @@ export default function Navbar() {
             <Link
               to="/login"
               aria-label="Login"
-              className="inline-flex items-center justify-center hover:text-ink-primary"
+              className="hidden items-center justify-center hover:text-ink-primary lg:inline-flex"
             >
-              <User className="h-[18px] w-[18px] lg:h-[15px] lg:w-[15px]" strokeWidth={1.8} />
+              <User className="h-[15px] w-[15px]" strokeWidth={1.8} />
             </Link>
           )}
         </div>
@@ -145,8 +137,22 @@ export default function Navbar() {
       {isMobileMenuOpen && (
         <nav
           id="mobile-nav"
-          className="border-t border-border/30 bg-[#4f2121] px-3 py-4 lg:hidden"
+          className="border-t border-border/30 bg-[#4f2121] px-4 py-5 lg:hidden"
         >
+          <form className="relative mb-5" onSubmit={handleSearchSubmit}>
+            <Search
+              className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-invert/75"
+              strokeWidth={1.8}
+            />
+            <input
+              type="search"
+              value={searchTerm}
+              onChange={(event) => setSearchTerm(event.target.value)}
+              placeholder="Search products"
+              aria-label="Search products"
+              className="h-12 w-full rounded-none border border-brand-light/40 bg-brand pl-10 pr-4 text-[12px] font-medium uppercase tracking-[0.1em] text-ink-invert shadow-[0_13px_28px_rgba(39,19,13,0.126)] placeholder:text-ink-invert/65 focus:border-brand-dark focus-visible:outline-none"
+            />
+          </form>
           <div className="flex flex-col gap-4 text-[13px] uppercase tracking-[0.1em] text-ink-secondary">
             <Link to="/shop" className="hover:text-ink-primary">Shop</Link>
             <Link to="/favourites" className="hover:text-ink-primary">Favourites</Link>
@@ -155,6 +161,7 @@ export default function Navbar() {
             <Link to="/about" className="hover:text-ink-primary">About us</Link>
             {user ? (
               <>
+                <Link to="/account" className="hover:text-ink-primary">Account</Link>
                 {user.role === 'admin' && (
                   <Link to="/admin/products" className="hover:text-ink-primary">Admin</Link>
                 )}
@@ -162,7 +169,9 @@ export default function Navbar() {
                   Logout
                 </button>
               </>
-            ) : null}
+            ) : (
+              <Link to="/login" className="hover:text-ink-primary">Login</Link>
+            )}
           </div>
         </nav>
       )}
