@@ -3,6 +3,7 @@ import { loginUser, registerUser, logoutUser, refreshToken } from '../api/auth.j
 import { mergeCart } from '../api/cart.js';
 
 let authMutationVersion = 0;
+const SESSION_RESTORE_TIMEOUT_MS = 3500;
 
 function getSessionId() {
   if (typeof window === 'undefined') {
@@ -45,7 +46,12 @@ export const useAuthStore = create((set) => ({
     const initializeVersion = authMutationVersion;
     set({ loading: true, error: '' });
     try {
-      const response = await refreshToken();
+      const response = await Promise.race([
+        refreshToken(),
+        new Promise((_, reject) => {
+          window.setTimeout(() => reject(new Error('Session restore timed out.')), SESSION_RESTORE_TIMEOUT_MS);
+        }),
+      ]);
       if (authMutationVersion !== initializeVersion) {
         return;
       }
