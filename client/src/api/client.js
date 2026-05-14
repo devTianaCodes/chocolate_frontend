@@ -1,7 +1,24 @@
 import axios from 'axios';
 
+const LOCAL_API_URL = 'http://localhost:3001/api';
+const PRODUCTION_API_URL = 'https://chocolate-api-production.up.railway.app/api';
+
+function resolveApiUrl() {
+  const configuredApiUrl = import.meta.env.VITE_API_URL;
+  const hostname = typeof window !== 'undefined' ? window.location.hostname : '';
+  const isLocalHost = hostname === 'localhost' || hostname === '127.0.0.1';
+  const isLocalApiUrl =
+    configuredApiUrl?.includes('localhost') || configuredApiUrl?.includes('127.0.0.1');
+
+  if (configuredApiUrl && (!isLocalApiUrl || isLocalHost)) {
+    return configuredApiUrl;
+  }
+
+  return isLocalHost ? LOCAL_API_URL : PRODUCTION_API_URL;
+}
+
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:3001/api',
+  baseURL: resolveApiUrl(),
   withCredentials: true,
 });
 
