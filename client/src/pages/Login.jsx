@@ -192,6 +192,22 @@ export default function Login() {
           </button>
         </div>
 
+        {!isRegisterMode && (
+          <div className="space-y-3 rounded-[22px] border border-[rgba(125,82,71,0.18)] bg-white/50 p-4">
+            <p className="text-panel-secondary text-body-sm">
+              Explore the signed-in experience without creating an account.
+            </p>
+            <button
+              type="button"
+              className="button-primary w-full"
+              onClick={handleDemoLogin}
+              disabled={loading}
+            >
+              {loading ? 'Opening demo…' : 'Continue as a demo user'}
+            </button>
+          </div>
+        )}
+
         {visibleError && <p className="text-body-sm text-[#8c3f37]">{visibleError}</p>}
 
         <form className="space-y-5" onSubmit={handleSubmit}>
@@ -352,22 +368,6 @@ export default function Login() {
             {loading ? (isRegisterMode ? 'Creating…' : 'Signing in…') : isRegisterMode ? 'Create account' : 'Sign in'}
           </button>
         </form>
-
-        {!isRegisterMode && (
-          <div className="space-y-3 border-t border-[rgba(125,82,71,0.18)] pt-5">
-            <p className="text-panel-secondary text-body-sm">
-              Want to explore the signed-in experience without creating an account?
-            </p>
-            <button
-              type="button"
-              className="button-ghost w-full"
-              onClick={handleDemoLogin}
-              disabled={loading}
-            >
-              {loading ? 'Opening demo…' : 'Continue as demo user'}
-            </button>
-          </div>
-        )}
       </div>
     </PageWrapper>
   );
