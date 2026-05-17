@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { loginUser, registerUser, logoutUser, refreshToken } from '../api/auth.js';
+import { demoLoginUser, loginUser, registerUser, logoutUser, refreshToken } from '../api/auth.js';
 import { mergeCart } from '../api/cart.js';
 
 let authMutationVersion = 0;
@@ -125,6 +125,29 @@ export const useAuthStore = create((set) => ({
       return true;
     } catch (err) {
       set({ error: err.response?.data?.error || 'Login failed.' });
+      return false;
+    } finally {
+      set({ loading: false });
+    }
+  },
+
+  demoLogin: async () => {
+    authMutationVersion += 1;
+    set({ loading: true, error: '' });
+    try {
+      const response = await demoLoginUser();
+      const sessionId = getSessionId();
+      if (sessionId) {
+        await mergeCart(sessionId, response.data.accessToken);
+      }
+      set({
+        user: response.data.user,
+        accessToken: response.data.accessToken,
+        initialized: true,
+      });
+      return true;
+    } catch (err) {
+      set({ error: err.response?.data?.error || 'Demo login failed.' });
       return false;
     } finally {
       set({ loading: false });

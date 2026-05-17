@@ -10,6 +10,11 @@ export async function loginUser(payload) {
   return data;
 }
 
+export async function demoLoginUser() {
+  const { data } = await api.post('/auth/demo-login');
+  return data;
+}
+
 export async function logoutUser() {
   const { data } = await api.post('/auth/logout');
   return data;

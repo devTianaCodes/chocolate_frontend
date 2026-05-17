@@ -44,6 +44,7 @@ export function installAuthInterceptor({ getAccessToken, refreshSession, clearSe
       // Avoid recursive refresh attempts on auth endpoints.
       if (
         originalRequest.url?.includes('/auth/login') ||
+        originalRequest.url?.includes('/auth/demo-login') ||
         originalRequest.url?.includes('/auth/register') ||
         originalRequest.url?.includes('/auth/refresh') ||
         originalRequest.url?.includes('/auth/logout')

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import PageWrapper from '../components/layout/PageWrapper.jsx';
 import { useAuthStore } from '../store/authStore.js';
@@ -40,41 +40,15 @@ function PasswordToggleButton({ visible, onToggle }) {
   );
 }
 
-function readDemoPayload() {
-  if (typeof window === 'undefined' || !window.location.hash.startsWith('#demo=')) {
-    return null;
-  }
-
-  const params = new URLSearchParams(window.location.hash.slice('#demo='.length));
-  return {
-    email: params.get('email') ?? '',
-    password: params.get('password') ?? '',
-    mode: params.get('mode') === 'register' ? 'register' : 'login',
-    redirect: params.get('redirect'),
-    autologin: params.get('autologin') === '1',
-  };
-}
-
-function clearDemoHash() {
-  if (typeof window === 'undefined' || !window.location.hash.startsWith('#demo=')) {
-    return;
-  }
-
-  window.history.replaceState({}, '', `${window.location.pathname}${window.location.search}`);
-}
-
 export default function Login() {
   const navigate = useNavigate();
   const location = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
-  const { login, register, loading, error, clearError } = useAuthStore();
+  const { demoLogin, login, register, loading, error, clearError } = useAuthStore();
   const [loginForm, setLoginForm] = useState(LOGIN_DEFAULTS);
   const [registerForm, setRegisterForm] = useState(REGISTER_DEFAULTS);
   const [localError, setLocalError] = useState('');
   const [isLoginPasswordVisible, setIsLoginPasswordVisible] = useState(false);
-  const [demoRedirect, setDemoRedirect] = useState(null);
-  const [demoLogin, setDemoLogin] = useState(null);
-  const autoLoginStarted = useRef(false);
   const redirectTo = location.state?.from || '/account';
   const isRegisterMode = useMemo(
     () => searchParams.get('mode') === 'register',
@@ -93,63 +67,6 @@ export default function Login() {
     }
     setSearchParams(nextParams, { replace: true });
   }
-
-  useEffect(() => {
-    function applyDemoPayload() {
-      const payload = readDemoPayload();
-      if (!payload) {
-        return;
-      }
-
-      setDemoRedirect(payload.redirect);
-      setMode(payload.mode);
-
-      if (payload.mode !== 'login') {
-        return;
-      }
-
-      setLoginForm({
-        email: payload.email,
-        password: payload.password,
-      });
-
-      if (!payload.autologin || !payload.email || !payload.password || autoLoginStarted.current) {
-        return;
-      }
-
-      autoLoginStarted.current = true;
-      clearDemoHash();
-      setDemoLogin({
-        email: payload.email,
-        password: payload.password,
-      });
-    }
-
-    applyDemoPayload();
-    window.addEventListener('hashchange', applyDemoPayload);
-    return () => window.removeEventListener('hashchange', applyDemoPayload);
-  }, []);
-
-  useEffect(() => {
-    if (!demoLogin || isRegisterMode || loading) {
-      return;
-    }
-
-    async function runDemoLogin() {
-      setLocalError('');
-      const success = await login(demoLogin.email.trim(), demoLogin.password);
-      if (success) {
-        navigate(demoRedirect || redirectTo, { replace: true });
-        setDemoLogin(null);
-        return;
-      }
-
-      autoLoginStarted.current = false;
-      setDemoLogin(null);
-    }
-
-    void runDemoLogin();
-  }, [demoLogin, demoRedirect, isRegisterMode, loading, login, navigate, redirectTo]);
 
   function updateLoginField(field, value) {
     setLoginForm((current) => ({ ...current, [field]: value }));
@@ -226,7 +143,16 @@ export default function Login() {
       : await login(loginForm.email.trim(), loginForm.password);
 
     if (success) {
-      navigate(demoRedirect || redirectTo, { replace: true });
+      navigate(redirectTo, { replace: true });
+    }
+  }
+
+  async function handleDemoLogin() {
+    setLocalError('');
+    clearError();
+    const success = await demoLogin();
+    if (success) {
+      navigate(redirectTo, { replace: true });
     }
   }
 
@@ -426,6 +352,22 @@ export default function Login() {
             {loading ? (isRegisterMode ? 'Creating…' : 'Signing in…') : isRegisterMode ? 'Create account' : 'Sign in'}
           </button>
         </form>
+
+        {!isRegisterMode && (
+          <div className="space-y-3 border-t border-[rgba(125,82,71,0.18)] pt-5">
+            <p className="text-panel-secondary text-body-sm">
+              Want to explore the signed-in experience without creating an account?
+            </p>
+            <button
+              type="button"
+              className="button-ghost w-full"
+              onClick={handleDemoLogin}
+              disabled={loading}
+            >
+              {loading ? 'Opening demo…' : 'Continue as demo user'}
+            </button>
+          </div>
+        )}
       </div>
     </PageWrapper>
   );
