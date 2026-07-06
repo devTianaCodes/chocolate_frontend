@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 const LOCAL_API_URL = 'http://localhost:3001/api';
-const PRODUCTION_API_URL = 'https://chocolate-api-production.up.railway.app/api';
+const MISSING_API_URL_MESSAGE =
+  'VITE_API_URL must be configured for the deployed Chocolate Craft House frontend.';
 
 function resolveApiUrl() {
   const configuredApiUrl = import.meta.env.VITE_API_URL;
@@ -14,12 +15,26 @@ function resolveApiUrl() {
     return configuredApiUrl;
   }
 
-  return isLocalHost ? LOCAL_API_URL : PRODUCTION_API_URL;
+  if (isLocalHost) {
+    return LOCAL_API_URL;
+  }
+
+  return '';
 }
 
+const API_URL = resolveApiUrl();
+
 const api = axios.create({
-  baseURL: resolveApiUrl(),
+  baseURL: API_URL || '/__missing_api_url__',
   withCredentials: true,
+});
+
+api.interceptors.request.use((config) => {
+  if (!API_URL) {
+    return Promise.reject(new Error(MISSING_API_URL_MESSAGE));
+  }
+
+  return config;
 });
 
 let interceptorCleanup = null;
