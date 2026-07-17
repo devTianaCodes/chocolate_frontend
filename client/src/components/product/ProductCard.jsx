@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { formatPrice } from '../../utils/formatPrice.js';
 import { getDisplayProductName } from '../../utils/getDisplayProductName.js';
 import { getEffectivePrice } from '../../utils/getEffectivePrice.js';
+import { getProductImageUrl } from '../../utils/getProductImageUrl.js';
 import { getProductReviewSummary } from '../../utils/getProductReviewSummary.js';
 import { useCartStore } from '../../store/cartStore.js';
 import { useFavouritesStore } from '../../store/favouritesStore.js';
@@ -19,6 +20,17 @@ export default function ProductCard({ product }) {
   const displayName = getDisplayProductName(product.name);
   const reviews = getProductReviewSummary(product.id);
   const hoverImage = product.hover_image && !hoverImageFailed ? product.hover_image : '';
+  const productImageUrl = getProductImageUrl({
+    source: product.image,
+    categorySlug: product.category_slug,
+    productName: product.name,
+  });
+  const hoverImageUrl = getProductImageUrl({
+    source: hoverImage,
+    categorySlug: product.category_slug,
+    productName: product.name,
+    variant: 'detail',
+  });
   const effectivePrice = getEffectivePrice(product);
 
   function openDetails() {
@@ -64,20 +76,23 @@ export default function ProductCard({ product }) {
         {!imageFailed ? (
           <>
             <img
-              src={product.image}
+              src={productImageUrl}
               alt={product.name}
               className={`h-full w-full object-cover transition duration-500 ${
                 hoverImage ? 'group-hover:scale-[1.01] group-hover:opacity-0' : 'group-hover:scale-[1.03]'
               }`}
               loading="lazy"
+              decoding="async"
               onError={() => setImageFailed(true)}
             />
-            {hoverImage && (
+            {hoverImageUrl && (
               <img
-                src={hoverImage}
+                src={hoverImageUrl}
                 alt={product.name}
                 className="absolute inset-0 h-full w-full object-cover opacity-0 transition duration-500 group-hover:opacity-100"
                 loading="lazy"
+                decoding="async"
+                fetchPriority="low"
                 onError={() => setHoverImageFailed(true)}
               />
             )}

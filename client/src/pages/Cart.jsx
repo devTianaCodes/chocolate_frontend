@@ -5,6 +5,7 @@ import { useCartStore } from '../store/cartStore.js';
 import { formatPrice } from '../utils/formatPrice.js';
 import { getDisplayProductName } from '../utils/getDisplayProductName.js';
 import { getEffectivePrice } from '../utils/getEffectivePrice.js';
+import { getProductImageUrl } from '../utils/getProductImageUrl.js';
 
 export default function Cart() {
   const { items, loading, error, loadCart, updateItem, removeItem, emptyCart } = useCartStore();
@@ -40,7 +41,17 @@ export default function Cart() {
           <div className="space-y-5">
             {items.map((item) => (
               <div key={item.id} className="panel-wash-strong flex flex-col gap-4 p-4 md:flex-row md:items-center">
-                <img src={item.image} alt={item.name} className="h-24 w-24 rounded-none object-cover" />
+                <img
+                  src={getProductImageUrl({
+                    source: item.image,
+                    categorySlug: item.category_slug,
+                    productName: item.name,
+                  })}
+                  alt={item.name}
+                  loading="lazy"
+                  decoding="async"
+                  className="h-24 w-24 rounded-none object-cover"
+                />
                 <div className="flex-1">
                   <p className="text-panel-ink font-display text-lg">{getDisplayProductName(item.name)}</p>
                   <p className="text-panel-secondary text-body-sm">{item.origin || 'Single origin'}</p>

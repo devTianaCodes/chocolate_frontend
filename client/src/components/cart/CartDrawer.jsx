@@ -5,6 +5,7 @@ import { useCartStore } from '../../store/cartStore.js';
 import { formatPrice } from '../../utils/formatPrice.js';
 import { getDisplayProductName } from '../../utils/getDisplayProductName.js';
 import { getEffectivePrice } from '../../utils/getEffectivePrice.js';
+import { getProductImageUrl } from '../../utils/getProductImageUrl.js';
 
 const FREE_SHIPPING_THRESHOLD = 50;
 
@@ -68,8 +69,13 @@ export default function CartDrawer() {
 
         <div className="mb-6 flex items-center gap-4 border-y border-black/10 py-4">
           <img
-            src={lastAddedItem.image}
+            src={getProductImageUrl({
+              source: lastAddedItem.image,
+              categorySlug: lastAddedItem.category_slug,
+              productName: lastAddedItem.name,
+            })}
             alt={lastAddedItem.name}
+            decoding="async"
             className="h-20 w-16 rounded-sm object-cover"
           />
           <div className="min-w-0 flex-1">

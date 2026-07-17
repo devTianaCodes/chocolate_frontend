@@ -6,6 +6,7 @@ import { fetchProductBySlug } from '../api/products.js';
 import { formatPrice } from '../utils/formatPrice.js';
 import { getDisplayProductName } from '../utils/getDisplayProductName.js';
 import { getEffectivePrice } from '../utils/getEffectivePrice.js';
+import { getProductImageUrl } from '../utils/getProductImageUrl.js';
 import { getProductReviewSummary } from '../utils/getProductReviewSummary.js';
 import { useCartStore } from '../store/cartStore.js';
 
@@ -49,6 +50,11 @@ export default function ProductDetail() {
       ? [{ url: product.image, alt_text: product.name, is_primary: true }]
       : [];
   const activeImage = hoveredImage || selectedImage || gallery[0]?.url || product?.image || '';
+  const activeImageUrl = getProductImageUrl({
+    source: activeImage,
+    categorySlug: product?.category_slug,
+    productName: product?.name,
+  });
   const reviews = getProductReviewSummary(product?.id);
   const specs = [
     {
@@ -89,10 +95,12 @@ export default function ProductDetail() {
             <div className="panel-wash-strong mx-auto max-w-[320px] overflow-hidden sm:max-w-[360px] lg:max-w-[400px]">
               <div className="relative aspect-[4/5]">
                 <img
-                  src={activeImage}
+                  src={activeImageUrl}
                   alt={product.name}
                   className="h-full w-full object-cover transition duration-300"
                   loading="eager"
+                  decoding="async"
+                  fetchPriority="high"
                 />
               </div>
             </div>
@@ -116,10 +124,16 @@ export default function ProductDetail() {
                       }`}
                     >
                       <img
-                        src={image.url}
+                        src={getProductImageUrl({
+                          source: image.url,
+                          categorySlug: product.category_slug,
+                          productName: product.name,
+                          variant: image.is_primary ? 'main' : 'detail',
+                        })}
                         alt={image.alt_text || product.name}
                         className="aspect-square h-full w-full object-cover"
                         loading="lazy"
+                        decoding="async"
                       />
                     </button>
                   );
