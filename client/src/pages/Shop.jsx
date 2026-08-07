@@ -145,7 +145,6 @@ export default function Shop() {
     if (page === currentPage) return;
 
     const nextParams = new URLSearchParams(searchParams);
-    pendingPageScrollRef.current = true;
 
     if (page <= 1) {
       nextParams.delete('page');

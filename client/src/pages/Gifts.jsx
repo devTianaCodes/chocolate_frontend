@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { fetchProductsByCategory } from '../api/categories.js';
 import PageWrapper from '../components/layout/PageWrapper.jsx';
@@ -6,15 +6,12 @@ import ProductCard from '../components/product/ProductCard.jsx';
 import Pagination from '../components/Pagination.jsx';
 import useResponsivePageSize from '../hooks/useResponsivePageSize.js';
 import { getTotalPages, paginateItems, parsePageParam } from '../utils/pagination.js';
-import { scrollToSection } from '../utils/scrollToSection.js';
 
 export default function Gifts() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [products, setProducts] = useState([]);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
-  const resultsRef = useRef(null);
-  const pendingPageScrollRef = useRef(false);
   const pageSize = useResponsivePageSize();
   const currentPage = parsePageParam(searchParams.get('page'));
 
@@ -63,22 +60,10 @@ export default function Gifts() {
     setSearchParams(nextParams, { replace: true });
   }, [currentPage, searchParams, setSearchParams, totalPages]);
 
-  useEffect(() => {
-    if (!pendingPageScrollRef.current || loading) return;
-    if (!products.length || !visibleProducts.length || !resultsRef.current) {
-      pendingPageScrollRef.current = false;
-      return;
-    }
-
-    scrollToSection(resultsRef.current);
-    pendingPageScrollRef.current = false;
-  }, [loading, products.length, visibleProducts.length, currentPage]);
-
   function handlePageChange(page) {
     if (page === currentPage) return;
 
     const nextParams = new URLSearchParams(searchParams);
-    pendingPageScrollRef.current = true;
 
     if (page <= 1) {
       nextParams.delete('page');
@@ -104,7 +89,7 @@ export default function Gifts() {
 
       {!loading && !error && products.length > 0 && (
         <>
-          <section ref={resultsRef} className="catalog-grid">
+          <section className="catalog-grid">
             {visibleProducts.map((product, index) => (
               <ProductCard key={product.id} product={product} priority={index < 2} />
             ))}

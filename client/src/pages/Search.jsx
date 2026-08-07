@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Search as SearchIcon } from 'lucide-react';
 import { useSearchParams } from 'react-router-dom';
 import PageWrapper from '../components/layout/PageWrapper.jsx';
@@ -7,7 +7,6 @@ import Pagination from '../components/Pagination.jsx';
 import { fetchProducts } from '../api/products.js';
 import useResponsivePageSize from '../hooks/useResponsivePageSize.js';
 import { getTotalPages, paginateItems, parsePageParam } from '../utils/pagination.js';
-import { scrollToSection } from '../utils/scrollToSection.js';
 
 function matchesQuery(product, query) {
   const haystack = [
@@ -27,8 +26,6 @@ export default function Search() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const resultsRef = useRef(null);
-  const pendingPageScrollRef = useRef(false);
   const pageSize = useResponsivePageSize();
   const rawQuery = searchParams.get('q')?.trim() || '';
   const query = rawQuery.toLowerCase();
@@ -96,22 +93,10 @@ export default function Search() {
     setSearchParams(nextParams, { replace: true });
   }, [currentPage, query, searchParams, setSearchParams, totalPages]);
 
-  useEffect(() => {
-    if (!pendingPageScrollRef.current || loading) return;
-    if (!results.length || !visibleResults.length || !resultsRef.current) {
-      pendingPageScrollRef.current = false;
-      return;
-    }
-
-    scrollToSection(resultsRef.current);
-    pendingPageScrollRef.current = false;
-  }, [loading, results.length, visibleResults.length, currentPage, query]);
-
   function handlePageChange(page) {
     if (page === currentPage) return;
 
     const nextParams = new URLSearchParams(searchParams);
-    pendingPageScrollRef.current = true;
 
     if (page <= 1) {
       nextParams.delete('page');
@@ -175,7 +160,7 @@ export default function Search() {
       )}
       {!loading && !error && results.length > 0 && (
         <>
-          <section ref={resultsRef} className="catalog-grid">
+          <section className="catalog-grid">
             {visibleResults.map((product, index) => (
               <ProductCard key={product.id} product={product} priority={index < 2} />
             ))}
