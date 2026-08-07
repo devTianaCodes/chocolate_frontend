@@ -1,26 +1,8 @@
-import { access, readFile, stat } from 'node:fs/promises';
+import { access, readFile, readdir, stat } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const MAX_MAIN_IMAGE_BYTES = 225 * 1024;
-const PRODUCT_ASSETS = [
-  'amber-single-origin',
-  'artisan-chocolate-bars',
-  'cacao-rich-vegan-and-dairy-free',
-  'estate-spreads-and-creams',
-  'golden-gift-boxes',
-  'hand-tempered-white-chocolate',
-  'luxe-seasonal-and-limited-edition',
-  'midnight-sugar-free',
-  'roasted-milk-chocolate',
-  'signature-chocolate-covered-nuts',
-  'silk-smooth-drinking-chocolate',
-  'single-harvest-ruby-chocolate',
-  'stone-ground-filled-and-pralines',
-  'velvety-dark-chocolate',
-  'vintage-raw-and-organic',
-];
-
 const scriptDirectory = path.dirname(fileURLToPath(import.meta.url));
 const outputDirectory = path.resolve(scriptDirectory, '../dist/product-images');
 
@@ -51,5 +33,14 @@ async function verifyAsset(asset) {
   }
 }
 
-await Promise.all(PRODUCT_ASSETS.map(verifyAsset));
-console.log(`Verified ${PRODUCT_ASSETS.length * 2} optimized product images.`);
+const outputFiles = await readdir(outputDirectory);
+const productAssets = outputFiles
+  .filter((fileName) => fileName.endsWith('-main.jpg'))
+  .map((fileName) => fileName.replace(/-main\.jpg$/, ''));
+
+if (productAssets.length === 0) {
+  throw new Error('No optimized product images were emitted.');
+}
+
+await Promise.all(productAssets.map(verifyAsset));
+console.log(`Verified ${productAssets.length * 2} optimized product images.`);

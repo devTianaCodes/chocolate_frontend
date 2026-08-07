@@ -11,6 +11,7 @@ function mapProduct(product) {
     discount_price: product.discount_price,
     image: product.image,
     category_name: product.category_name || 'Chocolate',
+    category_slug: product.category_slug || '',
     origin: product.origin || '',
   };
 }

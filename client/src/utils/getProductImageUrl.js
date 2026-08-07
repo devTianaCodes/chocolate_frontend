@@ -22,7 +22,11 @@ const brokenDemoImagePattern =
   /^https:\/\/res\.cloudinary\.com\/demo\/image\/upload\/.*\/chocolate_\d+\.jpg$/i;
 
 function getAssetFromProductName(productName = '') {
-  const normalizedName = productName.toLowerCase().replaceAll(' ', '-');
+  const normalizedName = productName
+    .toLowerCase()
+    .replaceAll('&', 'and')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '');
   return productNameAssets.find((asset) => normalizedName.startsWith(asset));
 }
 

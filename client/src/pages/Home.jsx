@@ -63,6 +63,11 @@ export default function Home() {
           <img
             src={homeHeroWideImage}
             alt="Luxury chocolate assortment in high definition"
+            width="1376"
+            height="768"
+            loading="eager"
+            decoding="async"
+            fetchPriority="high"
             className="h-[340px] w-full object-cover sm:h-[420px] md:h-[520px] lg:h-[620px]"
           />
           <div className="pointer-events-none absolute inset-y-0 left-0 w-12 bg-[linear-gradient(to_right,rgb(var(--color-page-bg))_0%,rgba(249,207,191,0.18)_38%,transparent_100%)] sm:w-16 md:w-20" />
