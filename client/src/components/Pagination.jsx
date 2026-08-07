@@ -11,13 +11,22 @@ export default function Pagination({ currentPage, totalPages, onPageChange }) {
 
   const pages = getVisiblePageNumbers(currentPage, totalPages);
 
+  function handlePageChange(page) {
+    if (page === currentPage) return;
+
+    onPageChange(page);
+    window.requestAnimationFrame(() => {
+      window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+    });
+  }
+
   return (
     <nav aria-label="Pagination" className="mt-10 flex flex-wrap items-center justify-center gap-3">
       <button
         type="button"
         className="button-ghost px-4 py-2 disabled:cursor-not-allowed disabled:opacity-50"
         disabled={currentPage === 1}
-        onClick={() => onPageChange(currentPage - 1)}
+        onClick={() => handlePageChange(currentPage - 1)}
       >
         Prev
       </button>
@@ -27,7 +36,7 @@ export default function Pagination({ currentPage, totalPages, onPageChange }) {
           type="button"
           aria-current={page === currentPage ? 'page' : undefined}
           className={getButtonClass(page === currentPage)}
-          onClick={() => onPageChange(page)}
+          onClick={() => handlePageChange(page)}
         >
           {page}
         </button>
@@ -36,7 +45,7 @@ export default function Pagination({ currentPage, totalPages, onPageChange }) {
         type="button"
         className="button-ghost px-4 py-2 disabled:cursor-not-allowed disabled:opacity-50"
         disabled={currentPage === totalPages}
-        onClick={() => onPageChange(currentPage + 1)}
+        onClick={() => handlePageChange(currentPage + 1)}
       >
         Next
       </button>
