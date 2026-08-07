@@ -1,19 +1,18 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { fetchProducts } from '../api/products.js';
 import PageWrapper from '../components/layout/PageWrapper.jsx';
 import Pagination from '../components/Pagination.jsx';
 import ProductCard from '../components/product/ProductCard.jsx';
-import homeHeroWideImage from '../assets/hero-big.png';
+import homeHeroWideImage from '../assets/hero-big.jpg';
 import useResponsivePageSize from '../hooks/useResponsivePageSize.js';
-import { getProductReviewSummary } from '../utils/getProductReviewSummary.js';
-import { getTotalPages, paginateItems } from '../utils/pagination.js';
 
 export default function Home() {
   const [products, setProducts] = useState([]);
   const [loadingLoved, setLoadingLoved] = useState(true);
   const [lovedError, setLovedError] = useState('');
   const [currentLovedPage, setCurrentLovedPage] = useState(1);
+  const [lovedTotalPages, setLovedTotalPages] = useState(1);
   const lovedPageSize = useResponsivePageSize();
 
   useEffect(() => {
@@ -24,9 +23,14 @@ export default function Home() {
       setLovedError('');
 
       try {
-        const response = await fetchProducts({ page: 1, limit: 100 });
+        const response = await fetchProducts({
+          page: currentLovedPage,
+          limit: lovedPageSize,
+          sort: 'popular',
+        });
         if (active) {
           setProducts(response.data.result || []);
+          setLovedTotalPages(response.data.info?.pages || 1);
         }
       } catch {
         if (active) {
@@ -45,35 +49,7 @@ export default function Home() {
     return () => {
       active = false;
     };
-  }, []);
-
-  const mostLovedProducts = useMemo(() => {
-    return [...products]
-      .sort((left, right) => {
-        const leftReviews = getProductReviewSummary(left.id);
-        const rightReviews = getProductReviewSummary(right.id);
-
-        if (rightReviews.rating !== leftReviews.rating) {
-          return rightReviews.rating - leftReviews.rating;
-        }
-
-        if (rightReviews.count !== leftReviews.count) {
-          return rightReviews.count - leftReviews.count;
-        }
-
-        return Number(left.id) - Number(right.id);
-      });
-  }, [products]);
-
-  const lovedTotalPages = useMemo(
-    () => getTotalPages(mostLovedProducts.length, lovedPageSize),
-    [mostLovedProducts.length, lovedPageSize]
-  );
-
-  const visibleLovedProducts = useMemo(
-    () => paginateItems(mostLovedProducts, currentLovedPage, lovedPageSize),
-    [mostLovedProducts, currentLovedPage, lovedPageSize]
-  );
+  }, [currentLovedPage, lovedPageSize]);
 
   useEffect(() => {
     if (currentLovedPage <= lovedTotalPages) return;
@@ -141,11 +117,11 @@ export default function Home() {
           </div>
         )}
 
-        {!loadingLoved && !lovedError && mostLovedProducts.length > 0 && (
+        {!loadingLoved && !lovedError && products.length > 0 && (
           <>
             <div className="grid grid-cols-1 gap-4 md:grid-cols-4 md:gap-5 lg:grid-cols-5 lg:gap-6">
-              {visibleLovedProducts.map((product) => (
-                <ProductCard key={product.id} product={product} />
+              {products.map((product, index) => (
+                <ProductCard key={product.id} product={product} priority={index < 2} />
               ))}
             </div>
             <Pagination
@@ -156,7 +132,7 @@ export default function Home() {
           </>
         )}
 
-        {!loadingLoved && !lovedError && mostLovedProducts.length === 0 && (
+        {!loadingLoved && !lovedError && products.length === 0 && (
           <div className="panel-wash-strong p-6">
             <p className="text-panel-secondary text-body-md">
               Most loved products are unavailable right now.

@@ -176,8 +176,8 @@ export default function Search() {
       {!loading && !error && results.length > 0 && (
         <>
           <section ref={resultsRef} className="catalog-grid">
-            {visibleResults.map((product) => (
-              <ProductCard key={product.id} product={product} />
+            {visibleResults.map((product, index) => (
+              <ProductCard key={product.id} product={product} priority={index < 2} />
             ))}
           </section>
           <Pagination

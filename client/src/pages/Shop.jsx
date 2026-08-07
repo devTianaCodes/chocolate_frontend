@@ -252,8 +252,8 @@ export default function Shop() {
       {!loading && !error && products.length > 0 && (
         <>
           <section ref={resultsRef} className="catalog-grid">
-            {visibleProducts.map((product) => (
-              <ProductCard key={product.id} product={product} />
+            {visibleProducts.map((product, index) => (
+              <ProductCard key={product.id} product={product} priority={index < 2} />
             ))}
           </section>
           <Pagination

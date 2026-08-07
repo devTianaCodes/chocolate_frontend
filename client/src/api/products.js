@@ -1,7 +1,7 @@
 import api from './client.js';
 
-export async function fetchProducts({ page = 1, limit = 12 } = {}) {
-  const { data } = await api.get('/products', { params: { page, limit } });
+export async function fetchProducts({ page = 1, limit = 12, sort } = {}) {
+  const { data } = await api.get('/products', { params: { page, limit, sort } });
   return data;
 }
 

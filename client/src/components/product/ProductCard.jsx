@@ -9,9 +9,10 @@ import { getProductReviewSummary } from '../../utils/getProductReviewSummary.js'
 import { useCartStore } from '../../store/cartStore.js';
 import { useFavouritesStore } from '../../store/favouritesStore.js';
 
-export default function ProductCard({ product }) {
+export default function ProductCard({ product, priority = false }) {
   const [imageFailed, setImageFailed] = useState(false);
   const [hoverImageFailed, setHoverImageFailed] = useState(false);
+  const [hoverImageRequested, setHoverImageRequested] = useState(false);
   const navigate = useNavigate();
   const addItem = useCartStore((state) => state.addItem);
   const favouriteItems = useFavouritesStore((state) => state.items);
@@ -53,6 +54,10 @@ export default function ProductCard({ product }) {
     openDetails();
   }
 
+  function requestHoverImage() {
+    if (hoverImage) setHoverImageRequested(true);
+  }
+
   return (
     <article
       className="panel-wash-strong group flex h-full min-w-0 cursor-pointer flex-col overflow-hidden transition duration-300 hover:-translate-y-1 hover:border-[rgba(79,33,33,0.42)]"
@@ -60,6 +65,8 @@ export default function ProductCard({ product }) {
       tabIndex={0}
       onClick={handleCardClick}
       onKeyDown={handleCardKeyDown}
+      onPointerEnter={requestHoverImage}
+      onFocusCapture={requestHoverImage}
     >
       <div className="relative aspect-[13/15] overflow-hidden bg-[rgba(79,33,33,0.1)] sm:aspect-[15/16]">
         <button
@@ -78,17 +85,22 @@ export default function ProductCard({ product }) {
             <img
               src={productImageUrl}
               alt={product.name}
+              width="773"
+              height="960"
               className={`h-full w-full object-cover transition duration-500 ${
                 hoverImage ? 'group-hover:scale-[1.01] group-hover:opacity-0' : 'group-hover:scale-[1.03]'
               }`}
-              loading="lazy"
+              loading={priority ? 'eager' : 'lazy'}
               decoding="async"
+              fetchPriority={priority ? 'high' : 'auto'}
               onError={() => setImageFailed(true)}
             />
-            {hoverImageUrl && (
+            {hoverImageRequested && hoverImageUrl && (
               <img
                 src={hoverImageUrl}
                 alt={product.name}
+                width="773"
+                height="960"
                 className="absolute inset-0 h-full w-full object-cover opacity-0 transition duration-500 group-hover:opacity-100"
                 loading="lazy"
                 decoding="async"

@@ -441,8 +441,8 @@ export default function Offers() {
                   ref={resultsRef}
                   className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-5 lg:grid-cols-3 lg:gap-6"
                 >
-                  {visibleProducts.map((product) => (
-                    <ProductCard key={product.id} product={product} />
+                  {visibleProducts.map((product, index) => (
+                    <ProductCard key={product.id} product={product} priority={index < 2} />
                   ))}
                 </section>
                 <Pagination
