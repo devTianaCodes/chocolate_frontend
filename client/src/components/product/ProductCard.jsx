@@ -64,7 +64,7 @@ export default function ProductCard({ product, priority = false }) {
 
   return (
     <article
-      className="panel-wash-strong group flex h-full min-w-0 cursor-pointer flex-col overflow-hidden transition duration-300 hover:-translate-y-1 hover:border-[rgba(79,33,33,0.42)]"
+      className="catalog-card panel-wash-strong group flex h-full min-w-0 cursor-pointer flex-col overflow-hidden transition duration-300 hover:-translate-y-1 hover:border-[rgba(79,33,33,0.42)]"
       role="link"
       tabIndex={0}
       onClick={handleCardClick}

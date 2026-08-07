@@ -4,7 +4,7 @@ import CartDrawer from '../cart/CartDrawer.jsx';
 
 export default function PageWrapper({ children }) {
   return (
-    <div className="relative flex min-h-screen flex-col overflow-hidden bg-[rgb(var(--color-page-bg))] text-ink-primary">
+    <div className="relative flex min-h-screen flex-col overflow-x-clip bg-[rgb(var(--color-page-bg))] text-ink-primary">
       <Navbar />
       <CartDrawer />
       <main className="relative mx-auto w-full max-w-[1440px] flex-1 px-3 pb-10 pt-[154px] sm:px-4 sm:pb-12 sm:pt-[158px] md:px-5 md:pt-[132px] md:pb-14 lg:px-8 lg:pb-16">

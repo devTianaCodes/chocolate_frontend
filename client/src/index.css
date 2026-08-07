@@ -56,6 +56,11 @@ body {
   min-height: 100vh;
 }
 
+.site-header {
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
 :focus-visible {
   outline: 2px solid rgb(var(--color-brand));
   outline-offset: 3px;
@@ -185,5 +190,46 @@ a {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .panel-wash,
+  .panel-wash-strong,
+  .glass-panel,
+  .glass-panel-strong,
+  .glass-input,
+  .backdrop-blur-luxury,
+  .backdrop-blur-md {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+
+  .panel-wash {
+    background-color: rgb(var(--color-panel-wash));
+  }
+
+  .panel-wash-strong {
+    background-color: rgb(var(--color-panel-wash-strong));
+  }
+
+  .panel-wash,
+  .panel-wash-strong {
+    box-shadow: 0 6px 16px rgba(79, 33, 33, 0.1);
+  }
+
+  .catalog-card {
+    contain: paint;
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .catalog-card,
+  .catalog-card img {
+    transition: none;
+  }
+
+  .catalog-card:hover {
+    transform: none;
   }
 }

@@ -41,7 +41,7 @@ export default function Navbar() {
   }
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 border-b border-border/35 bg-[#4f2121]">
+    <header className="site-header fixed inset-x-0 top-0 z-50 border-b border-border/35 bg-[#4f2121]">
       <div className="flex min-h-[36px] items-center justify-center border-b border-border/20 bg-brand px-2 py-1.5 text-center text-[8px] font-medium uppercase tracking-[0.08em] text-ink-invert sm:min-h-[36px] sm:px-3 sm:text-[10px] sm:tracking-[0.14em] md:min-h-[30px] md:py-1 md:text-[11px]">
         Free shipping on orders over €50
       </div>
